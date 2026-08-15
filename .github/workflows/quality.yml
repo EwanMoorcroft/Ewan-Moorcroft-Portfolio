@@ -16,6 +16,7 @@ jobs:
       - uses: astral-sh/setup-uv@v9.0.0
         with:
           enable-cache: true
+          cache-suffix: repository
           python-version: "3.11"
       - run: uv sync --extra quality
       - run: uv run ruff check scripts tests
@@ -43,6 +44,7 @@ jobs:
       - uses: astral-sh/setup-uv@v9.0.0
         with:
           enable-cache: true
+          cache-suffix: ${{ matrix.project }}
           python-version: "3.11"
       - run: uv sync --extra test
       - run: uv run pytest
