@@ -1,0 +1,40 @@
+{
+  "evidence_status": "historical retained result",
+  "reproduced_in_this_repository": false,
+  "dataset_identity": {
+    "image_count": 3475,
+    "classes": {
+      "Normal": 1250,
+      "Lung Opacity": 1125,
+      "Viral Pneumonia": 1100
+    }
+  },
+  "selection_rule": "highest validation macro F1 among eight recorded experiments",
+  "selected_model": "ResNet18 fine-tuning with dropout",
+  "validation": {
+    "macro_f1": 0.951185265036763,
+    "matthews_correlation_coefficient": 0.9251658836731356
+  },
+  "test": {
+    "image_count": 522,
+    "accuracy": 0.9368,
+    "balanced_accuracy": 0.9376,
+    "macro_precision": 0.9389,
+    "macro_recall": 0.9376,
+    "macro_f1": 0.9381,
+    "matthews_correlation_coefficient": 0.9051,
+    "per_class": {
+      "Normal": {"precision": 0.9016, "recall": 0.9255, "f1": 0.9134, "support": 188},
+      "Lung Opacity": {"precision": 0.9212, "recall": 0.8994, "f1": 0.9102, "support": 169},
+      "Viral Pneumonia": {"precision": 0.9939, "recall": 0.9879, "f1": 0.9909, "support": 165}
+    }
+  },
+  "known_limitations": [
+    "The recorded split was image-level and did not group exact or visual near-duplicates.",
+    "Five exact duplicate pairs were later identified within the Viral Pneumonia class.",
+    "Patient identifiers were unavailable, so patient-level independence was not established.",
+    "No external cohort, calibration study or uncertainty analysis was recorded.",
+    "These values are retained for provenance and are not fresh benchmark results."
+  ]
+}
+

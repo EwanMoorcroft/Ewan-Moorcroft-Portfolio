@@ -1,0 +1,27 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+.DS_Store
+
+# Real or downloaded match data stays local.
+data/raw/
+data/interim/
+data/processed/
+scratch/
+
+# Generated artifacts stay local.
+models/
+reports/generated/
+*.joblib
+*.pkl
+*.pickle
+*.db
+*.sqlite
+

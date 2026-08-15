@@ -1,0 +1,45 @@
+.DS_Store
+Thumbs.db
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Local tooling
+.idea/
+.vscode/
+.env
+.env.*
+!.env.example
+
+# Data and experiment outputs that must stay local
+**/data/raw/
+**/data/interim/
+**/data/processed/
+**/checkpoints/
+**/models/
+**/mlruns/
+**/wandb/
+**/runs/
+*.pt
+*.pth
+*.ckpt
+*.joblib
+*.onnx
+
+# Generated reports and temporary files
+coverage.xml
+junit.xml
+*.log
+*.tmp
+
