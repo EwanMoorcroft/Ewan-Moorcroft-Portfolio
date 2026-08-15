@@ -2,7 +2,7 @@
 
 ## City-level pattern
 
-The retained release represents 205,768 people across workplace indicators 1–3. Of 123,689 flows to
+The retained release represents 205,768 people across workplace indicators 1 to 3. Of 123,689 flows to
 a fixed UK workplace, 84,567 remained inside Liverpool: a city-wide local-retention share of 68.37%.
 This describes the recorded Census 2021 pattern; it is not a target, service level, or present-day
 commuting estimate.

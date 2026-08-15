@@ -2,121 +2,91 @@
 
 [![Quality checks](https://github.com/EwanMoorcroft/Ewan-Moorcroft-Portfolio/actions/workflows/quality.yml/badge.svg)](https://github.com/EwanMoorcroft/Ewan-Moorcroft-Portfolio/actions/workflows/quality.yml)
 
-MSc Data Science and Artificial Intelligence at the University of Liverpool — expected September
-2026. BSc Geography at the University of Liverpool — completed June 2025.
+I am studying for an MSc in Data Science and Artificial Intelligence at the University of
+Liverpool, with completion expected in September 2026. I completed a BSc in Geography there in
+June 2025.
 
-I build reproducible machine learning systems across computer vision, 3D spatial data,
-forecasting, reinforcement learning, and natural-language processing. My work emphasises
-defensible evaluation, data integrity, tested Python packages, and clear technical communication.
+Most of my work is in Python. I am especially interested in problems where location, time, or an
+awkward data boundary matters. That has led me to spatial analysis, forecasting, statistical
+modelling, deep learning, and careful evaluation. R is included where it gives a useful independent
+check rather than just repeating the Python workflow.
 
-**Core stack:** Python · PyTorch · scikit-learn · pandas · GeoPandas · DuckDB · R · pytest · Docker · GitHub Actions
+**Tools used here:** Python, pandas, NumPy, scikit-learn, PyTorch, GeoPandas, DuckDB, SQL, R, QGIS,
+pytest, Docker, and GitHub Actions.
 
-**Technical focus:** computer vision · 3D LiDAR · spatial statistics · temporal modelling · rigorous model evaluation
+![Liverpool workplace-flow retention](projects/liverpool-urban-accessibility/assets/local-retention-map.png)
 
-![Paired LiDAR benchmark results](projects/tree-lidar-benchmark/assets/micro_f1_paired.png)
+*The map shows the share of fixed-workplace flows from each Liverpool MSOA that remained within
+the city. It is one result from the [urban-accessibility analysis](projects/liverpool-urban-accessibility/).*
 
-*Held-out micro F1 across six tree-instance segmentation routes; see the
-[benchmark methodology and provenance](projects/tree-lidar-benchmark/).*
+## Main projects
 
-## Featured work
-
-| Project | What I built and evaluated | Technical evidence | Result status |
-|---|---|---|---|
-| [Tree LiDAR instance benchmark](projects/tree-lidar-benchmark/) | Compares six instance-segmentation methods on dense, source-aligned point clouds | 49.7M held-out points, deterministic bipartite matching, route-aware evaluation, 1,152 aggregate checks | **Current verified:** top development-selected micro F1 0.8436 |
-| [Liverpool urban accessibility](projects/liverpool-urban-accessibility/) | Analyses Census workplace flows across 61 MSOAs with reproducible spatial and count methods | DuckDB transformation, population-weighted centroids, Queen-contiguity Moran's I, Poisson/NB2 and binomial diagnostics, independent R parity | **Fresh public-data analysis:** 68.37% local fixed-workplace retention; Moran's I 0.4901 |
-| [FPL next-gameweek forecasting](projects/fpl-forecasting/) | Predicts player points using only information available before the target gameweek | Empty-period rejection, as-of features, expanding-window evaluation, regression and ranking metrics, JSON model artifacts | **Fresh historical evaluation:** ridge MAE 1.110 and Spearman 0.717 across GW6–15 |
-| [Chest X-ray classification](projects/chest-xray-classification/) | Builds a three-class transfer-learning pipeline around a public image corpus | Dataset identity contract, exact-duplicate grouping, visual-similarity review candidates, calibration metrics | **Historical reference:** macro F1 0.9381; safer split awaits a new run |
-
-## Supporting work
-
-| Project | Distinct capability | Result status |
+| Project | Work completed | Evidence available |
 |---|---|---|
-| [Neural chunking](projects/neural-chunking/) | BiLSTM and Transformer encoders, variable-length masking, duplicate-safe sentence splits, exact BIO span scoring | **Historical reference:** token macro F1 0.7521 from a retained BiLSTM run; retrospective span F1 unavailable |
-| [LunarLander Double DQN](projects/lunar-lander-double-dqn/) | Replay memory, online/target networks, terminal masking, checkpoint lifecycle, deterministic greedy evaluation | **Historical reference:** mean reward 283.56 +/- 12.07 over 10 episodes from one retained training seed |
+| [Liverpool urban accessibility](projects/liverpool-urban-accessibility/) | Used DuckDB, GeoPandas, spatial weights, count models, and a separate R check to analyse Census workplace flows across 61 MSOAs | Fresh public-data analysis. Local fixed-workplace retention was 68.37%; Moran's I was 0.4901 |
+| [FPL next-gameweek forecasting](projects/fpl-forecasting/) | Built a chronological forecasting pipeline with strict as-of features, recent-form baselines, regression metrics, ranking metrics, and a non-root Docker image | Fresh historical evaluation. Ridge MAE was 1.110 and Spearman correlation was 0.717 across GW6 to GW15 |
+| [Tree LiDAR benchmark](projects/tree-lidar-benchmark/) | Evaluated six tree-instance segmentation methods, each with a published/default and development-selected route, on 49.7 million aligned test points | Current verified evidence. The highest development-selected micro F1 was 0.8436 |
+| [Chest X-ray classification](projects/chest-xray-classification/) | Rebuilt a three-class training pipeline around an identified public dataset, exact-copy grouping, strict split checks, and calibration metrics | Historical reference only. Macro F1 was 0.9381 on an older image-level split; the safer split needs a new run |
 
-The status wording is deliberate. Current verified results, retained historical evidence, and
-software-only validation are never presented as equivalent. See [Evidence and claim rules](docs/EVIDENCE.md).
+Two smaller projects show other parts of my MSc work:
 
-## Capability map
+- [Neural chunking](projects/neural-chunking/) compares BiLSTM and Transformer encoders, masks
+  variable-length sequences correctly, and scores exact BIO spans. Its retained token macro F1 is a
+  historical result, not a new benchmark.
+- [LunarLander Double DQN](projects/lunar-lander-double-dqn/) covers replay memory, online and target
+  networks, terminal handling, checkpoints, and deterministic evaluation. The retained reward came
+  from one training seed, which is stated plainly in the project.
 
-| Capability | Public evidence and bounded experience |
-|---|---|
-| 3D computer vision and spatial data | Point-aligned LiDAR contracts, semantic eligibility rules, IoU matching, qualitative point-cloud comparison |
-| GIS and geospatial analysis | [Liverpool public-data project](projects/liverpool-urban-accessibility/) and [academic experience summary](docs/GEOSPATIAL_BACKGROUND.md): GeoPandas, CRS contracts, population-weighted centroids, origin-destination flows, spatial weights, Moran's I, QGIS, raster analysis and R |
-| Image classification | ResNet18 transfer learning, conservative augmentation, group-aware data preparation, calibration-aware evaluation |
-| Temporal machine learning | Strict as-of features, next-gameweek targets, expanding windows, error and ranking measures |
-| Deep learning systems | PyTorch CNN, BiLSTM, Transformer, and Double DQN implementations with Apple Metal/CPU selection |
-| Statistics and data analysis | Exposure-offset Poisson and NB2 diagnostics, independent R parity, spatial permutation inference, environmental observations, exploratory visualisation, hypothesis tests and analysis of variance |
-| Relational data and SQL | DuckDB transformation of a 197.7 MB national flow table plus relational modelling, joins, grouping, nested queries, constraints, transactions and concurrency-safe updates |
-| Dataset engineering | Schema validation, hashing, duplicate containment, immutable manifests, raw-data exclusion |
-| Evaluation design | Development-only selection, untouched held-out sets, leakage guards, baselines, limitations tied to each claim |
-| Python engineering | Typed packages, command-line interfaces, JSON/TOML configuration, safe persistence, unit and integration tests |
-| Delivery tooling | Ruff, pytest, repository safety checks, GitHub Actions, dependency locking, and non-root Docker packaging for the forecasting and geospatial CLIs |
+## What the repository shows
 
-## Education and geospatial background
+The Liverpool work is the clearest link between my Geography degree and data science. It includes
+CRS checks, population-weighted centroids, origin-destination data, Moran's I, regression diagnostics,
+maps, SQL-style transformation in DuckDB, and numerical comparison with R. My earlier academic work
+also covered QGIS, raster analysis, environmental field observations, hypothesis tests, analysis of
+variance, clustering, relational databases, transactions, and locking. The
+[geospatial background note](docs/GEOSPATIAL_BACKGROUND.md) explains the useful parts without
+publishing restricted teaching material or unclear third-party data.
 
-My Geography background adds spatial, environmental, and decision-focused analysis to the machine
-learning work above. It includes raster and vector geodata, census and urban-mobility data,
-environmental observations, cartography, spatial statistics, and communicating results to
-non-specialist audiences.
+Across the machine-learning projects, I have worked with temporal splits, grouped image splits,
+development and test separation, baselines, class imbalance, ranking measures, calibration, sequence
+masking, reinforcement learning, and 3D matching. The subjects differ, but the recurring concern is
+whether a result still holds once leakage, duplicates, incomplete data, and selection decisions are
+made explicit.
 
-The [Liverpool urban-accessibility project](projects/liverpool-urban-accessibility/) turns that
-background into a reproducible public-data study. The broader
-[academic geospatial and analytical background](docs/GEOSPATIAL_BACKGROUND.md) remains a bounded
-skills summary without raw field observations, private identifiers, or data with unclear terms.
+The code is organised as six installable packages with command-line tools and tests. CI installs each
+project independently, runs its suite, checks formatting and links, and scans the public tree for
+private paths, credentials, unsafe wording, and oversized files. The forecasting and Liverpool tools
+also have non-root Docker builds.
 
-## Repository navigation
+## Finding your way around
 
 ```text
 projects/
-  tree-lidar-benchmark/         flagship 3D instance-segmentation evidence pack
-  liverpool-urban-accessibility/ public-data GIS, spatial statistics and R parity
-  chest-xray-classification/    image-classification lifecycle and data controls
-  fpl-forecasting/              corrected chronological forecasting system
-  lunar-lander-double-dqn/      reinforcement-learning control system
-  neural-chunking/              neural BIO sequence labelling
-docs/                           cross-project evidence and reproducibility rules
-scripts/                        local link and public-safety checks
-tests/                          repository-tool tests
-.github/workflows/              lightweight quality checks only
+  liverpool-urban-accessibility/ public Census data, GIS, statistics, SQL, R and Docker
+  fpl-forecasting/              chronological forecasting and ranking evaluation
+  tree-lidar-benchmark/         3D tree-instance evaluation and retained evidence
+  chest-xray-classification/    image classification and duplicate-safe data preparation
+  neural-chunking/              BIO sequence labelling with two neural encoders
+  lunar-lander-double-dqn/      reinforcement learning for discrete control
+docs/                           evidence rules, reproducibility and academic background
+scripts/                        link and public-safety checks
+tests/                          tests for the repository-level checks
 ```
 
-Each project is independently packaged and has its own setup, data contract, run commands, tests,
-results, and limitations. Large datasets, model checkpoints, raw predictions, and local experiment
-outputs are intentionally excluded.
+Each project README gives its data source, setup, result status, and limitations. Large datasets,
+checkpoints, raw predictions, and local experiment outputs are kept out of Git.
 
-This repository is a curated, public-safe presentation of earlier academic and research work. Its
-public commit history records the portfolio assembly and hardening process, not the full original
-development timeline of every project.
-
-## Quick validation
-
-Python 3.11 or newer is the common baseline. Project environments are separate so a lightweight
-evaluator does not inherit deep-learning dependencies it does not use.
+To run the repository-level checks with Python 3.11 or newer:
 
 ```bash
 python3 scripts/check_markdown_links.py .
 python3 scripts/audit_repository.py .
 ```
 
-Then enter a project and follow its README. For example, the dependency-free LiDAR verifier runs as:
+Project environments are separate. Enter the project you want to inspect and follow its README.
+The [reproducibility note](docs/REPRODUCIBILITY.md) explains the shared conventions, while
+[evidence and claim rules](docs/EVIDENCE.md) explain why a current verified result, a historical
+number, and a software-only check are labelled differently.
 
-```bash
-cd projects/tree-lidar-benchmark
-PYTHONPATH=src python3 -m tree_lidar_benchmark verify
-PYTHONPATH=src python3 -m unittest discover -s tests -v
-```
-
-Full environment and compute guidance is in [Reproducibility](docs/REPRODUCIBILITY.md).
-
-## Design principles
-
-- A metric is published only with its protocol, split, selection route, and known limitations.
-- Raw or unsuitable data stays outside Git; download and validation steps replace copied datasets.
-- Academic experience is summarised without copying source reports, private identifiers, or restricted data.
-- Reusable logic lives in importable packages rather than depending on notebook state.
-- Default workflows fit an 8 GB Apple laptop where practical; expensive experiments remain explicit.
-- Lightweight CI checks code, tests, links, and public safety without training neural networks.
-
-Code in this repository is available under the [MIT License](LICENSE). Dataset and environment
-licences remain with their respective publishers.
+Code is available under the [MIT License](LICENSE). Data licences remain with the original
+publishers and are recorded beside each project.

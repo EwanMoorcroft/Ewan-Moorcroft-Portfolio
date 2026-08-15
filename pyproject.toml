@@ -1,7 +1,7 @@
 [project]
-name = "ewan-ml-cv-portfolio"
+name = "ewan-data-portfolio"
 version = "0.1.0"
-description = "Quality tooling for a machine learning and computer vision project portfolio"
+description = "Quality tooling for a data science, machine learning, and geospatial portfolio"
 requires-python = ">=3.11"
 dependencies = []
 

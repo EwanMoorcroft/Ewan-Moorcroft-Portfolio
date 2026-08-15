@@ -1,60 +1,53 @@
-# Evidence and Claim Rules
+# How results are labelled
 
-This repository uses five result labels so a reader can tell exactly what has been verified.
+A score is only useful when the reader can tell which data, split, and selection rule produced it.
+The short labels below stop an older run from looking equivalent to a result that can be checked from
+the files in this repository.
 
 ## Current verified
 
-The retained inputs are present, their identity is checked, and the included software independently
-reconstructs the published aggregates. The Tree LiDAR project is the only project currently carrying
-this label. Its verifier checks seven artifact hashes, all route identities, every held-out plot, and
-1,152 aggregate values.
+The inputs needed for aggregate checking are present and their hashes match. Included software can
+recalculate the published values. Tree LiDAR is the only project using this label: its verifier checks
+seven files, 12 method/route identities, every held-out plot, and 1,152 aggregate values.
 
 ## Historical reference
 
-A result artifact from an earlier run is retained, but the improved project has not regenerated that
-number. The chest X-ray, LunarLander, and neural chunking projects use this label. Each README states
-the original scope and why the value must not be treated as a fresh result from the rebuilt pipeline.
+An artifact from an earlier run exists, but the revised pipeline has not regenerated its score. The
+X-ray, LunarLander, and neural-chunking projects use this label. Their READMEs give the original scope
+and explain what is missing, so the number cannot be mistaken for a fresh result.
 
 ## Fresh historical evaluation
 
-The included protocol has been run on a completed, commit-pinned public dataset and the aggregate
-out-of-fold report and source manifest are retained. FPL forecasting uses this label for its fixed
-2024–25 GW1–15 interval. The label does not imply full-season coverage, live-season performance, or
-retention of raw records, row predictions, or a fitted model.
+The current method has been run on a completed, commit-pinned public dataset. FPL uses this label for
+gameweeks 1 to 15 of the 2024-25 season. Its source manifest and aggregate out-of-fold report are in
+Git, but the raw rows, row-level predictions, and fitted model are not. The result says nothing about
+a live season or the rest of that completed season.
 
 ## Fresh public-data analysis
 
-The included methods have been executed on dated, documented public sources. Compact transformed
-inputs, source identities, licences, aggregate outputs and hashes are retained, while a large raw
-source may remain outside Git. The Liverpool project uses this label. Its verifier proves retained
-integrity and reconstructs the Python aggregates and coefficients; a separate R script checks the
-cross-language values. The label does not claim that the national source can be rebuilt offline
-without downloading the identified archive.
+The analysis has been run on dated public sources with licences and source identities recorded.
+Liverpool uses this label. Compact transformed inputs and outputs are included, while the much larger
+national Census table must be downloaded from its publisher. The verifier rebuilds the Python
+aggregates and coefficients; a small R script checks the cross-language values.
 
 ## Rebuilt protocol
 
-The software and tests validate a corrected method, but no claim is made about performance on the
-real target data. The deterministic FPL synthetic path uses this label for protocol and plumbing
-checks. The invalid models, metrics, and recommendations from the earlier zero-target construction
-remain excluded.
+Tests and fictional fixtures exercise the corrected method, but no real-data performance claim is
+attached. FPL's synthetic command is an example. Older results built from empty future files are not
+included.
 
-## Claim checklist
+## Before a number is published
 
-Every numerical claim should answer:
+I check five things:
 
-1. Which data identity and split does it use?
-2. Was model or parameter selection isolated from the held-out set?
-3. Which metric definition and aggregation route produced it?
-4. Is the result reproduced here, independently verified here, or only retained?
-5. Which limitations change how the number should be interpreted?
+1. the exact data identity and split;
+2. whether selection was kept away from the held-out data;
+3. the metric definition and aggregation route;
+4. whether the result is recalculated here, checked from smaller artifacts, or historical only; and
+5. which limitations materially change its interpretation.
 
-Missing evidence is stated rather than inferred. In particular, this repository does not reconstruct
-unavailable prediction-level outputs, invent patient identities, or rerun expensive experiments to
-make a historical number appear current.
+If an input or prediction is unavailable, that gap is stated. I do not reconstruct missing outputs,
+invent patient identities, or rerun an expensive experiment merely to make an older number look new.
 
-## Academic background
-
-The geospatial and analytical background page is a verified skills summary, not a fifth model-result
-label. It describes completed academic experience while keeping source reports, raw observations,
-private identifiers, and data with unclear redistribution rights outside the repository. It does not
-promote archived numerical results to current reproducible evidence.
+The [geography background](GEOSPATIAL_BACKGROUND.md) is different. It summarises work I have done but
+does not attach a model-result label to source reports or data that cannot be redistributed.

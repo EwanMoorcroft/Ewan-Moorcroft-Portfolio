@@ -98,10 +98,21 @@ class TransformerChunker(nn.Module):
         feedforward_size: int = 256,
         dropout: float = 0.2,
         padding_index: int = 0,
+        maximum_length: int = 512,
     ) -> None:
         """Build embeddings, positional signals, encoder layers, and classifier."""
         super().__init__()
-        if min(vocabulary_size, label_count, embedding_size, attention_heads, layer_count) < 1:
+        if (
+            min(
+                vocabulary_size,
+                label_count,
+                embedding_size,
+                attention_heads,
+                layer_count,
+                maximum_length,
+            )
+            < 1
+        ):
             raise ValueError("model dimensions, heads, and layers must be positive")
         if feedforward_size < 1:
             raise ValueError("feedforward_size must be positive")
@@ -109,9 +120,10 @@ class TransformerChunker(nn.Module):
             raise ValueError("dropout must be in [0, 1)")
         if embedding_size % attention_heads:
             raise ValueError("embedding_size must be divisible by attention_heads")
+        self.maximum_length = maximum_length
         self.embedding_scale = math.sqrt(embedding_size)
         self.embedding = nn.Embedding(vocabulary_size, embedding_size, padding_idx=padding_index)
-        self.positions = SinusoidalPositionEncoding(embedding_size)
+        self.positions = SinusoidalPositionEncoding(embedding_size, maximum_length=maximum_length)
         layer = nn.TransformerEncoderLayer(
             d_model=embedding_size,
             nhead=attention_heads,
@@ -129,6 +141,13 @@ class TransformerChunker(nn.Module):
 
     def forward(self, tokens: torch.Tensor, mask: torch.Tensor | None = None) -> torch.Tensor:
         """Return token label logits while excluding padding from self-attention."""
+        if tokens.ndim != 2:
+            raise ValueError("tokens must be a two-dimensional batch")
+        if tokens.shape[1] > self.maximum_length:
+            raise ValueError(
+                f"Transformer sequence length {tokens.shape[1]} exceeds maximum "
+                f"{self.maximum_length}"
+            )
         embeddings = self.positions(self.embedding(tokens) * self.embedding_scale)
         padding_mask = None if mask is None else ~mask
         encoded = self.encoder(embeddings, src_key_padding_mask=padding_mask)

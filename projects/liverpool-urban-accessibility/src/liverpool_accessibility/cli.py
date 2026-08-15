@@ -11,7 +11,7 @@ from pathlib import Path
 
 from .analysis import prepare_evidence, write_prepared
 from .contracts import DataContractError
-from .evidence import verify_evidence, verify_source_manifest, write_results
+from .evidence import verify_evidence, write_results
 from .fixtures import fixture_source_manifest, write_fixture
 
 
@@ -57,15 +57,12 @@ def run(args: argparse.Namespace) -> dict[str, object]:
         destination.mkdir(parents=True, exist_ok=True)
         source_manifest = Path(args.source_manifest)
         payload = json.loads(source_manifest.read_text(encoding="utf-8"))
-        verify_source_manifest(
-            payload,
-            {
-                "flow_csv": args.flow_csv,
-                "boundaries": args.boundaries,
-                "centroids": args.centroids,
-            },
+        prepared = prepare_evidence(
+            args.flow_csv,
+            args.boundaries,
+            args.centroids,
+            source_manifest=payload,
         )
-        prepared = prepare_evidence(args.flow_csv, args.boundaries, args.centroids)
         paths = write_prepared(prepared, destination)
         retained_manifest = destination / "source-manifest.json"
         if source_manifest.resolve() != retained_manifest.resolve():
@@ -99,15 +96,12 @@ def run(args: argparse.Namespace) -> dict[str, object]:
             source_manifest,
             fixture_source_manifest(flow_path, boundary_path, centroid_path),
         )
-        verify_source_manifest(
-            json.loads(source_manifest.read_text(encoding="utf-8")),
-            {
-                "flow_csv": flow_path,
-                "boundaries": boundary_path,
-                "centroids": centroid_path,
-            },
+        prepared = prepare_evidence(
+            flow_path,
+            boundary_path,
+            centroid_path,
+            source_manifest=json.loads(source_manifest.read_text(encoding="utf-8")),
         )
-        prepared = prepare_evidence(flow_path, boundary_path, centroid_path)
         write_prepared(prepared, evidence)
         shutil.copyfile(source_manifest, evidence / "source-manifest.json")
         write_results(evidence)

@@ -1,10 +1,11 @@
 # Neural Chunking with BiLSTM and Transformer Encoders
 
-An end-to-end PyTorch sequence-labelling pipeline for assigning BIO chunk tags to variable-length
-sentences. It compares a bidirectional LSTM with a compact Transformer and treats data partitioning,
-padding masks, model selection, and exact-span evaluation as first-class concerns.
+This project compares a bidirectional LSTM and a compact Transformer on BIO chunk tagging. The most
+important implementation detail is padding: it must be absent from recurrent state updates, loss,
+attention, decoded labels, and every metric. Complete sentences are also split by content hash so an
+exact duplicate cannot cross a data boundary.
 
-## Result snapshot
+## Earlier result
 
 A retained reference run selected the BiLSTM at epoch 16 using validation token macro F1.
 
@@ -25,7 +26,7 @@ Retained figures and result metadata are pinned in
 
 ![BiLSTM confusion matrix](artifacts/figures/best_bilstm_confusion_matrix.png)
 
-## Why the rebuilt pipeline is stronger
+## Changes in the current pipeline
 
 - Complete sentences are split by a stable content hash, keeping exact token duplicates together.
 - Token and label vocabularies are built only from the training partition.
@@ -50,6 +51,10 @@ works B-VP
 
 Use a corpus whose licence permits your intended use and keep it outside version control.
 
+The Transformer supports at most 512 tokens per sentence by default. That limit is part of the
+persisted training configuration. Training and evaluation reject a longer sentence before token
+indices reach the embedding layer; the BiLSTM does not use this positional-encoding limit.
+
 ## Run
 
 ```bash
@@ -65,13 +70,17 @@ uv run pytest
 ```
 
 Training outputs include the selected checkpoint, data split counts, epoch history, validation token
-metrics, and validation exact-span metrics. The separate evaluation command verifies the input-file
-digest before using the test partition. The default settings are sized for an 8 GB Apple laptop.
+metrics, and validation exact-span metrics. `training-results.json` records the first epoch attaining
+the maximum validation span F1, the complete configuration, and the selected checkpoint's SHA-256.
+The separate evaluation command verifies that selection contract, the checkpoint digest, and the
+input-file digest before loading model tensors or using the test partition. Test results repeat the
+selection, configuration, checkpoint, and selection-record identities. The default settings are
+sized for an 8 GB Apple laptop.
 Fresh macro F1 gives each training-vocabulary label equal weight, including a zero contribution for
 an unsupported label. Exact-span scores aggregate matching BIO spans across complete sentences
 before calculating precision, recall, and F1.
 
-## Repository map
+## Files
 
 ```text
 src/neural_chunking/data.py      parsing, hash splitting, vocabularies, batching
@@ -85,11 +94,10 @@ artifacts/                       retained figures and scoped result metadata
 ## Limitations
 
 - The retained run reports token metrics but cannot support a retrospective exact-span score.
+- The source corpus name, version, hash, and licence were not preserved with that run, so the
+  historical number cannot be traced to an exact public dataset.
 - Rare BIO labels have very small support, making macro metrics sensitive to a few examples.
 - Content hashing protects exact duplicates, not paraphrases or unknown source-level groups.
 - Neither encoder uses pretrained language representations.
 - Seeded runs are designed to be repeatable, but exact floating-point results can still vary across
   PyTorch versions and compute backends.
-
-The natural next step is a repeated group-aware comparison against a pretrained encoder while
-preserving the same exact-span protocol and compute budget.

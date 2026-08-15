@@ -18,6 +18,7 @@ from .contracts import (
     validate_flow_header,
     validate_metrics,
 )
+from .evidence import verify_source_manifest
 from .spatial import queen_edges
 
 WGS84_TO_BNG = (
@@ -35,6 +36,8 @@ WGS84_TO_BNG = (
 class PreparedEvidence:
     """Canonical derived tables written by one preparation run."""
 
+    source_contract: str
+    evidence_scope: str
     metrics: pd.DataFrame
     edges: pd.DataFrame
     boundaries: gpd.GeoDataFrame
@@ -230,8 +233,20 @@ def prepare_evidence(
     flow_csv: str | Path,
     boundaries_path: str | Path,
     centroids_path: str | Path,
+    *,
+    source_manifest: dict[str, object] | None = None,
 ) -> PreparedEvidence:
-    """Transform official flow and boundary inputs into compact canonical evidence."""
+    """Transform authenticated official inputs or explicitly fictional fixture inputs."""
+    if source_manifest is None:
+        raise DataContractError("an authenticated source manifest is required for preparation")
+    source_identity = verify_source_manifest(
+        source_manifest,
+        {
+            "flow_csv": flow_csv,
+            "boundaries": boundaries_path,
+            "centroids": centroids_path,
+        },
+    )
     validate_flow_header(flow_csv)
     boundaries = read_boundaries(boundaries_path)
     centroids = read_centroids(
@@ -292,6 +307,8 @@ def prepare_evidence(
     ):
         raise DataContractError("Queen-contiguity graph contains at least one island")
     return PreparedEvidence(
+        source_contract=str(source_identity["contract"]),
+        evidence_scope=str(source_identity["evidence_scope"]),
         metrics=metrics,
         edges=edges,
         boundaries=boundaries,

@@ -39,6 +39,38 @@ def test_link_checker_accepts_optional_title(tmp_path: Path) -> None:
     assert checker["broken_links"](tmp_path) == []
 
 
+def test_link_checker_accepts_balanced_parentheses_in_destination(tmp_path: Path) -> None:
+    """Balanced parentheses are valid characters in an inline link destination."""
+    checker = _load_script("check_markdown_links")
+    (tmp_path / "report_(final).txt").write_text("ok", encoding="utf-8")
+    (tmp_path / "README.md").write_text(
+        "[report](report_(final).txt)",
+        encoding="utf-8",
+    )
+    assert checker["broken_links"](tmp_path) == []
+
+
+def test_link_checker_keeps_parentheses_inside_optional_title(tmp_path: Path) -> None:
+    """Parentheses in a quoted title must not terminate the inline destination."""
+    checker = _load_script("check_markdown_links")
+    (tmp_path / "report.txt").write_text("ok", encoding="utf-8")
+    (tmp_path / "README.md").write_text(
+        '[report](report.txt "Final (reviewed) version")',
+        encoding="utf-8",
+    )
+    assert checker["broken_links"](tmp_path) == []
+
+
+def test_link_checker_reports_full_missing_parenthesized_target(tmp_path: Path) -> None:
+    """A missing parenthesized path should be reported without truncation."""
+    checker = _load_script("check_markdown_links")
+    (tmp_path / "README.md").write_text(
+        "[report](missing_(final).txt)",
+        encoding="utf-8",
+    )
+    assert checker["broken_links"](tmp_path) == [(Path("README.md"), "missing_(final).txt")]
+
+
 def test_link_checker_rejects_target_outside_root(tmp_path: Path) -> None:
     """A path escape must not pass merely because it exists on the machine."""
     checker = _load_script("check_markdown_links")
@@ -115,6 +147,33 @@ def test_repository_auditor_flags_authorship_term(tmp_path: Path) -> None:
     (tmp_path / "README.md").write_text(f"Created through {term}.", encoding="utf-8")
     findings = auditor["audit_tree"](tmp_path)
     assert any(finding.detail == f"blocked content term: {term}" for finding in findings)
+
+
+def test_repository_auditor_flags_typographic_dashes(tmp_path: Path) -> None:
+    """Public text should use plain punctuation instead of typographic dash characters."""
+    auditor = _load_script("audit_repository")
+    dash = chr(0x2014)
+    (tmp_path / "README.md").write_text(f"First thought {dash} second thought.", encoding="utf-8")
+    findings = auditor["audit_tree"](tmp_path)
+    assert any(finding.detail == "typographic dash in public text" for finding in findings)
+
+
+def test_repository_auditor_flags_unfinished_markers(tmp_path: Path) -> None:
+    """Unfinished source markers should not be published as completed work."""
+    auditor = _load_script("audit_repository")
+    marker = "TO" + "DO"
+    (tmp_path / "model.py").write_text(f"# {marker}: add the real fit path", encoding="utf-8")
+    findings = auditor["audit_tree"](tmp_path)
+    assert any(finding.detail == f"unfinished marker: {marker}" for finding in findings)
+
+
+def test_repository_auditor_flags_leaked_instruction_text(tmp_path: Path) -> None:
+    """Prompt-like directions and implementation stubs should not reach public prose."""
+    auditor = _load_script("audit_repository")
+    leaked = "replace with your " + "implementation"
+    (tmp_path / "README.md").write_text(leaked, encoding="utf-8")
+    findings = auditor["audit_tree"](tmp_path)
+    assert any(finding.detail == "possible leaked instruction or stub text" for finding in findings)
 
 
 def test_repository_auditor_allows_confirmed_education(tmp_path: Path) -> None:
@@ -196,3 +255,9 @@ def test_ci_matrix_matches_project_test_contracts() -> None:
         test_requirements = config["project"]["optional-dependencies"]["test"]
         assert any(requirement.startswith("pytest") for requirement in test_requirements)
         assert any(requirement.startswith("ruff") for requirement in test_requirements)
+
+    assert "uv pip install --python .venv/bin/python -r requirements-dev.txt" in workflow
+    assert "uv run --no-sync pytest" in workflow
+    assert "uses: actions/checkout@v" not in workflow
+    assert "uses: astral-sh/setup-uv@v" not in workflow
+    assert "uses: r-lib/actions/setup-r@v" not in workflow

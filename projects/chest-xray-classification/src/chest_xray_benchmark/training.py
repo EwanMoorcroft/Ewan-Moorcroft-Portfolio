@@ -233,6 +233,7 @@ def train_model(
 
     split_sha256 = file_digest(splits_path)
     config_sha256 = file_digest(settings_path)
+    checkpoint_sha256 = file_digest(checkpoint_path)
     metadata = {
         "evidence_status": "fresh training and validation",
         "test_partition_used": False,
@@ -247,6 +248,7 @@ def train_model(
         "split_file_sha256": split_sha256,
         "config_file_sha256": config_sha256,
         "checkpoint_file": checkpoint_path.name,
+        "checkpoint_file_sha256": checkpoint_sha256,
         "torch_version": torch.__version__,
         "torchvision_version": torchvision.__version__,
         "numpy_version": numpy.__version__,

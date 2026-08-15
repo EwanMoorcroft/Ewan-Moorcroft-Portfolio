@@ -8,8 +8,8 @@ MSOAs. Every source uses the 2021 geography identity; no statistical crosswalk i
 ## Workplace flows
 
 - Publisher: Office for National Statistics via Nomis
-- Product: Census 2021 ODWP01EW origin–destination workplace flows
-- Official release: [Nomis Census 2021 origin–destination data](https://www.nomisweb.co.uk/sources/census_2021_od)
+- Product: Census 2021 ODWP01EW origin-destination workplace flows
+- Official release: [Nomis Census 2021 origin-destination data](https://www.nomisweb.co.uk/sources/census_2021_od)
 - Archive: [ODWP01EW](https://www.nomisweb.co.uk/output/census/2021/odwp01ew.zip)
 - Archive SHA-256: `9e32ababfd9f77e353411d399e463f812942440df115a2d6c296c74dbeea70d7`
 - MSOA member SHA-256: `8af475023e18227fdcee3ac4a547d6549b1fcb87138bd93d177a7a698d1a10dd`

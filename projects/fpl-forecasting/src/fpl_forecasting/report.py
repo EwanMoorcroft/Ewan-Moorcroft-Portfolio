@@ -9,7 +9,7 @@ from typing import Any
 
 _MODEL_LABELS = {
     "last_gameweek": "Last gameweek",
-    "rolling_3_mean": "Three-gameweek mean",
+    "rolling_3_mean": "Three-observation mean",
     "training_mean": "Training-window mean",
     "ridge_regression": "Ridge regression",
 }
@@ -19,7 +19,7 @@ def _number(value: Any, digits: int = 3) -> str:
     try:
         return f"{float(value):.{digits}f}"
     except (TypeError, ValueError):
-        return "—"
+        return "n/a"
 
 
 def render_evaluation_html(report: Mapping[str, Any]) -> str:
@@ -80,14 +80,14 @@ def render_evaluation_html(report: Mapping[str, Any]) -> str:
 <main>
   <p class="eyebrow">Forecast protocol</p>
   <h1>Next-gameweek forecasts evaluated in time order</h1>
-  <p class="lede">Each test gameweek is later than every row used to fit its model. The comparison includes three transparent baselines and standardized ridge regression.</p>
+  <p class="lede">Each test gameweek is later than every row used to fit its model. The comparison includes three simple baselines and standardized ridge regression.</p>
   <div class="notice"><strong>Evidence boundary:</strong> this page reflects only the supplied completed-gameweek files. It is not a claim about live-season performance.</div>
 
   <section class="grid" aria-label="Evaluation summary">
-    <div class="card"><strong>{escape(str(data.get("players", "—")))}</strong><span>players</span></div>
-    <div class="card"><strong>{escape(str(data.get("evaluated_rows", "—")))}</strong><span>future rows evaluated</span></div>
-    <div class="card"><strong>{escape(str(data.get("folds", "—")))}</strong><span>rolling folds</span></div>
-    <div class="card"><strong>{escape(str(data.get("evaluated_gameweek_start", "—")))}–{escape(str(data.get("evaluated_gameweek_end", "—")))}</strong><span>evaluated gameweeks</span></div>
+    <div class="card"><strong>{escape(str(data.get("players", "n/a")))}</strong><span>players</span></div>
+    <div class="card"><strong>{escape(str(data.get("evaluated_rows", "n/a")))}</strong><span>future rows evaluated</span></div>
+    <div class="card"><strong>{escape(str(data.get("folds", "n/a")))}</strong><span>rolling folds</span></div>
+    <div class="card"><strong>{escape(str(data.get("evaluated_gameweek_start", "n/a")))} to {escape(str(data.get("evaluated_gameweek_end", "n/a")))}</strong><span>evaluated gameweeks</span></div>
   </section>
 
   <h2>Out-of-fold results</h2>

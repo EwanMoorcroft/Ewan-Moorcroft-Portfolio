@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "fpl-next-gameweek-forecasting"
 version = "1.0.0"
-description = "Leak-safe next-gameweek forecasting with chronological evaluation."
+description = "Next-gameweek forecasting with chronological evaluation."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"

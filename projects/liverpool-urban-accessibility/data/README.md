@@ -8,7 +8,7 @@ No national flow archive is stored here. The retained project includes only:
 - the official 61-feature population-weighted centroid subset; and
 - aggregate models, spatial results, source identity and file hashes.
 
-The source and transformed tables use matching 2021 MSOA codes. Missing origin–destination pairs are
+The source and transformed tables use matching 2021 MSOA codes. Missing origin-destination pairs are
 not assumed to be explicit zeros. Downloaded national files and local rebuild outputs belong under
 ignored `data/raw/`, `data/interim/`, or `reports/generated/` paths.
 

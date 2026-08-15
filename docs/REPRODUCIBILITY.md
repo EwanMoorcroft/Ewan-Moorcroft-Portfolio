@@ -2,9 +2,9 @@
 
 ## Environment strategy
 
-Each project owns a small `pyproject.toml` and can be installed independently. This avoids one large
-environment combining unrelated computer-vision, reinforcement-learning, and tabular dependencies.
-Python 3.11 is the shared baseline.
+Each project has its own `pyproject.toml` and can be installed independently. A geospatial analysis
+should not need the same environment as a reinforcement-learning run or an image classifier. Python
+3.11 is the shared baseline.
 
 With `uv` installed, a typical project setup is:
 
@@ -49,6 +49,7 @@ distinguished in the project limitations.
 
 ## Safe persistence
 
-The forecasting project saves a transparent JSON model artifact instead of executable pickle data.
+The forecasting project saves its coefficients and preprocessing values as JSON instead of executable
+pickle data.
 PyTorch projects write state dictionaries and metadata for locally produced checkpoints. Only trusted
 local checkpoints should be loaded.
