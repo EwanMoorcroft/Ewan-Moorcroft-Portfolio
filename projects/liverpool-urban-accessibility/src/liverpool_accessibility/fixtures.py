@@ -112,9 +112,9 @@ def write_fixture(output_dir: str | Path, *, size: int = 4) -> tuple[Path, Path,
 def fixture_source_manifest(
     flow_path: Path, boundary_path: Path, centroid_path: Path
 ) -> dict[str, object]:
-    """Return a transparent identity record for generated fictional inputs."""
+    """Return the identity record for generated fictional inputs."""
     return {
-        "contract": "liverpool-source-manifest-v1",
+        "contract": "liverpool-fixture-source-manifest-v1",
         "evidence_scope": "fictional deterministic integration fixture",
         "sources": [
             {

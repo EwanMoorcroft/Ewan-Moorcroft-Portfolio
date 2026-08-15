@@ -56,6 +56,9 @@ def fit_poisson(metrics: pd.DataFrame) -> CountModelResult:
         family=sm.families.Poisson(),
         offset=np.log(frame["fixed_workplace"]),
     ).fit(cov_type="HC0")
+    converged = bool(getattr(fitted, "converged", False))
+    if not converged:
+        raise DataContractError("Poisson fit did not converge")
     degrees = max(int(fitted.df_resid), 1)
     dispersion = float(np.square(fitted.resid_pearson).sum() / degrees)
     confidence = fitted.conf_int()
@@ -80,7 +83,7 @@ def fit_poisson(metrics: pd.DataFrame) -> CountModelResult:
         aic=float(fitted.aic),
         pearson_dispersion=dispersion,
         alpha=None,
-        converged=True,
+        converged=converged,
         predicted_rate_min=float(predicted_rate.min()),
         predicted_rate_max=float(predicted_rate.max()),
     )
@@ -140,6 +143,9 @@ def fit_binomial_sensitivity(metrics: pd.DataFrame) -> CountModelResult:
         family=sm.families.Binomial(),
         freq_weights=exposure,
     ).fit(cov_type="HC0")
+    converged = bool(getattr(fitted, "converged", False))
+    if not converged:
+        raise DataContractError("binomial sensitivity fit did not converge")
     confidence = fitted.conf_int()
     coefficients = pd.DataFrame(
         {
@@ -162,7 +168,7 @@ def fit_binomial_sensitivity(metrics: pd.DataFrame) -> CountModelResult:
         aic=float(fitted.aic),
         pearson_dispersion=float("nan"),
         alpha=None,
-        converged=True,
+        converged=converged,
         predicted_rate_min=float(predicted_rate.min()),
         predicted_rate_max=float(predicted_rate.max()),
     )

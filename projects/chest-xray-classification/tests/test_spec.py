@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -18,6 +20,32 @@ class SpecTests(unittest.TestCase):
         )
         self.assertEqual(spec.alias_to_class["Opacity"], "Lung Opacity")
         self.assertEqual(spec.alias_to_class["Pneumonia"], "Viral Pneumonia")
+
+    def test_dataset_aliases_cannot_escape_the_data_root(self) -> None:
+        for alias in (
+            "/tmp/outside",
+            "safe/../outside",
+            r"safe\..\outside",
+            r"C:\outside",
+            r"C:drive-relative",
+            r"\root-relative",
+        ):
+            with self.subTest(alias=alias), tempfile.TemporaryDirectory() as directory:
+                path = Path(directory) / "spec.json"
+                path.write_text(
+                    json.dumps(
+                        {
+                            "name": "unsafe fixture",
+                            "version": 1,
+                            "doi": "fixture",
+                            "expected_total": 1,
+                            "classes": {"A": {"expected_count": 1, "directory_aliases": [alias]}},
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+                with self.assertRaisesRegex(ValueError, "within the data root"):
+                    DatasetSpec.load(path)
 
 
 if __name__ == "__main__":

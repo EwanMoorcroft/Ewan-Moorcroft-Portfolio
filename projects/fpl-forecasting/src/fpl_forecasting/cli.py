@@ -40,7 +40,7 @@ def _write_frame(frame, path: str) -> Path:
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="fpl-forecast",
-        description="Leak-safe next-gameweek forecasting from completed FPL live data.",
+        description="Chronological next-gameweek forecasting from completed FPL live data.",
     )
     commands = parser.add_subparsers(dest="command", required=True)
 

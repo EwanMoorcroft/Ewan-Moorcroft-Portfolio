@@ -110,40 +110,43 @@ def validate_metrics(frame: pd.DataFrame) -> None:
     if not frame["area_code"].map(lambda value: bool(AREA_CODE.fullmatch(str(value)))).all():
         raise DataContractError("area metrics contain an invalid MSOA code")
     numeric = sorted(METRIC_COLUMNS - {"area_code", "area_name"})
-    if (
-        not frame[numeric]
-        .apply(lambda column: pd.to_numeric(column, errors="coerce").notna())
-        .all()
-        .all()
-    ):
+    numeric_frame = frame[numeric].apply(pd.to_numeric, errors="coerce")
+    if (numeric_frame.isna() & frame[numeric].notna()).any().any():
         raise DataContractError("area metrics contain a non-numeric value")
-    if (frame[numeric] < 0).any().any():
+    if not np.isfinite(numeric_frame.to_numpy(dtype=float)).all():
+        raise DataContractError("area metrics contain a non-finite value")
+    if (numeric_frame < 0).any().any():
         raise DataContractError("area metrics contain a negative value")
-    if (frame[["employed_total", "fixed_workplace"]] <= 0).any().any():
+    if (numeric_frame[["employed_total", "fixed_workplace"]] <= 0).any().any():
         raise DataContractError("area metric denominators must be positive")
     if not (
-        frame["employed_total"]
-        == frame["home_or_no_fixed"] + frame["other_workplace"] + frame["fixed_workplace"]
+        numeric_frame["employed_total"]
+        == numeric_frame["home_or_no_fixed"]
+        + numeric_frame["other_workplace"]
+        + numeric_frame["fixed_workplace"]
     ).all():
         raise DataContractError("employed category reconciliation failed")
-    if (frame["local_fixed"] > frame["fixed_workplace"]).any():
+    if (numeric_frame["local_fixed"] > numeric_frame["fixed_workplace"]).any():
         raise DataContractError("local fixed-workplace counts exceed their exposure")
-    if (frame["same_area_fixed"] > frame["local_fixed"]).any():
+    if (numeric_frame["same_area_fixed"] > numeric_frame["local_fixed"]).any():
         raise DataContractError("same-area counts exceed local fixed-workplace counts")
     if not (
-        frame["outside_liverpool_fixed"] == frame["fixed_workplace"] - frame["local_fixed"]
+        numeric_frame["outside_liverpool_fixed"]
+        == numeric_frame["fixed_workplace"] - numeric_frame["local_fixed"]
     ).all():
         raise DataContractError("fixed-workplace flow conservation failed")
-    expected_local_share = frame["local_fixed"] / frame["fixed_workplace"]
-    expected_combined_share = frame["home_or_no_fixed"] / frame["employed_total"]
-    if not np.allclose(frame["local_retention_share"], expected_local_share, atol=1e-10, rtol=0):
+    expected_local_share = numeric_frame["local_fixed"] / numeric_frame["fixed_workplace"]
+    expected_combined_share = numeric_frame["home_or_no_fixed"] / numeric_frame["employed_total"]
+    if not np.allclose(
+        numeric_frame["local_retention_share"], expected_local_share, atol=1e-10, rtol=0
+    ):
         raise DataContractError("local-retention share identity failed")
     if not np.allclose(
-        frame["home_or_no_fixed_share"], expected_combined_share, atol=1e-10, rtol=0
+        numeric_frame["home_or_no_fixed_share"], expected_combined_share, atol=1e-10, rtol=0
     ):
         raise DataContractError("combined-category share identity failed")
     if not (
-        (frame["accessibility_3km"] <= frame["accessibility_5km"])
-        & (frame["accessibility_5km"] <= frame["accessibility_10km"])
+        (numeric_frame["accessibility_3km"] <= numeric_frame["accessibility_5km"])
+        & (numeric_frame["accessibility_5km"] <= numeric_frame["accessibility_10km"])
     ).all():
         raise DataContractError("accessibility decay sensitivity is not monotonic")

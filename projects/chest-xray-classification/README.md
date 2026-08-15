@@ -1,9 +1,9 @@
-# Chest X-Ray Classification Benchmark
+# Chest X-Ray Classification
 
-A reproducible three-class image-classification pipeline for comparing compact
-convolutional networks and transfer learning. The project emphasises dataset
-identity, duplicate-aware splitting, deterministic execution and honest result
-provenance.
+The main problem here is not choosing a larger neural network. It is knowing exactly which public
+dataset is being used and stopping identical files from appearing on both sides of evaluation. The
+package compares a compact convolutional network with ResNet18 transfer learning, records file
+identity, and rechecks both split structure and source-image bytes before training or evaluation.
 
 ## Safety boundary
 
@@ -34,7 +34,7 @@ The preparation pipeline:
 4. never merges perceptual-hash candidates automatically or transitively;
 5. assigns exact-identity groups to train, validation and test partitions; and
 6. checks that no exact digest or exact-identity group crosses a boundary before writing the split;
-   training and evaluation repeat that audit when reading the split CSV.
+   training and evaluation repeat that audit and re-hash every source image before building a loader.
 
 This prevents exact-copy leakage but cannot prove visual or patient-level
 independence. Difference-hash candidates are diagnostic only: the similarity
@@ -98,7 +98,7 @@ an 8 GB machine; reduce the batch size if memory pressure appears. The first
 pretrained run may fetch ImageNet weights. Set `pretrained = false` for a fully
 offline run, with the expectation that results will differ.
 
-## Historical evidence
+## Earlier result
 
 A retained earlier run selected ResNet18 fine-tuning with dropout and recorded
 validation macro F1 **0.9512**. Its test record reported accuracy **0.9368**,
@@ -113,22 +113,23 @@ they are not the expected score of the safer split implemented here. The retaine
 digest audit is available in
 [evidence/known-exact-duplicates.json](evidence/known-exact-duplicates.json).
 
-## Reported metrics
+## Metrics written by a new run
 
 Evaluation writes accuracy, balanced accuracy, macro and per-class
 precision/recall/F1, Matthews correlation coefficient, multiclass log loss,
 Brier score, expected calibration error and the confusion matrix. Every output
-includes the split-manifest digest, label order, seed and run settings.
+includes the split-manifest digest, selected-checkpoint digest, label order, seed and run settings.
 
-## Tests
+## Checks
 
 ```bash
-python -m unittest discover -s tests -v
+python -m pytest
 ```
 
 The focused suite checks deterministic exact-identity grouping and splitting,
 non-transitive visual-review candidates, cross-partition exact-copy guards,
-tampered split rejection, source-spec parsing and manifest round trips.
+tampered split and source-image rejection, checkpoint binding, source-spec parsing, manifest round
+trips and a synthetic CPU smoke pass over the optional training stack.
 
 ## Limitations
 

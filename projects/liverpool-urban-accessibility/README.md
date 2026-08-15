@@ -1,7 +1,8 @@
 # Liverpool Urban Accessibility
 
-An evidence-led spatial analysis of how Census 2021 workplace flows connect Liverpool's 61 Middle
-layer Super Output Areas (MSOAs).
+This project asks how much recorded workplace movement stayed within Liverpool in the 2021 Census,
+and whether the area-level pattern was spatially clustered. I reduced a 197.7 MB national flow table
+to the city's 61 Middle layer Super Output Areas (MSOAs), then checked the result in both Python and R.
 
 ![Liverpool local workplace-flow retention](assets/local-retention-map.png)
 
@@ -9,31 +10,31 @@ layer Super Output Areas (MSOAs).
 including the origin MSOA.
 Source and interpretation details are in [the figure captions](assets/CAPTIONS.md).*
 
-## What this demonstrates
+## How I approached it
 
-- ingestion of a 197.7 MB national origin–destination table with DuckDB;
+- ingestion of a 197.7 MB national origin-destination table with DuckDB;
 - strict geography, geometry, CRS, count, and flow-conservation contracts;
 - population-weighted centroids and metric distance calculations in British National Grid;
 - gravity-style accessibility at predeclared 3, 5, and 10 km decay distances;
-- Queen-contiguity spatial weights and a transparent Moran's I implementation;
+- Queen-contiguity spatial weights and a direct Moran's I implementation;
 - exposure-offset Poisson and overdispersion-aware NB2 count models, plus a bounded binomial
   sensitivity on identical observations;
 - independent numerical validation in base R;
-- retained source identities, file hashes, figures, tests, a CLI, and non-root Docker packaging.
+- source identities and file hashes alongside the figures, tests, CLI, and non-root Docker image.
 
-## Retained public-data findings
+## Results from the public data
 
 **Fresh public-data analysis:** run on the completed Census 2021 ODWP01EW release, official 2021
-ONS boundaries, and official population-weighted centroids. The raw national flow table is excluded;
-compact derived evidence, source identities, and every published aggregate are retained.
+ONS boundaries, and official population-weighted centroids. The raw national flow table is excluded.
+The repository keeps the 61-area derived tables, source identities, and published aggregates.
 
-| Finding | Retained value |
+| Finding | Value |
 |---|---:|
 | Liverpool MSOAs | 61 |
-| Employed or temporarily absent population represented by indicators 1–3 | 205,768 |
+| Employed or temporarily absent population represented by indicators 1 to 3 | 205,768 |
 | Fixed-workplace flows | 123,689 |
 | Fixed-workplace flows staying within Liverpool | 84,567 (68.37%) |
-| Combined working-at-home or no-fixed-place category | 81,158 (39.44% of indicators 1–3) |
+| Combined working-at-home or no-fixed-place category | 81,158 (39.44% of indicators 1 to 3) |
 | Moran's I for area local-retention share | 0.4901 |
 | Two-sided permutation p-value | 0.0001 from 9,999 fixed-seed permutations |
 | Poisson Pearson dispersion | 4.7468 |
@@ -46,7 +47,7 @@ causal. Its destination-flow mass is derived from the same release and includes 
 recorded flows, so the association is mechanically coupled rather than independent predictive
 evidence. The 2021 Census was also collected during pandemic disruption.
 
-## Reproduce the retained checks
+## Run the checks
 
 Python 3.11 or newer is required.
 
@@ -70,13 +71,14 @@ The full pipeline has a deterministic, network-free 5 × 5 fictional fixture:
 uv run liverpool-access fixture --output-dir reports/generated/fixture
 ```
 
-R is deliberately limited to one transparent cross-language check:
+The R script has one narrow job: recalculate the Moran statistic and Poisson coefficients from the
+same derived inputs.
 
 ```bash
 Rscript r/validate_results.R reports/retained reports/generated/r-validation.json
 ```
 
-## Rebuild from official inputs
+## Rebuild from source data
 
 Download ODWP01EW from the official Nomis release page and extract only `ODWP01EW_MSOA.csv` outside
 the repository. Download the two Liverpool GeoJSON queries recorded in
@@ -99,7 +101,7 @@ The source manifest is an explicit trust boundary: it records URLs, sizes, SHA-2
 time, licences, and transformations. Preparation rejects mismatched CRS, codes, geometry, headers,
 negative counts, missing areas, and spatial islands.
 
-## Container smoke path
+## Docker
 
 ```bash
 docker build -t liverpool-access:local .
@@ -111,7 +113,7 @@ docker run --rm -v "$PWD:/workspace" liverpool-access:local \
 The runtime image uses a dedicated non-root user. Public-data download is never part of an image
 build or CI run.
 
-## Project map
+## Files
 
 | Path | Purpose |
 |---|---|
@@ -123,7 +125,7 @@ build or CI run.
 | `data/` | public source specification and redistribution boundary |
 | `docs/` | methods, findings and interpretation limits |
 
-## Interpretation boundary
+## Limits on interpretation
 
 This analysis measures recorded workplace-flow patterns, not individual accessibility, realised
 journey quality, or present-day transport demand. It is affected by the modifiable areal unit

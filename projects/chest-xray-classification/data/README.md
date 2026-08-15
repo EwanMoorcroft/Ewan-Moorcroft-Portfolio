@@ -15,8 +15,8 @@ Expected classes and counts:
 
 The record identifies the Kaggle collection
 [`fatemehmehrparvar/lung-disease`](https://www.kaggle.com/datasets/fatemehmehrparvar/lung-disease/data)
-as its source. This is a three-class, 3,475-image collection; it is not the
-5,856-image, two-class collection commonly used in other chest X-ray examples.
+as its source. This is a three-class, 3,475-image collection. A differently named binary pneumonia
+collection is not interchangeable with it and will fail the class-count contract.
 
 The data record is licensed under
 [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/).
@@ -47,4 +47,6 @@ The derived CSV contract is `exact-identity-v1`: `sha256` must be exactly 64 low
 characters and `exact_group_id` must equal `sha256-<sha256>`. Legacy `group_id` manifests are
 rejected and should be regenerated. The split command validates this invariant before allocation,
 writes no split CSV unless leakage and class-coverage checks pass, and every training or evaluation
-read repeats the cross-partition identity audit.
+read repeats the cross-partition identity audit and verifies each current image against its retained
+byte count and SHA-256 before a data loader is built. Directory aliases and symlink targets must stay
+inside the declared data root.

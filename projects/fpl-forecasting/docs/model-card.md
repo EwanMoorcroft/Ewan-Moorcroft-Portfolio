@@ -6,9 +6,9 @@ Estimate individual player points for the next gameweek from recent and season-t
 
 ## Intended use
 
-- Compare a regularized linear forecast with transparent recent-form baselines.
+- Compare a regularized linear forecast with simple recent-form baselines.
 - Produce ranked player shortlists for further human review.
-- Demonstrate a chronological evaluation and a portable artifact contract.
+- Save fitted coefficients and preprocessing values in a portable JSON artifact.
 
 ## Out of scope
 

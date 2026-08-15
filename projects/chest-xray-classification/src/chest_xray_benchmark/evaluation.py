@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import hashlib
+import io
 import json
 from pathlib import Path
 from typing import Any
@@ -9,6 +11,7 @@ from typing import Any
 from .image_data import LABEL_ORDER, build_image_dataset, build_transforms
 from .metrics import classification_metrics
 from .modeling import build_resnet18
+from .records import SHA256_PATTERN
 from .settings import RunSettings
 from .splitting import read_split_rows, write_json
 from .training import (
@@ -18,6 +21,19 @@ from .training import (
     seed_everything,
     select_device,
 )
+
+
+def read_verified_checkpoint(metadata: dict[str, Any], checkpoint_path: Path) -> tuple[bytes, str]:
+    """Read once and require the exact state selected during training."""
+
+    expected = metadata.get("checkpoint_file_sha256")
+    if not isinstance(expected, str) or SHA256_PATTERN.fullmatch(expected) is None:
+        raise ValueError("Run metadata does not contain a valid selected-checkpoint SHA-256")
+    checkpoint_bytes = checkpoint_path.read_bytes()
+    observed = hashlib.sha256(checkpoint_bytes).hexdigest()
+    if observed != expected:
+        raise ValueError("Checkpoint differs from the state selected during training")
+    return checkpoint_bytes, observed
 
 
 def evaluate_checkpoint(
@@ -36,6 +52,7 @@ def evaluate_checkpoint(
     current_split_digest = file_digest(splits_path)
     if metadata["split_file_sha256"] != current_split_digest:
         raise ValueError("The split file differs from the one used for model selection")
+    checkpoint_bytes, checkpoint_digest = read_verified_checkpoint(metadata, checkpoint_path)
 
     settings = RunSettings(**metadata["settings"])
     settings.validate()
@@ -56,7 +73,7 @@ def evaluate_checkpoint(
     )
 
     network = build_resnet18(len(LABEL_ORDER), settings.dropout, pretrained=False)
-    state = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+    state = torch.load(io.BytesIO(checkpoint_bytes), map_location="cpu", weights_only=True)
     network.load_state_dict(state, strict=True)
     network.to(device)
     loss_function = nn.CrossEntropyLoss()
@@ -71,7 +88,7 @@ def evaluate_checkpoint(
         "evidence_status": "fresh grouped-split test evaluation",
         "label_order": list(LABEL_ORDER),
         "split_file_sha256": current_split_digest,
-        "checkpoint_file_sha256": file_digest(checkpoint_path),
+        "checkpoint_file_sha256": checkpoint_digest,
         "seed": settings.seed,
         "test_loss": test_loss,
         "metrics": metrics,

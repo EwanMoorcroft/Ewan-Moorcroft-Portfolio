@@ -20,6 +20,10 @@ from .spec import DatasetSpec
 IMAGE_EXTENSIONS = frozenset({".jpg", ".jpeg", ".png"})
 
 
+class ImageInspectionError(ValueError):
+    """Raised when Pillow cannot safely decode or inspect an image file."""
+
+
 def sha256_file(path: Path, chunk_size: int = 1024 * 1024) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -34,18 +38,21 @@ def difference_hash(path: Path) -> tuple[str, int, int, str, bool]:
     except ImportError as exc:  # pragma: no cover - dependency guard
         raise RuntimeError("Pillow is required to inspect images") from exc
 
-    with Image.open(path) as source:
-        source.verify()
-    with Image.open(path) as source:
-        width, height = source.size
-        color_mode = source.mode
-        has_exif = bool(source.getexif())
-        image = ImageOps.exif_transpose(source).convert("L")
-        image = image.resize((9, 8), Image.Resampling.LANCZOS)
-        if hasattr(image, "get_flattened_data"):
-            values = list(image.get_flattened_data())
-        else:  # Pillow before 12
-            values = list(image.getdata())
+    try:
+        with Image.open(path) as source:
+            source.verify()
+        with Image.open(path) as source:
+            width, height = source.size
+            color_mode = source.mode
+            has_exif = bool(source.getexif())
+            image = ImageOps.exif_transpose(source).convert("L")
+            image = image.resize((9, 8), Image.Resampling.LANCZOS)
+            if hasattr(image, "get_flattened_data"):
+                values = list(image.get_flattened_data())
+            else:  # Pillow before 12
+                values = list(image.getdata())
+    except (OSError, SyntaxError, Image.DecompressionBombError) as exc:
+        raise ImageInspectionError(f"Pillow could not inspect {path.name}") from exc
     bits = 0
     for row in range(8):
         offset = row * 9
@@ -65,6 +72,7 @@ def scan_dataset(
     if not data_root.is_dir():
         raise FileNotFoundError(f"Data root does not exist: {data_root}")
 
+    root = data_root.resolve(strict=True)
     alias_map = spec.alias_to_class
     visible_directories = sorted(
         entry.name
@@ -76,16 +84,31 @@ def scan_dataset(
     errors: list[dict[str, str]] = []
 
     for alias, label in sorted(alias_map.items()):
-        class_root = data_root / alias
-        if not class_root.is_dir():
+        class_candidate = root / alias
+        if not class_candidate.is_dir():
             continue
-        paths = sorted(
-            path
-            for path in class_root.rglob("*")
-            if path.is_file() and path.suffix.lower() in IMAGE_EXTENSIONS
-        )
+        class_root = class_candidate.resolve(strict=True)
+        if not class_root.is_relative_to(root):
+            raise ValueError(f"Dataset alias resolves outside the data root: {alias!r}")
+        paths: list[Path] = []
+        for candidate in class_root.rglob("*"):
+            if candidate.is_symlink():
+                try:
+                    resolved_candidate = candidate.resolve(strict=True)
+                except OSError as exc:
+                    raise ValueError(
+                        f"Dataset contains an unresolved symlink: {candidate}"
+                    ) from exc
+                if not resolved_candidate.is_relative_to(root):
+                    raise ValueError(f"Dataset symlink resolves outside the data root: {candidate}")
+            if candidate.is_file() and candidate.suffix.lower() in IMAGE_EXTENSIONS:
+                resolved_candidate = candidate.resolve(strict=True)
+                if not resolved_candidate.is_relative_to(root):
+                    raise ValueError(f"Dataset image resolves outside the data root: {candidate}")
+                paths.append(candidate)
+        paths.sort()
         for path in paths:
-            relative_path = path.relative_to(data_root).as_posix()
+            relative_path = path.relative_to(root).as_posix()
             try:
                 visual_hash, width, height, color_mode, has_exif = difference_hash(path)
                 records.append(
@@ -101,7 +124,7 @@ def scan_dataset(
                         has_exif=has_exif,
                     )
                 )
-            except Exception as exc:  # keep the inventory usable for diagnosis
+            except (ImageInspectionError, OSError) as exc:
                 errors.append(
                     {
                         "relative_path": relative_path,
