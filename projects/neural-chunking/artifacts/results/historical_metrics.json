@@ -1,0 +1,23 @@
+{
+  "status": "retained_reference_run",
+  "selected_architecture": "BiLSTM",
+  "selection_rule": "highest validation token macro F1 with validation loss as tie-breaker",
+  "best_epoch": 16,
+  "split": {
+    "method": "seeded sentence-level 70/15/15 split",
+    "train_sentences": 6243,
+    "validation_sentences": 1337,
+    "test_sentences": 1339,
+    "test_tokens": 31833
+  },
+  "test": {
+    "token_accuracy": 0.942984,
+    "token_macro_f1": 0.752093,
+    "token_weighted_f1": 0.942322,
+    "token_matthews_correlation": 0.928787,
+    "loss": 0.215831,
+    "span_f1": null
+  },
+  "scope_note": "The retained predictions are unavailable, so exact-span F1 cannot be reconstructed. The current evaluator reports it for new runs."
+}
+

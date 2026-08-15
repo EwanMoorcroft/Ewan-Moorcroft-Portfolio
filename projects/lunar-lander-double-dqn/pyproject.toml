@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lunar-double-dqn"
+version = "0.1.0"
+description = "A reproducible Double DQN pipeline for LunarLander"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+dependencies = [
+  "gymnasium[box2d]>=1.0,<2",
+  "numpy>=1.26,<3",
+  "torch>=2.4,<3",
+]
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.9,<4"]
+test = [
+  "pytest>=8.2,<9",
+  "ruff>=0.9,<1",
+]
+
+[project.scripts]
+lunar-dqn = "lunar_dqn.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lunar_dqn"]
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-config --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["E501"]
