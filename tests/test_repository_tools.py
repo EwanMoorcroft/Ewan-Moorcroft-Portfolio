@@ -96,6 +96,14 @@ def test_repository_auditor_flags_authorship_term(tmp_path: Path) -> None:
     assert any(finding.detail == f"blocked content term: {term}" for finding in findings)
 
 
+def test_repository_auditor_skips_operating_system_metadata(tmp_path: Path) -> None:
+    """Ignored desktop metadata should not be decoded as repository text."""
+    auditor = _load_script("audit_repository")
+    (tmp_path / ".DS_Store").write_bytes(b"\x00\xff")
+    (tmp_path / "Thumbs.db").write_bytes(b"\x00\xff")
+    assert auditor["audit_tree"](tmp_path) == []
+
+
 def test_repository_auditor_allows_technical_identifier(tmp_path: Path) -> None:
     """A Python alias may use the otherwise restricted term as a technical suffix."""
     auditor = _load_script("audit_repository")

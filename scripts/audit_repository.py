@@ -32,6 +32,7 @@ TEXT_SUFFIXES = {
     ".yml",
 }
 SKIP_PARTS = {".git", ".mypy_cache", ".pytest_cache", ".ruff_cache", ".venv", "__pycache__"}
+SKIP_FILENAMES = {".DS_Store", "Thumbs.db"}
 MAX_PUBLIC_FILE_BYTES = 10 * 1024 * 1024
 
 
@@ -114,6 +115,8 @@ def _iter_files(root: Path):
     """Yield files while ignoring local environments and tool caches."""
     for path in sorted(root.rglob("*")):
         if any(part in SKIP_PARTS for part in path.parts):
+            continue
+        if path.name in SKIP_FILENAMES:
             continue
         if path.is_file() or path.is_symlink():
             yield path
