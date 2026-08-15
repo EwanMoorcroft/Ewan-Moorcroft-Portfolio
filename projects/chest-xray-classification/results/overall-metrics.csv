@@ -1,0 +1,5 @@
+metric,value,image_count,evidence_status
+accuracy,0.9368,522,retained earlier run
+balanced_accuracy,0.9376,522,retained earlier run
+macro_f1,0.9381,522,retained earlier run
+matthews_correlation_coefficient,0.9051,522,retained earlier run
