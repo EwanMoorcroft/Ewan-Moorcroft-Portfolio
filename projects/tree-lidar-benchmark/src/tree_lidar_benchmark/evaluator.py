@@ -12,6 +12,12 @@ from typing import Any
 PROTOCOL_ID = "for_instance_pointwise_v2"
 MATCHING_POLICY = "maximum_cardinality_one_to_one"
 EVALUATION_MASK = "union_of_reference_tree_and_eligible_prediction_points"
+REFERENCE_CLASSES = (4, 5, 6)
+IGNORED_REFERENCE_IDS = (0, -1)
+IGNORED_PREDICTION_IDS = (0, -1)
+BOUNDARY_BACKGROUND_CLASS = 3
+BOUNDARY_MAJORITY_THRESHOLD = 0.5
+IOU_THRESHOLD = 0.5
 
 
 @dataclass(frozen=True)
@@ -145,26 +151,63 @@ def maximum_cardinality_threshold_matching(
     return sorted((prediction, reference) for reference, prediction in reference_owner.items())
 
 
+def _require_v2_options(
+    *,
+    reference_classes: tuple[int, ...],
+    ignored_reference_ids: tuple[int, ...],
+    ignored_prediction_ids: tuple[int, ...],
+    boundary_background_class: int,
+    boundary_majority_threshold: float,
+    iou_threshold: float,
+) -> None:
+    """Prevent metric-changing options from carrying the canonical v2 identity."""
+
+    supplied = {
+        "reference_classes": reference_classes,
+        "ignored_reference_ids": ignored_reference_ids,
+        "ignored_prediction_ids": ignored_prediction_ids,
+        "boundary_background_class": boundary_background_class,
+        "boundary_majority_threshold": boundary_majority_threshold,
+        "iou_threshold": iou_threshold,
+    }
+    required = {
+        "reference_classes": REFERENCE_CLASSES,
+        "ignored_reference_ids": IGNORED_REFERENCE_IDS,
+        "ignored_prediction_ids": IGNORED_PREDICTION_IDS,
+        "boundary_background_class": BOUNDARY_BACKGROUND_CLASS,
+        "boundary_majority_threshold": BOUNDARY_MAJORITY_THRESHOLD,
+        "iou_threshold": IOU_THRESHOLD,
+    }
+    changed = [name for name, expected in required.items() if supplied[name] != expected]
+    if changed:
+        names = ", ".join(changed)
+        raise ValueError(f"{PROTOCOL_ID} uses fixed scoring rules; non-canonical options: {names}")
+
+
 def evaluate_aligned_labels(
     predicted_tree_id: Sequence[object],
     reference_tree_id: Sequence[object],
     classification: Sequence[object],
     *,
     source_row_index: Sequence[object],
-    reference_classes: tuple[int, ...] = (4, 5, 6),
-    ignored_reference_ids: tuple[int, ...] = (0, -1),
-    ignored_prediction_ids: tuple[int, ...] = (0, -1),
-    boundary_background_class: int = 3,
-    boundary_majority_threshold: float = 0.5,
-    iou_threshold: float = 0.5,
+    reference_classes: tuple[int, ...] = REFERENCE_CLASSES,
+    ignored_reference_ids: tuple[int, ...] = IGNORED_REFERENCE_IDS,
+    ignored_prediction_ids: tuple[int, ...] = IGNORED_PREDICTION_IDS,
+    boundary_background_class: int = BOUNDARY_BACKGROUND_CLASS,
+    boundary_majority_threshold: float = BOUNDARY_MAJORITY_THRESHOLD,
+    iou_threshold: float = IOU_THRESHOLD,
 ) -> EvaluationResult:
     """Evaluate aligned labels under ``for_instance_pointwise_v2``.
 
-    ``source_row_index`` is required and must equal ``0..n-1``. A complete
+    ``source_row_index`` is required and must equal ``0..n-1``. Reference
+    instances require a positive ID on semantic class 4, 5, or 6. A complete
     predicted instance is excluded before matching only when strictly more than
     half of its aligned points carry semantic class 3. Candidate pairs require
-    IoU of at least 0.5 by default, followed by deterministic one-to-one
+    IoU of at least 0.5, followed by deterministic one-to-one
     maximum-cardinality matching.
+
+    The keyword parameters remain visible for API compatibility, but changing
+    any scoring rule is rejected because the result would not be v2 evidence.
     """
 
     predicted = _integer_labels(predicted_tree_id, "predicted_tree_id")
@@ -174,13 +217,16 @@ def evaluate_aligned_labels(
     if not (size == len(reference) == len(semantic)):
         raise ValueError("Prediction, reference, classification and index lengths differ")
     _validate_source_rows(source_row_index, size)
-    if not math.isfinite(boundary_majority_threshold) or not (
-        0.0 <= boundary_majority_threshold <= 1.0
-    ):
-        raise ValueError("boundary_majority_threshold must be in [0, 1]")
+    _require_v2_options(
+        reference_classes=reference_classes,
+        ignored_reference_ids=ignored_reference_ids,
+        ignored_prediction_ids=ignored_prediction_ids,
+        boundary_background_class=boundary_background_class,
+        boundary_majority_threshold=boundary_majority_threshold,
+        iou_threshold=iou_threshold,
+    )
 
     reference_class_set = set(reference_classes)
-    ignored_reference_set = set(ignored_reference_ids)
     ignored_prediction_set = set(ignored_prediction_ids)
 
     instance_sizes: dict[int, int] = {}
@@ -207,9 +253,7 @@ def evaluate_aligned_labels(
         prediction_active = (
             prediction_id not in ignored_prediction_set and prediction_id not in excluded
         )
-        reference_active = (
-            semantic[index] in reference_class_set and reference_id not in ignored_reference_set
-        )
+        reference_active = semantic[index] in reference_class_set and reference_id > 0
         if prediction_active or reference_active:
             evaluated_point_count += 1
         if prediction_active:

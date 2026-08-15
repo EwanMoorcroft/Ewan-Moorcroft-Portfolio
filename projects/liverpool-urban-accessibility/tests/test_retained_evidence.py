@@ -8,10 +8,25 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
-from liverpool_accessibility.evidence import verify_evidence
+from liverpool_accessibility.evidence import (
+    OFFICIAL_ANALYSIS_AREA,
+    OFFICIAL_NATIONAL_FLOW_IDENTITY,
+    OFFICIAL_SOURCE_CONTRACT,
+    verify_evidence,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "reports" / "retained"
+
+
+def test_official_source_gate_matches_the_retained_manifest() -> None:
+    """Pinned full-source identity must remain aligned with the retained rebuild contract."""
+    manifest = json.loads((EVIDENCE / "source-manifest.json").read_text(encoding="utf-8"))
+    flow_source = next(source for source in manifest["sources"] if source["role"] == "flow_csv")
+    assert manifest["contract"] == OFFICIAL_SOURCE_CONTRACT
+    assert manifest["analysis_area"] == OFFICIAL_ANALYSIS_AREA
+    for field, expected in OFFICIAL_NATIONAL_FLOW_IDENTITY.items():
+        assert flow_source[field] == expected
 
 
 def test_retained_evidence_reconstructs() -> None:

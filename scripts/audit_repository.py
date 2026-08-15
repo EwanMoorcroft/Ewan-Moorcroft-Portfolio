@@ -89,11 +89,34 @@ SECRET_PATTERNS = (
 )
 STANDALONE_SHORT_TERM = re.compile(r"(?i)\b" + "A" + "I" + r"\b")
 LEGACY_LABEL = re.compile(r"(?i)\bC" + r"A(?:\s*[12])?\b")
+TYPOGRAPHIC_DASH = re.compile("[\u2013\u2014]")
 HOME_PATH = re.compile(r"(?:/Users/|/home/)[A-Za-z0-9._-]+/")
 WINDOWS_HOME_PATH = re.compile(r"(?i)\b[A-Z]:[\\/]+Users[\\/]+[A-Za-z0-9._-]+[\\/]")
 TECHNICAL_BASE_TYPE = re.compile(r"\b(?:nn|torch\.nn)\." + _joined("Mo", "dule") + r"\b")
 TECHNICAL_IDENTIFIER_TERM = re.compile(
     r"(?i)(?:_" + _joined("mo", "dule") + r"\b|\b" + _joined("mo", "dule") + r"_)"
+)
+UNFINISHED_MARKERS = tuple(
+    (
+        marker,
+        re.compile(r"(?i)\b" + re.escape(marker) + r"\b"),
+    )
+    for marker in (
+        _joined("TO", "DO"),
+        _joined("FIX", "ME"),
+        _joined("T", "BD"),
+    )
+)
+LEAKED_INSTRUCTION_PHRASES = tuple(
+    _joined(*parts)
+    for parts in (
+        ("your ", "prompt"),
+        ("the user ", "asked"),
+        ("the user's ", "request"),
+        ("replace with your ", "implementation"),
+        ("lorem ", "ipsum"),
+        ("raise Not", "ImplementedError"),
+    )
 )
 
 
@@ -165,6 +188,14 @@ def audit_tree(root: Path) -> list[Finding]:
             findings.append(Finding(relative, "blocked standalone acronym in content"))
         if LEGACY_LABEL.search(content):
             findings.append(Finding(relative, "blocked legacy label in content"))
+        if TYPOGRAPHIC_DASH.search(content):
+            findings.append(Finding(relative, "typographic dash in public text"))
+        for marker, pattern in UNFINISHED_MARKERS:
+            if pattern.search(content):
+                findings.append(Finding(relative, f"unfinished marker: {marker}"))
+        for phrase in LEAKED_INSTRUCTION_PHRASES:
+            if phrase.lower() in lowered:
+                findings.append(Finding(relative, "possible leaked instruction or stub text"))
         if HOME_PATH.search(content):
             findings.append(Finding(relative, "machine-specific home path"))
         if WINDOWS_HOME_PATH.search(content):

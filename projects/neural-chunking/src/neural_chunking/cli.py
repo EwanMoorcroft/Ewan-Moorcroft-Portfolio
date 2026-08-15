@@ -28,6 +28,11 @@ def build_parser() -> argparse.ArgumentParser:
     evaluate_parser.add_argument("data", type=Path, help="same data file used during training")
     evaluate_parser.add_argument("checkpoint", type=Path)
     evaluate_parser.add_argument("--output", type=Path, default=Path("runs/test-results.json"))
+    evaluate_parser.add_argument(
+        "--selection-metadata",
+        type=Path,
+        help="training-results JSON; defaults to the checkpoint directory",
+    )
     return parser
 
 
@@ -42,7 +47,12 @@ def main() -> int:
         )
         print(f"Best validation span F1: {result['best_validation_span_f1']:.4f}")
         return 0
-    result = evaluate_pipeline(args.data, args.checkpoint, args.output)
+    result = evaluate_pipeline(
+        args.data,
+        args.checkpoint,
+        args.output,
+        selection_metadata_path=args.selection_metadata,
+    )
     print(f"Test span F1: {result['test']['span_f1']:.4f}")
     return 0
 

@@ -1,4 +1,4 @@
-"""Transparent spatial weighting and autocorrelation routines."""
+"""Spatial weighting and autocorrelation routines."""
 
 from __future__ import annotations
 

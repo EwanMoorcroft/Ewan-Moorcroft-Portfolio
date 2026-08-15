@@ -112,7 +112,9 @@ def test_checkpoint_round_trip_uses_expected_safe_format(tmp_path) -> None:
     original = DoubleDQNAgent(2, 2, config, device=torch.device("cpu"))
     checkpoint = tmp_path / "agent.pt"
     original.save(checkpoint, metadata={"kind": "test"})
-    payload = DoubleDQNAgent.read_checkpoint(checkpoint)
+    payload, checkpoint_sha256 = DoubleDQNAgent.read_checkpoint_with_digest(checkpoint)
+    assert len(checkpoint_sha256) == 64
+    assert set(checkpoint_sha256) <= set("0123456789abcdef")
     restored = DoubleDQNAgent(2, 2, config, device=torch.device("cpu"))
     assert restored.restore(payload) == {"kind": "test"}
     for expected, actual in zip(

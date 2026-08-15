@@ -25,6 +25,23 @@ CORE_FILES = (
 OPTIONAL_FILES = ("r-validation.json",)
 SOURCE_ROLES = {"flow_csv", "boundaries", "centroids"}
 SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
+OFFICIAL_SOURCE_CONTRACT = "liverpool-source-manifest-v1"
+FIXTURE_SOURCE_CONTRACT = "liverpool-fixture-source-manifest-v1"
+FIXTURE_EVIDENCE_SCOPE = "fictional deterministic integration fixture"
+OFFICIAL_ANALYSIS_AREA = {
+    "area_code": "E08000012",
+    "area_name": "Liverpool",
+    "geography": "2021 Middle layer Super Output Areas",
+    "msoa_count": 61,
+}
+OFFICIAL_NATIONAL_FLOW_IDENTITY = {
+    "archive_bytes": 80_621_150,
+    "archive_sha256": "9e32ababfd9f77e353411d399e463f812942440df115a2d6c296c74dbeea70d7",
+    "archive_url": "https://www.nomisweb.co.uk/output/census/2021/odwp01ew.zip",
+    "bytes": 197_658_221,
+    "file": "ODWP01EW_MSOA.csv",
+    "sha256": "8af475023e18227fdcee3ac4a547d6549b1fcb87138bd93d177a7a698d1a10dd",
+}
 
 
 def sha256_file(path: str | Path) -> str:
@@ -40,7 +57,8 @@ def verify_source_manifest(
     payload: dict[str, object], role_paths: dict[str, str | Path]
 ) -> dict[str, object]:
     """Bind each source-manifest identity to the exact file supplied for preparation."""
-    if payload.get("contract") != "liverpool-source-manifest-v1":
+    contract = payload.get("contract")
+    if contract not in {OFFICIAL_SOURCE_CONTRACT, FIXTURE_SOURCE_CONTRACT}:
         raise DataContractError("unsupported source-manifest contract")
     if set(role_paths) != SOURCE_ROLES:
         raise DataContractError("source paths must cover flow, boundary, and centroid roles")
@@ -73,7 +91,28 @@ def verify_source_manifest(
             raise DataContractError(f"source manifest has invalid bytes for {role}")
         if path.stat().st_size != expected_bytes or sha256_file(path) != expected_hash:
             raise DataContractError(f"source identity mismatch: {role}")
-    return {"contract": payload["contract"], "files_verified": len(SOURCE_ROLES)}
+
+    if contract == OFFICIAL_SOURCE_CONTRACT:
+        if payload.get("analysis_area") != OFFICIAL_ANALYSIS_AREA:
+            raise DataContractError("official source manifest has an invalid analysis area")
+        flow_record = by_role["flow_csv"]
+        if any(
+            flow_record.get(field) != expected
+            for field, expected in OFFICIAL_NATIONAL_FLOW_IDENTITY.items()
+        ):
+            raise DataContractError(
+                "official source manifest does not authenticate the complete national OD source"
+            )
+        evidence_scope = "official national OD source with Liverpool analysis geography"
+    else:
+        if payload.get("evidence_scope") != FIXTURE_EVIDENCE_SCOPE:
+            raise DataContractError("fixture source manifest has an invalid evidence scope")
+        evidence_scope = FIXTURE_EVIDENCE_SCOPE
+    return {
+        "contract": contract,
+        "evidence_scope": evidence_scope,
+        "files_verified": len(SOURCE_ROLES),
+    }
 
 
 def _write_json(path: Path, payload: dict[str, object]) -> None:

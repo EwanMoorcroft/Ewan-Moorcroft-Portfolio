@@ -55,7 +55,12 @@ def test_source_manifest_binds_exact_input_files(tmp_path: Path) -> None:
     flows, boundaries, centroids = write_fixture(tmp_path / "source", size=3)
     manifest = fixture_source_manifest(flows, boundaries, centroids)
     paths = {"flow_csv": flows, "boundaries": boundaries, "centroids": centroids}
-    assert verify_source_manifest(manifest, paths)["files_verified"] == 3
+    verified = verify_source_manifest(manifest, paths)
+    assert verified == {
+        "contract": "liverpool-fixture-source-manifest-v1",
+        "evidence_scope": "fictional deterministic integration fixture",
+        "files_verified": 3,
+    }
     flows.write_text(flows.read_text(encoding="utf-8") + "\n", encoding="utf-8")
     with pytest.raises(DataContractError, match="identity mismatch: flow_csv"):
         verify_source_manifest(manifest, paths)

@@ -1,4 +1,4 @@
-"""Leak-safe next-gameweek forecasting for Fantasy Premier League."""
+"""Chronological next-gameweek forecasting for Fantasy Premier League."""
 
 from .config import ProtocolConfig
 from .data import GameweekSnapshot, load_gameweeks
