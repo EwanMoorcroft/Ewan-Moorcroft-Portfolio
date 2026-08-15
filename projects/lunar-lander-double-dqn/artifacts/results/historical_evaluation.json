@@ -1,0 +1,16 @@
+{
+  "status": "retained_reference_run",
+  "environment_id": "LunarLander-v3",
+  "training_seed": 532,
+  "training_episodes": 1000,
+  "evaluation_policy": "greedy",
+  "evaluation_episodes": 10,
+  "mean_reward": 283.56484403195094,
+  "standard_deviation_reward": 12.06780585899103,
+  "minimum_reward": 254.9006929711685,
+  "maximum_reward": 297.04207806977047,
+  "mean_episode_length": 254.4,
+  "centred_landing_rate": 0.9,
+  "scope_note": "One training seed and ten deterministic evaluation seeds; not a multi-seed robustness estimate."
+}
+

@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "neural-chunking"
+version = "0.1.0"
+description = "Leakage-resistant BIO sequence labelling with BiLSTM and Transformer baselines"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26,<3",
+  "scikit-learn>=1.5,<2",
+  "torch>=2.4,<3",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=8.2,<9",
+  "ruff>=0.9,<1",
+]
+
+[project.scripts]
+neural-chunking = "neural_chunking.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/neural_chunking"]
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-config --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["E501"]

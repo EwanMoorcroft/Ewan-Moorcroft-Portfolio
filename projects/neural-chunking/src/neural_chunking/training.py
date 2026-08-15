@@ -1,0 +1,379 @@
+"""Training and evaluation orchestration for neural chunkers."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import random
+from dataclasses import asdict, dataclass
+from functools import partial
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+import torch
+from sklearn.metrics import accuracy_score, f1_score, matthews_corrcoef
+from torch import nn
+from torch.utils.data import DataLoader
+
+from neural_chunking.data import (
+    ChunkDataset,
+    Vocabulary,
+    build_vocabularies,
+    collate_sentences,
+    read_sentences,
+    split_by_content_hash,
+)
+from neural_chunking.metrics import span_metrics
+from neural_chunking.models import BiLSTMChunker, TransformerChunker
+
+LABEL_IGNORE_INDEX = -100
+
+
+@dataclass(frozen=True)
+class TrainingConfig:
+    """Configuration for a deterministic neural chunking run."""
+
+    seed: int = 534
+    architecture: str = "bilstm"
+    batch_size: int = 64
+    epochs: int = 30
+    learning_rate: float = 2e-3
+    patience: int = 4
+    embedding_size: int = 128
+    hidden_size: int = 128
+    dropout: float = 0.3
+
+    def validate(self) -> None:
+        """Reject invalid or unsupported training settings."""
+        if self.seed < 0:
+            raise ValueError("seed must be non-negative")
+        if self.architecture not in {"bilstm", "transformer"}:
+            raise ValueError("architecture must be bilstm or transformer")
+        if (
+            min(
+                self.batch_size,
+                self.epochs,
+                self.patience,
+                self.embedding_size,
+                self.hidden_size,
+            )
+            < 1
+        ):
+            raise ValueError("batch, epoch, patience, and model sizes must be positive")
+        if self.learning_rate <= 0.0:
+            raise ValueError("learning_rate must be positive")
+        if not 0.0 <= self.dropout < 1.0:
+            raise ValueError("dropout must be in [0, 1)")
+
+
+def select_device() -> torch.device:
+    """Use Apple Metal acceleration when available and otherwise use CPU."""
+    return torch.device("mps") if torch.backends.mps.is_available() else torch.device("cpu")
+
+
+def set_seed(seed: int) -> None:
+    """Seed Python, NumPy, and PyTorch for repeatable data and model state."""
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.backends.mps.is_available():
+        torch.mps.manual_seed(seed)
+    torch.use_deterministic_algorithms(True, warn_only=True)
+
+
+def file_digest(path: Path) -> str:
+    """Return the SHA-256 digest of an input data file."""
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        while chunk := stream.read(1024 * 1024):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def build_model(
+    config: TrainingConfig,
+    vocabulary_size: int,
+    label_count: int,
+) -> nn.Module:
+    """Create the selected chunker architecture."""
+    if config.architecture == "bilstm":
+        return BiLSTMChunker(
+            vocabulary_size,
+            label_count,
+            embedding_size=config.embedding_size,
+            hidden_size=config.hidden_size,
+            dropout=config.dropout,
+        )
+    return TransformerChunker(
+        vocabulary_size,
+        label_count,
+        embedding_size=config.embedding_size,
+        feedforward_size=config.hidden_size * 2,
+        dropout=config.dropout,
+    )
+
+
+def _run_epoch(
+    model: nn.Module,
+    loader: DataLoader,
+    criterion: nn.CrossEntropyLoss,
+    device: torch.device,
+    optimiser: torch.optim.Optimizer | None,
+) -> tuple[float, list[int], list[int], list[list[int]], list[list[int]]]:
+    """Run one training or evaluation epoch and return aligned predictions."""
+    model.train(optimiser is not None)
+    total_loss = 0.0
+    valid_tokens = 0
+    expected_flat: list[int] = []
+    predicted_flat: list[int] = []
+    expected_rows: list[list[int]] = []
+    predicted_rows: list[list[int]] = []
+    for tokens, labels, mask in loader:
+        tokens, labels, mask = tokens.to(device), labels.to(device), mask.to(device)
+        with torch.set_grad_enabled(optimiser is not None):
+            logits = model(tokens, mask)
+            loss = criterion(logits.reshape(-1, logits.shape[-1]), labels.reshape(-1))
+            if optimiser is not None:
+                optimiser.zero_grad(set_to_none=True)
+                loss.backward()
+                nn.utils.clip_grad_norm_(model.parameters(), max_norm=5.0)
+                optimiser.step()
+        predictions = logits.argmax(dim=-1)
+        batch_valid_tokens = int(mask.sum().item())
+        total_loss += float(loss.item()) * batch_valid_tokens
+        valid_tokens += batch_valid_tokens
+        for expected_row, predicted_row, valid_row in zip(labels, predictions, mask, strict=True):
+            expected = expected_row[valid_row].detach().cpu().tolist()
+            predicted = predicted_row[valid_row].detach().cpu().tolist()
+            expected_rows.append(expected)
+            predicted_rows.append(predicted)
+            expected_flat.extend(expected)
+            predicted_flat.extend(predicted)
+    return (
+        total_loss / max(valid_tokens, 1),
+        expected_flat,
+        predicted_flat,
+        expected_rows,
+        predicted_rows,
+    )
+
+
+def evaluate_predictions(
+    expected_flat: list[int],
+    predicted_flat: list[int],
+    expected_rows: list[list[int]],
+    predicted_rows: list[list[int]],
+    labels: Vocabulary,
+) -> dict[str, float]:
+    """Calculate token metrics and exact-span BIO metrics."""
+    expected_tags = [labels.decode(row) for row in expected_rows]
+    predicted_tags = [labels.decode(row) for row in predicted_rows]
+    spans = span_metrics(expected_tags, predicted_tags)
+    label_indices = list(range(len(labels)))
+    distinct_indices = set(expected_flat) | set(predicted_flat)
+    matthews = (
+        float(matthews_corrcoef(expected_flat, predicted_flat))
+        if len(distinct_indices) > 1
+        else 0.0
+    )
+    return {
+        "token_accuracy": float(accuracy_score(expected_flat, predicted_flat)),
+        "token_macro_f1": float(
+            f1_score(
+                expected_flat,
+                predicted_flat,
+                labels=label_indices,
+                average="macro",
+                zero_division=0,
+            )
+        ),
+        "token_weighted_f1": float(
+            f1_score(
+                expected_flat,
+                predicted_flat,
+                labels=label_indices,
+                average="weighted",
+                zero_division=0,
+            )
+        ),
+        "token_matthews_correlation": matthews,
+        "span_precision": spans.precision,
+        "span_recall": spans.recall,
+        "span_f1": spans.f1,
+    }
+
+
+def _snapshot_state(model: nn.Module) -> dict[str, torch.Tensor]:
+    """Copy model tensors so later CPU updates cannot mutate the selected state."""
+    return {name: tensor.detach().cpu().clone() for name, tensor in model.state_dict().items()}
+
+
+def _collate_for(
+    token_vocabulary: Vocabulary,
+    label_vocabulary: Vocabulary,
+):
+    """Create padding behavior for token inputs and ignored label targets."""
+    if token_vocabulary.pad_index is None:
+        raise ValueError("token vocabulary must define a padding index")
+    if label_vocabulary.pad_index is not None:
+        raise ValueError("label vocabulary must not expose padding as a prediction class")
+    return partial(
+        collate_sentences,
+        token_pad_index=token_vocabulary.pad_index,
+        label_pad_index=LABEL_IGNORE_INDEX,
+    )
+
+
+def _loader(
+    rows,
+    token_vocabulary: Vocabulary,
+    label_vocabulary: Vocabulary,
+    config: TrainingConfig,
+    shuffle: bool,
+    seed_offset: int,
+) -> DataLoader:
+    """Build a deterministically seeded sentence loader."""
+    return DataLoader(
+        ChunkDataset(rows, token_vocabulary, label_vocabulary),
+        batch_size=config.batch_size,
+        shuffle=shuffle,
+        collate_fn=_collate_for(token_vocabulary, label_vocabulary),
+        generator=torch.Generator().manual_seed(config.seed + seed_offset),
+    )
+
+
+def train_pipeline(data_path: Path, output_dir: Path, config: TrainingConfig) -> dict[str, Any]:
+    """Train and select with validation data without evaluating the test split."""
+    config.validate()
+    set_seed(config.seed)
+    data_sha256 = file_digest(data_path)
+    sentences = read_sentences(data_path)
+    if file_digest(data_path) != data_sha256:
+        raise ValueError("input data changed while it was being read")
+    splits = split_by_content_hash(sentences, seed=config.seed)
+    token_vocabulary, label_vocabulary = build_vocabularies(splits["train"])
+    loaders = {
+        "train": _loader(
+            splits["train"],
+            token_vocabulary,
+            label_vocabulary,
+            config,
+            shuffle=True,
+            seed_offset=0,
+        ),
+        "validation": _loader(
+            splits["validation"],
+            token_vocabulary,
+            label_vocabulary,
+            config,
+            shuffle=False,
+            seed_offset=1,
+        ),
+    }
+    device = select_device()
+    model = build_model(config, len(token_vocabulary), len(label_vocabulary)).to(device)
+    criterion = nn.CrossEntropyLoss(ignore_index=LABEL_IGNORE_INDEX)
+    optimiser = torch.optim.AdamW(model.parameters(), lr=config.learning_rate)
+    best_state: dict[str, torch.Tensor] | None = None
+    best_validation_f1 = -1.0
+    best_epoch = 0
+    epochs_without_improvement = 0
+    history: list[dict[str, float | int]] = []
+    for epoch in range(1, config.epochs + 1):
+        train_loss, *_ = _run_epoch(model, loaders["train"], criterion, device, optimiser)
+        validation = _run_epoch(model, loaders["validation"], criterion, device, None)
+        validation_metrics = evaluate_predictions(*validation[1:], label_vocabulary)
+        history.append(
+            {
+                "epoch": epoch,
+                "train_loss": train_loss,
+                "validation_loss": validation[0],
+                **{f"validation_{key}": value for key, value in validation_metrics.items()},
+            }
+        )
+        if validation_metrics["span_f1"] > best_validation_f1:
+            best_validation_f1 = validation_metrics["span_f1"]
+            best_epoch = epoch
+            best_state = _snapshot_state(model)
+            epochs_without_improvement = 0
+        else:
+            epochs_without_improvement += 1
+            if epochs_without_improvement >= config.patience:
+                break
+    if best_state is None:
+        raise RuntimeError("training did not produce a selectable model")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    torch.save(
+        {
+            "model_state": best_state,
+            "config": asdict(config),
+            "token_values": list(token_vocabulary.index_to_value),
+            "label_values": list(label_vocabulary.index_to_value),
+            "data_file_sha256": data_sha256,
+        },
+        output_dir / "chunker_checkpoint.pt",
+    )
+    result = {
+        "status": "fresh_train_validation_run",
+        "test_partition_used": False,
+        "config": asdict(config),
+        "data_file_sha256": data_sha256,
+        "split_sentences": {name: len(rows) for name, rows in splits.items()},
+        "selection_metric": "validation_span_f1",
+        "best_epoch": best_epoch,
+        "best_validation_span_f1": best_validation_f1,
+        "history": history,
+    }
+    (output_dir / "training-results.json").write_text(
+        json.dumps(result, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return result
+
+
+def evaluate_pipeline(
+    data_path: Path,
+    checkpoint_path: Path,
+    output_path: Path,
+) -> dict[str, Any]:
+    """Evaluate one frozen, validation-selected checkpoint on the test split."""
+    payload = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+    required = {"model_state", "config", "token_values", "label_values", "data_file_sha256"}
+    if not isinstance(payload, dict) or not required.issubset(payload):
+        raise ValueError("checkpoint does not match the expected chunker format")
+    current_digest = file_digest(data_path)
+    if payload["data_file_sha256"] != current_digest:
+        raise ValueError("input data differs from the file used for model selection")
+
+    config = TrainingConfig(**payload["config"])
+    config.validate()
+    set_seed(config.seed)
+    sentences = read_sentences(data_path)
+    if file_digest(data_path) != current_digest:
+        raise ValueError("input data changed while it was being read")
+    splits = split_by_content_hash(sentences, seed=config.seed)
+    token_vocabulary = Vocabulary.from_index_values(payload["token_values"])
+    label_vocabulary = Vocabulary.from_index_values(payload["label_values"])
+    test_loader = _loader(
+        splits["test"],
+        token_vocabulary,
+        label_vocabulary,
+        config,
+        shuffle=False,
+        seed_offset=2,
+    )
+    device = select_device()
+    model = build_model(config, len(token_vocabulary), len(label_vocabulary)).to(device)
+    model.load_state_dict(payload["model_state"], strict=True)
+    criterion = nn.CrossEntropyLoss(ignore_index=LABEL_IGNORE_INDEX)
+    test = _run_epoch(model, test_loader, criterion, device, None)
+    result = {
+        "status": "fresh_test_evaluation",
+        "data_file_sha256": current_digest,
+        "split_sentences": {name: len(rows) for name, rows in splits.items()},
+        "test": {"loss": test[0], **evaluate_predictions(*test[1:], label_vocabulary)},
+    }
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    return result
