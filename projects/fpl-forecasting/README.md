@@ -1,18 +1,23 @@
 # FPL Next-Gameweek Forecasting
 
-A compact forecasting project built around one rule: every reported prediction must be made with information that existed before its target gameweek.
+Fantasy Premier League data makes temporal leakage easy: a row can look valid while containing
+information that was not available when the decision would have been made. This project predicts a
+player's next-gameweek points and treats that time boundary as part of the data contract.
 
 [Open the project overview](demo/index.html) for a quick visual tour.
 
-## What it does
+## Question and approach
 
-The pipeline reads completed Fantasy Premier League live-gameweek JSON files, validates their sequence, creates strictly as-of player features, and predicts points in the next completed gameweek. It compares standardized ridge regression with three transparent baselines under an expanding-window evaluation.
+The pipeline reads completed Fantasy Premier League live-gameweek JSON files, validates their
+sequence, creates strictly as-of player features, and predicts points in the next completed
+gameweek. Standardized ridge regression is compared with three simple baselines under an
+expanding-window evaluation.
 
 The repository contains no downloaded match data and no trained model. It retains one compact,
 real-data evaluation report with an auditable source manifest. A deterministic synthetic generator
 supports local checks and examples without network access.
 
-## Evidence controls
+## Guardrails
 
 - Empty gameweeks are rejected rather than converted into zero targets; completion status must
   already have been established when each file is captured.
@@ -25,22 +30,22 @@ supports local checks and examples without network access.
 - Results include MAE and RMSE for point error, plus Spearman, NDCG@K, and top-K overlap for recommendation quality.
 - Saved ridge artifacts are plain JSON, not executable pickle files.
 
-## Retained real-data evaluation
+## Historical evaluation on public data
 
-The retained report was generated on 15 August 2026 from gameweeks 1–15 of the completed 2024–25
+The retained report was generated on 15 August 2026 from gameweeks 1 to 15 of the completed 2024-25
 season. The source is Vaastav Anand's public FPL historical dataset at immutable revision
 [`a59a43a`](https://github.com/vaastav/Fantasy-Premier-League/tree/a59a43a8343d960a58cbe7a1f9fba2d2ce431856/data/2024-25/gws).
 The interval was chosen before model evaluation: it is the longest season-opening interval that
 passes the pre-existing 0.90 adjacent-player coverage gate. The GW15→GW16 coverage is 0.8987, so
 the pipeline rejects joining later gameweeks across that boundary.
 
-The expanding-window comparison trained first on target gameweeks 2–5, then evaluated ten
-chronologically held-out target gameweeks (GW6–GW15), covering 6,684 player-gameweek rows:
+The expanding-window comparison trained first on target gameweeks 2 to 5, then evaluated ten
+chronologically held-out target gameweeks (GW6 to GW15), covering 6,684 player-gameweek rows:
 
 | Candidate | MAE ↓ | RMSE ↓ | R² ↑ | Spearman ↑ | NDCG@10 ↑ | Top-10 overlap ↑ |
 |---|---:|---:|---:|---:|---:|---:|
 | Last gameweek | 1.235 | 2.673 | -0.274 | 0.655 | 0.084 | 0.090 |
-| Three-gameweek mean | 1.130 | 2.232 | 0.111 | 0.692 | 0.151 | 0.110 |
+| Three-observation mean | 1.130 | 2.232 | 0.111 | 0.692 | 0.151 | 0.110 |
 | Training-window mean | 1.501 | 2.368 | -0.000 | 0.000 | 0.002 | 0.020 |
 | Ridge regression | **1.110** | **2.019** | **0.273** | **0.717** | **0.226** | **0.170** |
 
@@ -52,7 +57,7 @@ conversion rules, and per-file checks.
 
 The upstream repository uses an MIT licence for its software, while its licence file states that
 the underlying data belong to the named data providers. This repository therefore retains no
-source CSVs or converted player records—only aggregate metrics and file-level provenance.
+source CSVs or converted player records. Only aggregate metrics and file-level provenance are kept.
 
 ## Quick start
 
@@ -115,8 +120,10 @@ fpl-forecast import-vaastav \
   --gameweek-end 15
 ```
 
-The retained manifest records the archive URL and SHA-256. Run `validate` and `evaluate` with the
-same default configuration after import; raw and converted records remain ignored.
+The retained manifest records the archive URL and SHA-256. The adapter cannot inspect Git history,
+so its `--source-revision` value is supplied by the caller; the per-file hashes and aggregate hash are
+the byte-level identity checks it actually performs. Run `validate` and `evaluate` with the same
+default configuration after import. Raw and converted records remain ignored.
 
 ## Input contract
 
@@ -150,12 +157,16 @@ be distinguished from a finished one using this payload alone.
 Every feature is available by the end of the as-of gameweek:
 
 - latest points, minutes, start flag, ICT, influence, creativity, and threat;
-- three-gameweek means for points, minutes, ICT, goals, and assists;
-- three-gameweek start rate;
-- five-gameweek points mean;
+- means over a player's latest three recorded rows for points, minutes, ICT, goals, and assists;
+- start rate over those latest three recorded rows;
+- points mean over the latest five recorded rows;
 - season-to-date points, minutes, appearances, and points per appearance.
 
-Player ID and gameweek fields remain metadata and are never model inputs. Team, position, current price, fixture difficulty, and availability news are deliberately absent because historical as-of versions are not provided by the live-gameweek files.
+These are observation windows, not guaranteed consecutive-gameweek windows: a player who is absent
+from a snapshot has no row added to their personal history. Player ID and gameweek fields remain
+metadata and are never model inputs. Team, position, current price, fixture difficulty, and
+availability news are absent because the live-gameweek files do not provide trustworthy historical
+as-of versions.
 
 ## Evaluation
 
@@ -172,9 +183,10 @@ Point error alone does not describe recommendation quality, so ranking metrics a
 
 This project forecasts individual next-gameweek points; it does not optimize a full squad, transfers, captaincy, budget, or bench order. It does not include fixture schedules, opponent strength, injury reports, predicted line-ups, or historical price snapshots. Results depend on the supplied season and must be re-evaluated after material rule or data changes.
 
-Synthetic results demonstrate plumbing and protocol behavior only. They must not be presented as live-season performance. Forecasts are uncertain and should not be treated as a guarantee.
+Synthetic results exercise the pipeline and protocol only. They are not live-season performance.
+Forecasts remain uncertain and should not be treated as a guarantee.
 
-## Project map
+## Files
 
 ```text
 config/default.json          Protocol settings
@@ -185,9 +197,11 @@ src/fpl_forecasting/         Validation, features, splits, metrics, model, CLI
 tests/                       Deterministic contract and end-to-end checks
 ```
 
-The tested dependency set is pinned in `requirements.txt` and `requirements-dev.txt`. Runtime behavior is also declared in `pyproject.toml`.
+The Docker build pins the three direct runtime dependencies in `requirements.txt`. CI uses
+`requirements-dev.txt`, which adds pinned test tools. These files are not a hash-locked record of
+every transitive package; compatible ranges remain in `pyproject.toml` for ordinary installation.
 
-## Container smoke check
+## Docker
 
 The optional image uses a slim Python runtime and runs the CLI as an unprivileged user. Build it locally, then generate the same deterministic fixture on every run:
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Leak-safe FPL next-gameweek forecasting project overview.">
+  <meta name="description" content="Chronological FPL next-gameweek forecasting project overview.">
   <title>FPL Next-Gameweek Forecasting</title>
   <style>
     :root{--ink:#13212c;--muted:#607080;--green:#087b64;--green2:#12a17e;--soft:#e9f6f2;--line:#dbe5e2;--navy:#102c3c}
@@ -21,26 +21,26 @@
 <body>
   <header class="hero">
     <div class="shell">
-      <span class="tag">Portfolio case study</span>
-      <h1>Forecast the next gameweek. Respect the clock.</h1>
-      <p>A reproducible FPL pipeline that rejects empty future placeholders, builds only as-of features, and compares regression with honest recent-form baselines in time order.</p>
+      <span class="tag">FPL forecasting</span>
+      <h1>Predict the next gameweek from completed data.</h1>
+      <p>The pipeline rejects empty future files, stops every feature at the as-of gameweek, and compares ridge regression with recent-form baselines in time order.</p>
       <div class="actions"><a class="button primary" href="../README.md">Read the guide</a><a class="button secondary" href="../docs/methodology.md">Inspect the protocol</a></div>
     </div>
   </header>
 
   <main class="shell">
     <section>
-      <h2>Designed around evidence quality</h2>
+      <h2>The time boundary</h2>
       <p class="intro">The difficult part is not fitting a regressor. It is proving that every input existed before the outcome and that every reported prediction came from a later gameweek.</p>
       <div class="grid">
         <article class="card"><span class="number">1</span><h3>Strict inputs</h3><p>Empty, duplicate, gapped, malformed, and low-coverage gameweeks fail before feature construction.</p></article>
         <article class="card"><span class="number">2</span><h3>As-of features</h3><p>Latest form, rolling windows, and season totals stop at gameweek <em>t</em>; the target comes from completed <em>t+1</em>.</p></article>
-        <article class="card"><span class="number">3</span><h3>Future-only tests</h3><p>Expanding train windows predict later, non-overlapping gameweeks and retain row-level out-of-fold evidence.</p></article>
+        <article class="card"><span class="number">3</span><h3>Later gameweeks</h3><p>Expanding train windows predict later, non-overlapping gameweeks and keep every out-of-fold row for scoring.</p></article>
       </div>
     </section>
 
     <section class="section">
-      <h2>End-to-end flow</h2>
+      <h2>From files to report</h2>
       <p class="intro">One CLI covers deterministic examples, validation, table construction, evaluation, reporting, and a safe final artifact.</p>
       <div class="flow" aria-label="Pipeline flow">
         <div class="step"><small>Input</small><strong>Completed live-gameweek JSON</strong></div>
@@ -63,7 +63,7 @@
         </ul>
       </div>
       <div class="panel light">
-        <h2>What ships</h2>
+        <h2>Included</h2>
         <p><strong>Focused tests</strong> cover the data contract, future-invariance, boundary guards, chronological splits, ranking metrics, end-to-end evaluation, CLI flow, and artifact round trips.</p>
         <p><strong>No source records or fitted model ship.</strong> A compact historical aggregate evaluation and source manifest are retained. Run <code>fpl-forecast synthetic</code> for a deterministic example, then replace it with separately obtained completed-gameweek files.</p>
         <p>The generated report is a single local HTML file with no external scripts, fonts, trackers, or network calls.</p>
@@ -71,6 +71,6 @@
     </section>
   </main>
 
-  <footer><div class="shell">FPL Next-Gameweek Forecasting · protocol-first tabular regression</div></footer>
+  <footer><div class="shell">FPL next-gameweek forecasting | chronological tabular regression</div></footer>
 </body>
 </html>
