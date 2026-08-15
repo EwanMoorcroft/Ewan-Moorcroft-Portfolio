@@ -1,6 +1,6 @@
 # Evidence and Claim Rules
 
-This repository uses three result labels so a reader can tell exactly what has been verified.
+This repository uses four result labels so a reader can tell exactly what has been verified.
 
 ## Current verified
 
@@ -15,11 +15,19 @@ A result artifact from an earlier run is retained, but the improved project has 
 number. The chest X-ray, LunarLander, and neural chunking projects use this label. Each README states
 the original scope and why the value must not be treated as a fresh result from the rebuilt pipeline.
 
+## Fresh historical evaluation
+
+The included protocol has been run on a completed, commit-pinned public dataset and the aggregate
+out-of-fold report and source manifest are retained. FPL forecasting uses this label for its fixed
+2024–25 GW1–15 interval. The label does not imply full-season coverage, live-season performance, or
+retention of raw records, row predictions, or a fitted model.
+
 ## Rebuilt protocol
 
-The software and tests validate the corrected method, but no claim is made about performance on the
-real target data. FPL forecasting uses this label because the earlier dataset construction created
-invalid zero targets. Those models, metrics, and recommendations are excluded.
+The software and tests validate a corrected method, but no claim is made about performance on the
+real target data. The deterministic FPL synthetic path uses this label for protocol and plumbing
+checks. The invalid models, metrics, and recommendations from the earlier zero-target construction
+remain excluded.
 
 ## Claim checklist
 
@@ -34,4 +42,3 @@ Every numerical claim should answer:
 Missing evidence is stated rather than inferred. In particular, this repository does not reconstruct
 unavailable prediction-level outputs, invent patient identities, or rerun expensive experiments to
 make a historical number appear current.
-

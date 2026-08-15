@@ -9,33 +9,15 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
 
-from .records import MANIFEST_FIELDS, ImageRecord
+from .records import (
+    MANIFEST_FIELDS,
+    ImageRecord,
+    canonical_exact_group_id,
+    validate_exact_identity,
+)
 from .spec import DatasetSpec
 
 IMAGE_EXTENSIONS = frozenset({".jpg", ".jpeg", ".png"})
-
-
-class DisjointSet:
-    def __init__(self, size: int) -> None:
-        self.parent = list(range(size))
-        self.rank = [0] * size
-
-    def find(self, item: int) -> int:
-        while self.parent[item] != item:
-            self.parent[item] = self.parent[self.parent[item]]
-            item = self.parent[item]
-        return item
-
-    def union(self, left: int, right: int) -> None:
-        left_root = self.find(left)
-        right_root = self.find(right)
-        if left_root == right_root:
-            return
-        if self.rank[left_root] < self.rank[right_root]:
-            left_root, right_root = right_root, left_root
-        self.parent[right_root] = left_root
-        if self.rank[left_root] == self.rank[right_root]:
-            self.rank[left_root] += 1
 
 
 def sha256_file(path: Path, chunk_size: int = 1024 * 1024) -> str:
@@ -130,44 +112,51 @@ def scan_dataset(
     return records, errors, unexpected_directories
 
 
-def group_duplicates(
+def group_exact_duplicates(records: Iterable[ImageRecord]) -> list[ImageRecord]:
+    """Assign split groups using cryptographic identity only.
+
+    Difference hashes are deliberately excluded from automatic grouping. A
+    perceptual hash is a useful review signal, but it is not an identity key:
+    pairwise similarities can form long transitive chains whose endpoints are
+    not visually similar.
+    """
+
+    return [record.with_exact_group(canonical_exact_group_id(record.sha256)) for record in records]
+
+
+def visual_review_candidates(
     records: Iterable[ImageRecord],
-    near_hamming: int = 2,
-) -> list[ImageRecord]:
-    if not 0 <= near_hamming <= 64:
-        raise ValueError("near_hamming must be between 0 and 64")
-    items = list(records)
-    sets = DisjointSet(len(items))
-    by_digest: dict[str, int] = {}
-    for index, record in enumerate(items):
-        previous = by_digest.setdefault(record.sha256, index)
-        sets.union(index, previous)
+    max_hamming: int = 2,
+) -> list[dict[str, Any]]:
+    """Return direct perceptual-hash pairs for manual review.
 
-    for left in range(len(items)):
-        left_record = items[left]
-        for right in range(left + 1, len(items)):
-            right_record = items[right]
-            if left_record.sha256 == right_record.sha256:
+    Each pair is evaluated independently. Candidates never alter
+    ``exact_group_id`` and therefore never become split constraints without a
+    separately reviewed identity source.
+    """
+
+    if not 0 <= max_hamming <= 64:
+        raise ValueError("max_hamming must be between 0 and 64")
+    items = sorted(records, key=lambda item: item.relative_path)
+    candidates: list[dict[str, Any]] = []
+    for left_index, left in enumerate(items):
+        for right in items[left_index + 1 :]:
+            if left.sha256 == right.sha256:
                 continue
-            if (left_record.width, left_record.height) != (right_record.width, right_record.height):
+            if (left.width, left.height) != (right.width, right.height):
                 continue
-            if (
-                hamming_distance(left_record.difference_hash, right_record.difference_hash)
-                <= near_hamming
-            ):
-                sets.union(left, right)
-
-    members: dict[int, list[int]] = defaultdict(list)
-    for index in range(len(items)):
-        members[sets.find(index)].append(index)
-
-    group_ids: dict[int, str] = {}
-    for root, indices in members.items():
-        signature = "\n".join(sorted({items[index].sha256 for index in indices}))
-        digest = hashlib.sha256(signature.encode("ascii")).hexdigest()[:20]
-        group_ids[root] = f"g-{digest}"
-
-    return [record.with_group(group_ids[sets.find(index)]) for index, record in enumerate(items)]
+            distance = hamming_distance(left.difference_hash, right.difference_hash)
+            if distance <= max_hamming:
+                candidates.append(
+                    {
+                        "left_path": left.relative_path,
+                        "right_path": right.relative_path,
+                        "left_label": left.label,
+                        "right_label": right.label,
+                        "hamming_distance": distance,
+                    }
+                )
+    return candidates
 
 
 def verification_report(
@@ -175,17 +164,15 @@ def verification_report(
     spec: DatasetSpec,
     errors: list[dict[str, str]] | None = None,
     unexpected_directories: list[str] | None = None,
-    near_hamming: int = 2,
+    visual_review_hamming: int = 2,
 ) -> dict[str, Any]:
     items = list(records)
     errors = errors or []
     unexpected_directories = unexpected_directories or []
     counts = Counter(record.label for record in items)
     by_digest: dict[str, list[ImageRecord]] = defaultdict(list)
-    by_group: dict[str, list[ImageRecord]] = defaultdict(list)
     for record in items:
         by_digest[record.sha256].append(record)
-        by_group[record.group_id].append(record)
 
     exact_groups = [
         {
@@ -196,18 +183,13 @@ def verification_report(
         for digest, members in sorted(by_digest.items())
         if len(members) > 1
     ]
-    near_groups = [
-        {
-            "group_id": group_id,
-            "labels": sorted({record.label for record in members}),
-            "paths": sorted(record.relative_path for record in members),
-            "distinct_sha256": len({record.sha256 for record in members}),
-        }
-        for group_id, members in sorted(by_group.items())
-        if len({record.sha256 for record in members}) > 1
-    ]
     cross_label_exact_groups = [group for group in exact_groups if len(group["labels"]) > 1]
-    cross_label_groups = [group for group in near_groups if len(group["labels"]) > 1]
+    review_candidates = visual_review_candidates(items, visual_review_hamming)
+    cross_label_review_candidates = [
+        candidate
+        for candidate in review_candidates
+        if candidate["left_label"] != candidate["right_label"]
+    ]
     expected_counts = spec.expected_counts
     observed_counts = {name: counts.get(name, 0) for name in spec.class_names}
     identity_matches = (
@@ -216,6 +198,7 @@ def verification_report(
         and not errors
         and not unexpected_directories
     )
+    exact_identity_split_ready = identity_matches and not cross_label_exact_groups
     dimensions = Counter(f"{record.width}x{record.height}" for record in items)
     return {
         "dataset": {"name": spec.name, "version": spec.version, "doi": spec.doi},
@@ -224,28 +207,33 @@ def verification_report(
         "observed_total": len(items),
         "expected_class_counts": expected_counts,
         "observed_class_counts": observed_counts,
-        "near_hamming_threshold": near_hamming,
+        "automatic_grouping_policy": "sha256_exact_identity_only",
+        "visual_hash_policy": "direct_pair_review_candidates_only",
+        "visual_review_hamming_threshold": visual_review_hamming,
         "exact_duplicate_group_count": len(exact_groups),
-        "visual_near_duplicate_group_count": len(near_groups),
+        "visual_review_candidate_pair_count": len(review_candidates),
         "cross_label_exact_group_count": len(cross_label_exact_groups),
-        "cross_label_visual_group_count": len(cross_label_groups),
+        "cross_label_visual_review_candidate_pair_count": len(cross_label_review_candidates),
+        "manual_visual_review_required": bool(review_candidates),
+        "exact_identity_split_ready": exact_identity_split_ready,
         "images_with_embedded_metadata": sum(record.has_exif for record in items),
         "dimensions": dict(sorted(dimensions.items())),
         "unexpected_directories": unexpected_directories,
         "unreadable_images": errors,
         "exact_duplicate_groups": exact_groups,
-        "visual_near_duplicate_groups": near_groups,
+        "visual_review_candidate_pairs": review_candidates,
         "cross_label_exact_groups": cross_label_exact_groups,
-        "cross_label_visual_groups": cross_label_groups,
+        "cross_label_visual_review_candidate_pairs": cross_label_review_candidates,
     }
 
 
 def write_manifest(records: Iterable[ImageRecord], path: Path) -> None:
+    items = validate_exact_identity(records)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as stream:
         writer = csv.DictWriter(stream, fieldnames=MANIFEST_FIELDS)
         writer.writeheader()
-        for record in sorted(records, key=lambda item: item.relative_path):
+        for record in sorted(items, key=lambda item: item.relative_path):
             writer.writerow(
                 {
                     "relative_path": record.relative_path,
@@ -257,15 +245,26 @@ def write_manifest(records: Iterable[ImageRecord], path: Path) -> None:
                     "height": record.height,
                     "color_mode": record.color_mode,
                     "has_exif": int(record.has_exif),
-                    "group_id": record.group_id,
+                    "exact_group_id": record.exact_group_id,
                 }
             )
 
 
 def read_manifest(path: Path) -> list[ImageRecord]:
     with path.open(newline="", encoding="utf-8") as stream:
-        rows = list(csv.DictReader(stream))
-    return [
+        reader = csv.DictReader(stream)
+        fields = reader.fieldnames or []
+        if len(fields) != len(set(fields)):
+            raise ValueError("Manifest contains duplicate column names")
+        missing = sorted(set(MANIFEST_FIELDS) - set(fields))
+        if missing:
+            if "group_id" in fields and "exact_group_id" in missing:
+                raise ValueError(
+                    "Legacy manifest schema is not accepted; regenerate it with the verify command"
+                )
+            raise ValueError("Manifest is missing required columns: " + ", ".join(missing))
+        rows = list(reader)
+    records = [
         ImageRecord(
             relative_path=row["relative_path"],
             label=row["label"],
@@ -276,7 +275,8 @@ def read_manifest(path: Path) -> list[ImageRecord]:
             height=int(row["height"]),
             color_mode=row["color_mode"],
             has_exif=row["has_exif"] in {"1", "true", "True"},
-            group_id=row["group_id"],
+            exact_group_id=row["exact_group_id"],
         )
         for row in rows
     ]
+    return validate_exact_identity(records)

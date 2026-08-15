@@ -30,11 +30,11 @@
     }
   },
   "known_limitations": [
-    "The recorded split was image-level and did not group exact or visual near-duplicates.",
+    "The recorded split was image-level and did not enforce exact-copy grouping.",
+    "Perceptual-hash review candidates were not adjudicated for the recorded split.",
     "Five exact duplicate pairs were later identified within the Viral Pneumonia class.",
     "Patient identifiers were unavailable, so patient-level independence was not established.",
     "No external cohort, calibration study or uncertainty analysis was recorded.",
     "These values are retained for provenance and are not fresh benchmark results."
   ]
 }
-

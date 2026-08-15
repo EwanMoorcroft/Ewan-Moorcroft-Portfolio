@@ -2,7 +2,12 @@
 
 from __future__ import annotations
 
+import re
+from collections.abc import Iterable
 from dataclasses import dataclass, replace
+
+SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
+EXACT_GROUP_PREFIX = "sha256-"
 
 
 @dataclass(frozen=True, slots=True)
@@ -18,10 +23,32 @@ class ImageRecord:
     height: int
     color_mode: str
     has_exif: bool = False
-    group_id: str = ""
+    exact_group_id: str = ""
 
-    def with_group(self, group_id: str) -> ImageRecord:
-        return replace(self, group_id=group_id)
+    def with_exact_group(self, exact_group_id: str) -> ImageRecord:
+        return replace(self, exact_group_id=exact_group_id)
+
+
+def canonical_exact_group_id(sha256: str) -> str:
+    """Return the only valid automatic group identifier for one digest."""
+
+    if SHA256_PATTERN.fullmatch(sha256) is None:
+        raise ValueError("sha256 must be exactly 64 lowercase hexadecimal characters")
+    return f"{EXACT_GROUP_PREFIX}{sha256}"
+
+
+def validate_exact_identity(records: Iterable[ImageRecord]) -> list[ImageRecord]:
+    """Fail closed unless every record uses the canonical digest-derived group."""
+
+    items = list(records)
+    for index, record in enumerate(items):
+        expected_group = canonical_exact_group_id(record.sha256)
+        if record.exact_group_id != expected_group:
+            raise ValueError(
+                "Exact identity invariant failed for record "
+                f"{index} ({record.relative_path!r}): exact_group_id must be {expected_group!r}"
+            )
+    return items
 
 
 MANIFEST_FIELDS = (
@@ -34,5 +61,5 @@ MANIFEST_FIELDS = (
     "height",
     "color_mode",
     "has_exif",
-    "group_id",
+    "exact_group_id",
 )

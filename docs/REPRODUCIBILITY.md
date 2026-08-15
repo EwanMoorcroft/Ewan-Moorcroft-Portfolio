@@ -31,7 +31,7 @@ and `pip` can be used instead.
 |---|---|---|
 | Tree LiDAR | Aggregate v2 tables, route manifest, evaluator, figures | Raw point clouds and prediction arrays |
 | Chest X-ray | Source specification, duplicate evidence, preparation code | 3,475 source images and checkpoints |
-| FPL | Deterministic synthetic generator and protocol code | Downloaded gameweek snapshots, fitted models, generated reports |
+| FPL | Protocol code, retained aggregate evaluation, source manifest | Downloaded gameweek snapshots, row predictions and fitted models |
 | LunarLander | Retained figures and scoped metric JSON | Model checkpoint and new run outputs |
 | Neural chunking | Model/evaluator code, figures, scoped metric JSON | Source corpus, checkpoints, new run outputs |
 
@@ -50,4 +50,3 @@ distinguished in the project limitations.
 The forecasting project saves a transparent JSON model artifact instead of executable pickle data.
 PyTorch projects write state dictionaries and metadata for locally produced checkpoints. Only trusted
 local checkpoints should be loaded.
-

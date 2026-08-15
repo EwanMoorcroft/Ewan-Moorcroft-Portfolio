@@ -13,6 +13,7 @@ from .data import load_gameweeks, validate_sequence
 from .errors import ForecastingError
 from .evaluation import evaluate_models
 from .features import build_training_frame
+from .historical import import_historical_gameweeks
 from .models import fit_ridge
 from .report import write_evaluation_html
 from .synthetic import write_synthetic_gameweeks
@@ -73,6 +74,18 @@ def _parser() -> argparse.ArgumentParser:
     synthetic.add_argument("--gameweeks", type=int, default=10)
     synthetic.add_argument("--players", type=int, default=24)
     synthetic.add_argument("--seed", type=int, default=42)
+
+    historical = commands.add_parser(
+        "import-vaastav",
+        help="convert a pinned historical CSV interval into completed gameweek JSON",
+    )
+    historical.add_argument("--source-dir", required=True)
+    historical.add_argument("--output-dir", required=True)
+    historical.add_argument("--manifest", required=True)
+    historical.add_argument("--season", required=True)
+    historical.add_argument("--source-revision", required=True)
+    historical.add_argument("--gameweek-start", required=True, type=int)
+    historical.add_argument("--gameweek-end", required=True, type=int)
     return parser
 
 
@@ -91,6 +104,29 @@ def run(args: argparse.Namespace) -> dict[str, object]:
             "gameweeks": len(paths),
             "players": args.players,
             "seed": args.seed,
+        }
+
+    if args.command == "import-vaastav":
+        result = import_historical_gameweeks(
+            args.source_dir,
+            args.output_dir,
+            season=args.season,
+            source_revision=args.source_revision,
+            gameweek_start=args.gameweek_start,
+            gameweek_end=args.gameweek_end,
+        )
+        manifest = Path(args.manifest)
+        manifest.parent.mkdir(parents=True, exist_ok=True)
+        manifest.write_text(
+            json.dumps(result.manifest, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        return {
+            "command": "import-vaastav",
+            "gameweeks": len(result.paths),
+            "gameweek_start": args.gameweek_start,
+            "gameweek_end": args.gameweek_end,
+            "source_files_sha256": result.manifest["source_files_sha256"],
         }
 
     protocol = _protocol(args.config)

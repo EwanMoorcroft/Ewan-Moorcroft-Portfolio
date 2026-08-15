@@ -37,6 +37,14 @@ cxr-benchmark verify \
 ```
 
 The verifier checks identity, class counts, readability, dimensions, SHA-256
-digests, embedded metadata presence, exact duplicates and conservative visual
-near-duplicate groups. It stores only relative paths and derived metadata.
+digests, embedded metadata presence and exact duplicates. It assigns automatic
+split groups only from exact SHA-256 identity. A 64-bit difference hash reports
+direct visual-review candidate pairs, but those candidates are never merged or
+used as automatic split constraints. The output stores only relative paths and
+derived metadata.
 
+The derived CSV contract is `exact-identity-v1`: `sha256` must be exactly 64 lowercase hexadecimal
+characters and `exact_group_id` must equal `sha256-<sha256>`. Legacy `group_id` manifests are
+rejected and should be regenerated. The split command validates this invariant before allocation,
+writes no split CSV unless leakage and class-coverage checks pass, and every training or evaluation
+read repeats the cross-partition identity audit.
