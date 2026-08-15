@@ -6,13 +6,18 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from fpl_forecasting.data import load_gameweeks
+from fpl_forecasting.contracts import canonical_json_sha256
+from fpl_forecasting.data import GameweekSnapshot, load_gameweeks
 from fpl_forecasting.errors import LeakageError
 from fpl_forecasting.features import (
     FEATURE_COLUMNS,
+    FEATURE_SCHEMA_SHA256,
+    assert_forecast_frame,
     assert_leak_free_frame,
+    build_forecast_frame,
     build_training_frame,
     feature_matrix,
+    feature_schema_payload,
 )
 from fpl_forecasting.synthetic import write_synthetic_gameweeks
 
@@ -85,3 +90,52 @@ def test_boundary_guard_rejects_future_facing_extra_column(
     frame["future_points"] = 0.0
     with pytest.raises(LeakageError, match="future-facing"):
         assert_leak_free_frame(frame)
+
+
+def test_feature_schema_hash_covers_order_and_semantics() -> None:
+    schema = feature_schema_payload()
+    ordered = schema["ordered_features"]
+    assert isinstance(ordered, list)
+    assert [item["name"] for item in ordered] == list(FEATURE_COLUMNS)
+    assert canonical_json_sha256(schema) == FEATURE_SCHEMA_SHA256
+
+    changed = feature_schema_payload()
+    changed["as_of_meaning"] = "after target gameweek"
+    assert canonical_json_sha256(changed) != FEATURE_SCHEMA_SHA256
+
+
+def test_forecast_frame_uses_all_history_and_only_latest_players(
+    synthetic_snapshots,
+) -> None:
+    latest = synthetic_snapshots[-1]
+    latest_players = dict(latest.players)
+    latest_players.pop(1)
+    challenged = [
+        *synthetic_snapshots[:-1],
+        GameweekSnapshot(
+            gameweek=latest.gameweek,
+            season_id=latest.season_id,
+            players=latest_players,
+            source=latest.source,
+        ),
+    ]
+
+    frame = build_forecast_frame(challenged)
+    assert set(frame["player_id"]) == set(latest_players)
+    assert set(frame["as_of_gw"]) == {latest.gameweek}
+    assert set(frame["target_gw"]) == {latest.gameweek + 1}
+    expected_sum = sum(snapshot.players[2].total_points for snapshot in challenged)
+    observed = frame.loc[frame["player_id"] == 2, "season_points_sum"].item()
+    assert observed == expected_sum
+
+
+def test_frame_guards_reject_boolean_numeric_values(synthetic_snapshots) -> None:
+    training = build_training_frame(synthetic_snapshots).astype(object)
+    training.loc[0, FEATURE_COLUMNS[0]] = True
+    with pytest.raises(LeakageError, match="cannot be boolean"):
+        assert_leak_free_frame(training)
+
+    forecast = build_forecast_frame(synthetic_snapshots).astype(object)
+    forecast.loc[0, "player_id"] = True
+    with pytest.raises(LeakageError, match="cannot be boolean"):
+        assert_forecast_frame(forecast)

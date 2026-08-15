@@ -8,10 +8,10 @@ player's next-gameweek points and treats that time boundary as part of the data 
 
 ## Question and approach
 
-The pipeline reads completed Fantasy Premier League live-gameweek JSON files, validates their
-sequence, creates strictly as-of player features, and predicts points in the next completed
-gameweek. Standardized ridge regression is compared with three simple baselines under an
-expanding-window evaluation.
+The pipeline reads canonical season-tagged snapshots converted from completed Fantasy Premier League
+live-gameweek payloads. It validates their sequence, creates strictly as-of player features, and
+predicts points in the next completed gameweek. Standardized ridge regression is compared with three
+simple baselines under an expanding-window evaluation.
 
 The repository contains no downloaded match data and no trained model. It retains one compact,
 real-data evaluation report with an auditable source manifest. A deterministic synthetic generator
@@ -28,7 +28,8 @@ supports local checks and examples without network access.
 - Model inputs come from a fixed numeric allow-list. Identifiers, target values, and future-facing columns cannot enter training.
 - Evaluation uses expanding train windows followed by untouched later gameweeks.
 - Results include MAE and RMSE for point error, plus Spearman, NDCG@K, and top-K overlap for recommendation quality.
-- Saved ridge artifacts are plain JSON, not executable pickle files.
+- Saved ridge artifacts are plain JSON, not executable pickle files. A saved model artifact is bound
+  to one season, one effective configuration, and one semantic feature schema.
 
 ## Historical evaluation on public data
 
@@ -55,8 +56,9 @@ these results. See the [evaluation report](reports/retained/2024-25-gw01-15-eval
 [source manifest](reports/retained/2024-25-gw01-15-source-manifest.json) for exact folds, hashes,
 conversion rules, and per-file checks.
 
-The upstream repository uses an MIT licence for its software, while its licence file states that
-the underlying data belong to the named data providers. This repository therefore retains no
+The upstream repository uses an MIT licence for its software; its [licence
+file](https://github.com/vaastav/Fantasy-Premier-League/blob/a59a43a8343d960a58cbe7a1f9fba2d2ce431856/LICENSE)
+states that the underlying data belong to the named data providers. This repository therefore retains no
 source CSVs or converted player records. Only aggregate metrics and file-level provenance are kept.
 
 ## Quick start
@@ -75,6 +77,7 @@ Create a deterministic local example:
 ```bash
 fpl-forecast synthetic \
   --output-dir scratch/synthetic-gameweeks \
+  --season 2025-26 \
   --gameweeks 10 \
   --players 24 \
   --seed 42
@@ -100,9 +103,69 @@ Fit a final ridge model only after reviewing the out-of-fold comparison:
 ```bash
 fpl-forecast train \
   --gameweek-dir scratch/synthetic-gameweeks \
+  --season 2025-26 \
   --config config/default.json \
   --artifact models/ridge.json
 ```
+
+Score the next gameweek from the same completed sequence:
+
+```bash
+fpl-forecast predict \
+  --gameweek-dir scratch/synthetic-gameweeks \
+  --artifact models/ridge.json \
+  --season 2025-26 \
+  --expected-as-of-gw 10 \
+  --completion-status completed \
+  --config config/default.json \
+  --predictions reports/generated/gw11-predictions.json \
+  --manifest reports/generated/gw11-manifest.json
+```
+
+`--expected-as-of-gw` must equal the latest supplied file. `--completion-status completed` is a
+caller declaration; see the [completion boundary](docs/data-contract.md#completion-boundary). The
+command refuses a different season, effective configuration, feature schema, or artifact gameweek.
+It ranks players found in the latest snapshot for gameweek `t+1`, then writes canonical JSON with a
+stable player-ID tie-break.
+
+The manifest records SHA-256 identities for the exact artifact bytes, ordered input snapshots,
+effective configuration, semantic feature schema, and prediction output. It stores file names but
+not machine-local paths or a clock timestamp, so the same inputs produce the same manifest bytes.
+
+Verify and persist that generated batch in a local DuckDB database:
+
+```bash
+fpl-forecast store-batch \
+  --database scratch/forecasts.duckdb \
+  --gameweek-dir scratch/synthetic-gameweeks \
+  --artifact models/ridge.json \
+  --predictions reports/generated/gw11-predictions.json \
+  --manifest reports/generated/gw11-manifest.json
+```
+
+`store-batch` rebuilds the forecast frame and expected output from the supplied snapshots and
+artifact. It verifies the canonical prediction and manifest bytes before one transactional write,
+including the exact hashes of both evidence files. An exact replay returns the same run and
+idempotency identities with `replayed: true`; changed evidence under the same input identity is
+rejected.
+
+The optional local HTTP process starts only after that database exists:
+
+```bash
+fpl-forecast-service \
+  --artifact models/ridge.json \
+  --gameweek-dir scratch/synthetic-gameweeks \
+  --database scratch/forecasts.duckdb \
+  --season 2025-26 \
+  --expected-as-of-gw 10 \
+  --completion-status completed \
+  --config config/default.json
+```
+
+It opens DuckDB read-only, requires the exact loaded model identity to be registered, and provides
+bounded health, model-identity, in-memory prediction, model-filtered stored prediction, and metrics
+endpoints. It has no training, upload, registration, or write route. See [the operational
+contract](docs/operations.md) before exposing it beyond the default loopback address.
 
 The `scratch/`, `data/`, `models/`, and generated report locations are ignored by Git.
 
@@ -127,10 +190,15 @@ default configuration after import. Raw and converted records remain ignored.
 
 ## Input contract
 
-Use one file per completed gameweek, named `gameweek-<number>.json` or `gameweek-<number>-<label>.json`. Each file must follow the public live-gameweek shape:
+Use one file per completed gameweek, named `gameweek-<number>.json` or
+`gameweek-<number>-<label>.json`. Raw FPL live payloads are not accepted directly. Each file must use
+the exact completed-snapshot wrapper:
 
 ```json
 {
+  "snapshot_format": "fpl-completed-gameweek-v1",
+  "season_id": "2025-26",
+  "gameweek": 7,
   "elements": [
     {
       "id": 101,
@@ -145,10 +213,10 @@ Use one file per completed gameweek, named `gameweek-<number>.json` or `gameweek
 }
 ```
 
-The live-gameweek shape has no event-completion flag. Files are therefore treated as
-caller-declared completed snapshots: confirm the event's official finished status before saving
-each file. The validator rejects empty placeholders, but a non-empty in-progress snapshot cannot
-be distinguished from a finished one using this payload alone.
+The wrapper adds the season and gameweek that are absent from the raw live payload. Completion is a
+caller assertion rather than independent verification; see the [completion boundary](docs/data-contract.md#completion-boundary).
+The validator rejects empty placeholders and season or gameweek mismatches. Operational training and
+prediction require the same canonical season, and saved model artifacts cannot be reused across seasons.
 
 `total_points` and `minutes` are required. Missing optional statistics are set to zero. Numeric values must be finite, player IDs must be unique within a gameweek, and the `elements` list cannot be empty. See [the full data contract](docs/data-contract.md).
 
@@ -167,6 +235,10 @@ from a snapshot has no row added to their personal history. Player ID and gamewe
 metadata and are never model inputs. Team, position, current price, fixture difficulty, and
 availability news are absent because the live-gameweek files do not provide trustworthy historical
 as-of versions.
+
+The ordered fields, their `float64` type, window meaning, value meaning, as-of boundary, population,
+and missing-observation meaning form a versioned semantic schema. Its canonical JSON SHA-256 is
+stored in saved model artifacts and checked again before prediction.
 
 ## Evaluation
 
@@ -191,23 +263,54 @@ Forecasts remain uncertain and should not be treated as a guarantee.
 ```text
 config/default.json          Protocol settings
 demo/index.html              Self-contained visual overview
-docs/                        Data, evaluation, and model notes
+docs/                        Data, evaluation, model, and operational notes
 reports/retained/            Compact metrics and source audit evidence
-src/fpl_forecasting/         Validation, features, splits, metrics, model, CLI
+src/fpl_forecasting/         Validation, modelling, batch storage, CLI, and local service
 tests/                       Deterministic contract and end-to-end checks
 ```
 
-The Docker build pins the three direct runtime dependencies in `requirements.txt`. CI uses
+The Docker build pins the direct runtime dependencies in `requirements.txt`. CI uses
 `requirements-dev.txt`, which adds pinned test tools. These files are not a hash-locked record of
 every transitive package; compatible ranges remain in `pyproject.toml` for ordinary installation.
 
 ## Docker
 
-The optional image uses a slim Python runtime and runs the CLI as an unprivileged user. Build it locally, then generate the same deterministic fixture on every run:
+The optional image uses a slim Python runtime and runs as an unprivileged user. Build it locally,
+then keep generated evidence in a mounted scratch directory:
 
 ```bash
 docker build -t fpl-forecast .
-docker run --rm fpl-forecast synthetic --output-dir /tmp/gameweeks --gameweeks 8 --players 12 --seed 42
+mkdir -p scratch/container
+chmod 0777 scratch/container
+docker run --rm -v "${PWD}/scratch/container:/work" fpl-forecast \
+  synthetic --output-dir /work/gameweeks --season 2025-26 \
+  --gameweeks 10 --players 24 --seed 42
+docker run --rm -v "${PWD}/scratch/container:/work" fpl-forecast \
+  train --gameweek-dir /work/gameweeks --artifact /work/ridge.json --season 2025-26
+docker run --rm -v "${PWD}/scratch/container:/work" fpl-forecast \
+  predict --gameweek-dir /work/gameweeks --artifact /work/ridge.json --season 2025-26 \
+  --expected-as-of-gw 10 --completion-status completed \
+  --predictions /work/predictions.json --manifest /work/manifest.json
+docker run --rm -v "${PWD}/scratch/container:/work" fpl-forecast \
+  store-batch --database /work/forecasts.duckdb --gameweek-dir /work/gameweeks \
+  --artifact /work/ridge.json --predictions /work/predictions.json \
+  --manifest /work/manifest.json
 ```
 
-This is a packaging smoke check, not a hosted-service claim. The temporary gameweek files are removed with the container.
+The permission change applies only to this disposable ignored scratch directory and lets the fixed
+unprivileged container UID write the bind-mounted files. The service mount below is read-only.
+
+Start the same read-only local service in the foreground:
+
+```bash
+docker run --rm -p 127.0.0.1:8000:8000 \
+  -v "${PWD}/scratch/container:/work:ro" \
+  --entrypoint fpl-forecast-service fpl-forecast \
+  --artifact /work/ridge.json --gameweek-dir /work/gameweeks \
+  --database /work/forecasts.duckdb --season 2025-26 \
+  --expected-as-of-gw 10 --completion-status completed \
+  --host 0.0.0.0 --port 8000
+```
+
+The port is published to host loopback only. CI repeats the synthetic train, predict, store, and
+health endpoint without downloading FPL data.

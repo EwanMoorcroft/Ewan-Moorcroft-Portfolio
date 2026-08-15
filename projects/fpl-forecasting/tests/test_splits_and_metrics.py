@@ -110,3 +110,25 @@ def test_ranking_helpers_reject_fractional_cutoffs() -> None:
         top_k_overlap([1.0, 2.0], [1.0, 2.0], 1.5)
     with pytest.raises(DataContractError, match="positive integer"):
         evaluate_predictions([1.0, 2.0], [1.0, 2.0], [6, 6], top_k=1.5)
+
+
+def test_metrics_and_splits_reject_overflowing_integers_cleanly(
+    synthetic_snapshots,
+) -> None:
+    enormous = 10**10_000
+    with pytest.raises(DataContractError, match="finite numeric vectors"):
+        evaluate_predictions([enormous], [1], [1], top_k=1)
+    with pytest.raises(DataContractError, match="positive integer"):
+        evaluate_predictions([1], [1], [enormous], top_k=1)
+
+    frame = build_training_frame(synthetic_snapshots).astype({"target_gw": object})
+    frame.loc[0, "target_gw"] = enormous
+    with pytest.raises(SplitError, match="finite"):
+        list(
+            rolling_origin_splits(
+                frame,
+                minimum_train_gameweeks=4,
+                test_gameweeks_per_fold=1,
+                step=1,
+            )
+        )

@@ -23,7 +23,7 @@
     <div class="shell">
       <span class="tag">FPL forecasting</span>
       <h1>Predict the next gameweek from completed data.</h1>
-      <p>The pipeline rejects empty future files, stops every feature at the as-of gameweek, and compares ridge regression with recent-form baselines in time order.</p>
+      <p>The pipeline requires season-wrapped completed snapshots, stops every feature at the as-of gameweek, and compares ridge regression with recent-form baselines in time order.</p>
       <div class="actions"><a class="button primary" href="../README.md">Read the guide</a><a class="button secondary" href="../docs/methodology.md">Inspect the protocol</a></div>
     </div>
   </header>
@@ -33,21 +33,21 @@
       <h2>The time boundary</h2>
       <p class="intro">The difficult part is not fitting a regressor. It is proving that every input existed before the outcome and that every reported prediction came from a later gameweek.</p>
       <div class="grid">
-        <article class="card"><span class="number">1</span><h3>Strict inputs</h3><p>Empty, duplicate, gapped, malformed, and low-coverage gameweeks fail before feature construction.</p></article>
+        <article class="card"><span class="number">1</span><h3>Strict inputs</h3><p>Unwrapped, empty, duplicate, gapped, cross-season, malformed, and low-coverage snapshots fail before feature construction.</p></article>
         <article class="card"><span class="number">2</span><h3>As-of features</h3><p>Latest form, rolling windows, and season totals stop at gameweek <em>t</em>; the target comes from completed <em>t+1</em>.</p></article>
-        <article class="card"><span class="number">3</span><h3>Later gameweeks</h3><p>Expanding train windows predict later, non-overlapping gameweeks and keep every out-of-fold row for scoring.</p></article>
+        <article class="card"><span class="number">3</span><h3>Bound deployment</h3><p>The final artifact records its season, feature schema, protocol configuration, and training boundary.</p></article>
       </div>
     </section>
 
     <section class="section">
       <h2>From files to report</h2>
-      <p class="intro">One CLI covers deterministic examples, validation, table construction, evaluation, reporting, and a safe final artifact.</p>
+      <p class="intro">The command-line tools cover deterministic examples, validation, evaluation, safe artifacts, hashed batch evidence, and verified local persistence.</p>
       <div class="flow" aria-label="Pipeline flow">
-        <div class="step"><small>Input</small><strong>Completed live-gameweek JSON</strong></div>
+        <div class="step"><small>Input</small><strong>Season-tagged completed snapshots</strong></div>
         <div class="step"><small>Gate</small><strong>Sequence and coverage validation</strong></div>
         <div class="step"><small>Build</small><strong>Fixed as-of feature contract</strong></div>
         <div class="step"><small>Evaluate</small><strong>Rolling baselines and ridge</strong></div>
-        <div class="step"><small>Deliver</small><strong>JSON, CSV, and local HTML</strong></div>
+        <div class="step"><small>Operate</small><strong>Hashed JSON, DuckDB, and a read-only local API</strong></div>
       </div>
     </section>
 
@@ -60,12 +60,14 @@
           <li>No identifier or target enters the feature matrix</li>
           <li>No test gameweek precedes training data</li>
           <li>No executable pickle artifact is loaded</li>
+          <li>No stored batch is served under a different model identity</li>
         </ul>
       </div>
       <div class="panel light">
         <h2>Included</h2>
         <p><strong>Focused tests</strong> cover the data contract, future-invariance, boundary guards, chronological splits, ranking metrics, end-to-end evaluation, CLI flow, and artifact round trips.</p>
-        <p><strong>No source records or fitted model ship.</strong> A compact historical aggregate evaluation and source manifest are retained. Run <code>fpl-forecast synthetic</code> for a deterministic example, then replace it with separately obtained completed-gameweek files.</p>
+        <p><strong>No source records or fitted model ship.</strong> A compact historical aggregate evaluation and source manifest are retained. Run <code>fpl-forecast synthetic --season 2025-26</code> for a deterministic example, then replace it with explicitly wrapped completed-gameweek files.</p>
+        <p><strong>The service is deliberately narrow.</strong> It opens one already prepared DuckDB database read-only, binds stored results to the exact model ID, and has no HTTP route for training, uploads, registration, or writes.</p>
         <p>The generated report is a single local HTML file with no external scripts, fonts, trackers, or network calls.</p>
       </div>
     </section>
