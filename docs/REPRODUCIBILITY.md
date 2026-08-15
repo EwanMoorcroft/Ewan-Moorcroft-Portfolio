@@ -34,6 +34,7 @@ and `pip` can be used instead.
 | FPL | Protocol code, retained aggregate evaluation, source manifest | Downloaded gameweek snapshots, row predictions and fitted models |
 | LunarLander | Retained figures and scoped metric JSON | Model checkpoint and new run outputs |
 | Neural chunking | Model/evaluator code, figures, scoped metric JSON | Source corpus, checkpoints, new run outputs |
+| Academic geospatial background | Public-safe skills and methods summary | Source reports, raw observations, instructional material, personal identifiers and third-party datasets |
 
 The X-ray corpus is the CC BY 4.0 [Chest X-Ray V1 dataset](https://data.mendeley.com/datasets/p5rm59k7ph/1),
 DOI `10.17632/p5rm59k7ph.1`. The project verifier checks its expected class counts before preparation.
