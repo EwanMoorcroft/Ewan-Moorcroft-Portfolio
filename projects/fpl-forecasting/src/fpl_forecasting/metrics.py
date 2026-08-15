@@ -41,8 +41,13 @@ class MetricBundle:
 
 
 def _arrays(actual: Iterable[float], predicted: Iterable[float]) -> tuple[np.ndarray, np.ndarray]:
-    y_true = np.asarray(list(actual), dtype=float)
-    y_pred = np.asarray(list(predicted), dtype=float)
+    try:
+        y_true = np.asarray(list(actual), dtype=float)
+        y_pred = np.asarray(list(predicted), dtype=float)
+    except (OverflowError, TypeError, ValueError) as exc:
+        raise DataContractError(
+            "Actual and predicted values must be finite numeric vectors"
+        ) from exc
     if y_true.ndim != 1 or y_pred.ndim != 1 or len(y_true) != len(y_pred):
         raise DataContractError("Actual and predicted values must be equal-length vectors")
     if len(y_true) == 0:
@@ -60,7 +65,12 @@ def _gameweek_groups(values: Iterable[int], expected_length: int) -> np.ndarray:
     for index, value in enumerate(materialized):
         if isinstance(value, bool) or not isinstance(value, Real):
             raise DataContractError(f"target_gameweeks[{index}] must be an integer")
-        numeric = float(value)
+        try:
+            numeric = float(value)
+        except (OverflowError, TypeError, ValueError) as exc:
+            raise DataContractError(
+                f"target_gameweeks[{index}] must be a positive integer"
+            ) from exc
         if not math.isfinite(numeric) or numeric != int(numeric) or numeric < 1:
             raise DataContractError(f"target_gameweeks[{index}] must be a positive integer")
         groups.append(int(numeric))

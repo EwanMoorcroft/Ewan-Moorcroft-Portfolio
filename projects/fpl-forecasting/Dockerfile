@@ -24,6 +24,7 @@ RUN groupadd --gid 10001 --system forecast \
 COPY --from=builder /install /usr/local
 
 WORKDIR /workspace
+EXPOSE 8000
 USER forecast
 
 ENTRYPOINT ["fpl-forecast"]

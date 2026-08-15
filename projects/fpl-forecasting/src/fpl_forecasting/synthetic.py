@@ -8,14 +8,23 @@ import random
 from pathlib import Path
 from typing import Any
 
+from .contracts import validate_season_id
+from .data import completed_snapshot_payload
 from .errors import DataContractError
+
+DEFAULT_SYNTHETIC_SEASON_ID = "2024-25"
 
 
 def generate_synthetic_gameweeks(
-    *, gameweeks: int = 10, players: int = 24, seed: int = 42
+    *,
+    gameweeks: int = 10,
+    players: int = 24,
+    seed: int = 42,
+    season_id: str = DEFAULT_SYNTHETIC_SEASON_ID,
 ) -> dict[int, dict[str, Any]]:
     """Generate a small sequence with persistence, form cycles, and absences."""
 
+    season = validate_season_id(season_id)
     if gameweeks < 2:
         raise DataContractError("Synthetic data requires at least two gameweeks")
     if players < 4:
@@ -63,7 +72,11 @@ def generate_synthetic_gameweeks(
                     },
                 }
             )
-        payloads[gameweek] = {"elements": elements}
+        payloads[gameweek] = completed_snapshot_payload(
+            season_id=season,
+            gameweek=gameweek,
+            elements=elements,
+        )
     return payloads
 
 
@@ -73,12 +86,18 @@ def write_synthetic_gameweeks(
     gameweeks: int = 10,
     players: int = 24,
     seed: int = 42,
+    season_id: str = DEFAULT_SYNTHETIC_SEASON_ID,
 ) -> list[Path]:
     """Write deterministic fixtures using the same JSON shape as FPL live data."""
 
     destination = Path(directory)
     destination.mkdir(parents=True, exist_ok=True)
-    payloads = generate_synthetic_gameweeks(gameweeks=gameweeks, players=players, seed=seed)
+    payloads = generate_synthetic_gameweeks(
+        gameweeks=gameweeks,
+        players=players,
+        seed=seed,
+        season_id=season_id,
+    )
     paths: list[Path] = []
     for gameweek, payload in payloads.items():
         path = destination / f"gameweek-{gameweek:02d}.json"

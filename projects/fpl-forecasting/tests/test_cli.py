@@ -20,11 +20,14 @@ def test_cli_synthetic_validate_and_evaluate(tmp_path: Path, capsys) -> None:
                 "12",
                 "--seed",
                 "9",
+                "--season",
+                "2024-25",
             ]
         )
         == 0
     )
-    capsys.readouterr()
+    generated = json.loads(capsys.readouterr().out)
+    assert generated["season_id"] == "2024-25"
 
     assert main(["validate", "--gameweek-dir", str(gameweeks)]) == 0
     validated = json.loads(capsys.readouterr().out)

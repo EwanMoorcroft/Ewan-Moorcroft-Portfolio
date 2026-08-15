@@ -9,7 +9,24 @@ from numbers import Integral, Real
 from pathlib import Path
 from typing import Any
 
+from .contracts import (
+    canonical_json_sha256,
+    object_without_duplicate_keys,
+    reject_nonfinite_json_constant,
+)
 from .errors import DataContractError
+
+
+def _finite_real(value: Any, field: str) -> float:
+    if isinstance(value, bool) or not isinstance(value, Real):
+        raise DataContractError(f"{field} must be numeric")
+    try:
+        number = float(value)
+    except (OverflowError, TypeError, ValueError) as exc:
+        raise DataContractError(f"{field} must be finite") from exc
+    if not math.isfinite(number):
+        raise DataContractError(f"{field} must be finite")
+    return number
 
 
 @dataclass(frozen=True)
@@ -43,25 +60,18 @@ class ProtocolConfig:
             raise DataContractError("split_step must be positive")
         if self.split_step < self.test_gameweeks_per_fold:
             raise DataContractError("split_step must be at least test_gameweeks_per_fold")
-        coverage = self.minimum_adjacent_player_coverage
-        if (
-            isinstance(coverage, bool)
-            or not isinstance(coverage, Real)
-            or not math.isfinite(float(coverage))
-            or not 0 < coverage <= 1
-        ):
+        coverage = _finite_real(
+            self.minimum_adjacent_player_coverage,
+            "minimum_adjacent_player_coverage",
+        )
+        if not 0 < coverage <= 1:
             raise DataContractError(
                 "minimum_adjacent_player_coverage must be in the interval (0, 1]"
             )
         if self.ranking_top_k < 1:
             raise DataContractError("ranking_top_k must be positive")
-        alpha = self.ridge_alpha
-        if (
-            isinstance(alpha, bool)
-            or not isinstance(alpha, Real)
-            or not math.isfinite(float(alpha))
-            or alpha < 0
-        ):
+        alpha = _finite_real(self.ridge_alpha, "ridge_alpha")
+        if alpha < 0:
             raise DataContractError("ridge_alpha must be finite and non-negative")
         if self.random_seed < 0:
             raise DataContractError("random_seed must be non-negative")
@@ -69,9 +79,23 @@ class ProtocolConfig:
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
 
+    def sha256(self) -> str:
+        """Hash the validated effective configuration, independent of input key order."""
+
+        return canonical_json_sha256(self.to_dict())
+
     @classmethod
     def from_json(cls, path: str | Path) -> ProtocolConfig:
-        payload = json.loads(Path(path).read_text(encoding="utf-8"))
+        try:
+            payload = json.loads(
+                Path(path).read_text(encoding="utf-8"),
+                object_pairs_hook=object_without_duplicate_keys,
+                parse_constant=reject_nonfinite_json_constant,
+            )
+        except json.JSONDecodeError as exc:
+            raise DataContractError(f"Invalid configuration JSON: {exc.msg}") from exc
+        except ValueError as exc:
+            raise DataContractError("Invalid numeric value in configuration JSON") from exc
         if not isinstance(payload, dict):
             raise DataContractError("Configuration must be a JSON object")
         allowed = set(cls.__dataclass_fields__)

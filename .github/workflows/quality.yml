@@ -95,3 +95,96 @@ jobs:
       - run: >-
           docker run --rm liverpool-access:ci
           fixture --output-dir /tmp/fixture --size 5
+
+  fpl-container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Build FPL image
+        run: docker build -t fpl-forecast:ci .
+        working-directory: projects/fpl-forecasting
+      - name: Confirm non-root runtime
+        run: docker run --rm --entrypoint sh fpl-forecast:ci -c 'test "$(id -u)" -ne 0'
+      - name: Prepare writable synthetic workspace
+        run: install -d -m 0777 /tmp/fpl-container-ci
+      - name: Generate synthetic completed gameweeks
+        run: >-
+          docker run --rm
+          -v /tmp/fpl-container-ci:/work
+          fpl-forecast:ci synthetic
+          --output-dir /work/gameweeks
+          --season 2025-26
+          --gameweeks 10
+          --players 24
+          --seed 42
+      - name: Train season-bound artifact
+        run: >-
+          docker run --rm
+          -v /tmp/fpl-container-ci:/work
+          fpl-forecast:ci train
+          --gameweek-dir /work/gameweeks
+          --artifact /work/ridge.json
+          --season 2025-26
+      - name: Generate deterministic batch evidence
+        run: >-
+          docker run --rm
+          -v /tmp/fpl-container-ci:/work
+          fpl-forecast:ci predict
+          --gameweek-dir /work/gameweeks
+          --artifact /work/ridge.json
+          --season 2025-26
+          --expected-as-of-gw 10
+          --completion-status completed
+          --predictions /work/predictions.json
+          --manifest /work/manifest.json
+      - name: Verify and store batch
+        run: >-
+          docker run --rm
+          -v /tmp/fpl-container-ci:/work
+          fpl-forecast:ci store-batch
+          --database /work/forecasts.duckdb
+          --gameweek-dir /work/gameweeks
+          --artifact /work/ridge.json
+          --predictions /work/predictions.json
+          --manifest /work/manifest.json
+      - name: Start read-only service
+        run: >-
+          docker run --rm -d
+          --name fpl-service-ci
+          -p 127.0.0.1:18000:8000
+          -v /tmp/fpl-container-ci:/work:ro
+          --entrypoint fpl-forecast-service
+          fpl-forecast:ci
+          --artifact /work/ridge.json
+          --gameweek-dir /work/gameweeks
+          --database /work/forecasts.duckdb
+          --season 2025-26
+          --expected-as-of-gw 10
+          --completion-status completed
+          --host 0.0.0.0
+          --port 8000
+      - name: Check service health
+        run: >-
+          curl --fail --silent --show-error
+          --retry 10 --retry-connrefused --retry-all-errors --retry-delay 1 --retry-max-time 45
+          http://127.0.0.1:18000/health
+      - name: Check service model metadata
+        run: curl --fail --silent --show-error http://127.0.0.1:18000/model
+      - name: Check in-memory prediction route
+        run: >-
+          curl --fail --silent --show-error
+          -H 'Content-Type: application/json'
+          --data '{"season_id":"2025-26","as_of_gw":10,"player_ids":[1,2]}'
+          http://127.0.0.1:18000/predict
+      - name: Check stored predictions route
+        run: curl --fail --silent --show-error 'http://127.0.0.1:18000/predictions/2025-26/11?limit=2'
+      - name: Check metrics route
+        run: curl --fail --silent --show-error http://127.0.0.1:18000/metrics
+      - name: Show service logs on failure
+        if: failure()
+        continue-on-error: true
+        run: docker logs fpl-service-ci
+      - name: Stop service
+        if: always()
+        continue-on-error: true
+        run: docker rm -f fpl-service-ci

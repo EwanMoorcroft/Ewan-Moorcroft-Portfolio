@@ -57,10 +57,16 @@ def rolling_origin_splits(
     if step < test_gameweeks_per_fold:
         raise SplitError("step must prevent overlapping test windows")
 
-    values = pd.to_numeric(frame["target_gw"], errors="coerce")
+    try:
+        values = pd.to_numeric(frame["target_gw"], errors="coerce")
+    except (OverflowError, TypeError, ValueError) as exc:
+        raise SplitError("target_gw must be finite") from exc
     if values.isna().any():
         raise SplitError("target_gw must be numeric")
-    numeric_values = values.to_numpy(dtype=float)
+    try:
+        numeric_values = values.to_numpy(dtype=float)
+    except (OverflowError, TypeError, ValueError) as exc:
+        raise SplitError("target_gw must be finite") from exc
     if not np.isfinite(numeric_values).all():
         raise SplitError("target_gw must be finite")
     if (

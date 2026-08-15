@@ -87,6 +87,8 @@ def test_historical_import_aggregates_fixtures_without_filling_absence(tmp_path:
     assert first.players[11].total_points == 5
     assert first.players[11].minutes == 90
     assert result.manifest["source_file_count"] == 2
+    assert result.manifest["season"] == "2024-25"
+    assert "season_id" not in result.manifest
     audits = result.manifest["source_files"]
     assert isinstance(audits, list)
     assert audits[0]["duplicate_fixture_rows"] == 1
@@ -143,5 +145,8 @@ def test_historical_import_output_is_deterministic(tmp_path: Path) -> None:
 
     assert first.manifest == second.manifest
     first_payload = json.loads(first.paths[0].read_text(encoding="utf-8"))
+    assert first_payload["snapshot_format"] == "fpl-completed-gameweek-v1"
+    assert first_payload["season_id"] == "2024-25"
+    assert first_payload["gameweek"] == 1
     assert [record["id"] for record in first_payload["elements"]] == [11, 12]
     assert first.paths[0].read_bytes() == second.paths[0].read_bytes()

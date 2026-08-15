@@ -20,7 +20,9 @@ with future values. If a player is absent from a snapshot, that gameweek is not 
 row; the window therefore means recent recorded observations rather than consecutive gameweeks. An
 appearance is a recorded gameweek with more than zero minutes.
 
-The feature list is constant and ordered. Training and prediction both select exactly that list. Any target, identifier, or extra future-facing field stays outside the model matrix.
+The feature list is constant and ordered. Training and prediction both select exactly that list. Any target, identifier, or extra future-facing field stays outside the model matrix. The deployment
+contract also hashes each feature's type, window and value semantics, plus the as-of, population and
+missing-observation meanings. Matching names alone are not sufficient.
 
 ## Expanding-window evaluation
 
@@ -62,6 +64,18 @@ ties use stable input order; the pipeline sorts each gameweek by player ID befor
 The `train` command fits ridge on every completed labeled row only after the rolling comparison has been reviewed. This final artifact has no attached performance claim; performance evidence comes from the out-of-fold report.
 
 The artifact stores feature names, scaling values, coefficients, intercept, regularization strength,
-row count, and final target gameweek as JSON. Loading requires the exact versioned field set,
-numeric parameter types, positive integer training metadata, compatible vector lengths, fixed
-feature order, finite values, and positive scales. Duplicate JSON keys are rejected.
+row count, final target gameweek, canonical season, semantic schema identity, and effective
+configuration identity as JSON. Loading requires the exact versioned field set, numeric parameter
+types, positive integer training metadata, compatible vector lengths, fixed feature order, finite
+values, and positive scales. Duplicate JSON keys are rejected.
+
+## Operational batch scoring
+
+The latest supplied completed gameweek is the as-of boundary. Every player present in that snapshot
+gets one unlabeled row using only that season's observations through the boundary. The target
+gameweek is exactly one greater. The artifact must have been trained through the same boundary and
+must match the requested season, effective configuration, and semantic feature schema.
+
+Predictions are sorted by predicted points descending and then player ID ascending. Canonical JSON
+serialization and content hashes make an exact rerun distinguishable from a changed artifact,
+snapshot set, configuration, schema, or output.
