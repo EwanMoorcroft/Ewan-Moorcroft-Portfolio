@@ -24,6 +24,21 @@ def test_transformer_rejects_incompatible_attention_width() -> None:
         TransformerChunker(20, 5, embedding_size=15, attention_heads=4)
 
 
+def test_transformer_rejects_over_length_batch_before_embedding(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The public length limit must be enforced before token embedding lookup."""
+
+    model = TransformerChunker(20, 5, embedding_size=16, maximum_length=2)
+    monkeypatch.setattr(
+        model.embedding,
+        "forward",
+        lambda *args, **kwargs: pytest.fail("embedding must not be indexed"),
+    )
+    with pytest.raises(ValueError, match="sequence length 3 exceeds maximum 2"):
+        model(torch.tensor([[2, 3, 4]]))
+
+
 def test_bilstm_valid_logits_do_not_depend_on_batch_padding() -> None:
     """Packing should make valid recurrent outputs invariant to neighbouring lengths."""
     torch.manual_seed(7)

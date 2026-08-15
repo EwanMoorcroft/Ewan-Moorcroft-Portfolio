@@ -49,7 +49,7 @@ def learning_reward(
     terminal: bool,
     config: DQNConfig,
 ) -> float:
-    """Apply transparent training-only shaping while preserving raw scores for reporting."""
+    """Apply training-only reward shaping while preserving raw scores for reporting."""
     if not config.use_reward_shaping:
         return float(raw_reward)
     x_position, altitude, x_velocity, y_velocity, angle = map(float, next_state[:5])

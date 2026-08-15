@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import hashlib
+import io
 import random
 from pathlib import Path
 from typing import Any
@@ -139,11 +141,22 @@ class DoubleDQNAgent:
     @staticmethod
     def read_checkpoint(path: Path, device: torch.device | str = "cpu") -> dict[str, Any]:
         """Read a checkpoint through PyTorch's restricted weights-only loader."""
-        payload = torch.load(path, map_location=device, weights_only=True)
+        payload, _ = DoubleDQNAgent.read_checkpoint_with_digest(path, device)
+        return payload
+
+    @staticmethod
+    def read_checkpoint_with_digest(
+        path: Path,
+        device: torch.device | str = "cpu",
+    ) -> tuple[dict[str, Any], str]:
+        """Hash and parse the same checkpoint bytes through the restricted loader."""
+        checkpoint_bytes = path.read_bytes()
+        digest = hashlib.sha256(checkpoint_bytes).hexdigest()
+        payload = torch.load(io.BytesIO(checkpoint_bytes), map_location=device, weights_only=True)
         required = {"online_state", "target_state", "optimiser_state", "config"}
         if not isinstance(payload, dict) or not required.issubset(payload):
             raise ValueError("checkpoint does not match the expected Double DQN format")
-        return payload
+        return payload, digest
 
     def restore(self, payload: dict[str, Any]) -> dict[str, Any]:
         """Restore network and optimiser tensors from a validated checkpoint mapping."""

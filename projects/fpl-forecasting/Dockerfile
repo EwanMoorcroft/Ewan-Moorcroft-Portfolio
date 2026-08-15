@@ -7,10 +7,11 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
 
 WORKDIR /build
 
-COPY pyproject.toml README.md LICENSE ./
+COPY pyproject.toml README.md LICENSE requirements.txt ./
 COPY src ./src
 
-RUN python -m pip install --prefix=/install --no-compile .
+RUN python -m pip install --prefix=/install --no-compile -r requirements.txt \
+    && python -m pip install --prefix=/install --no-compile --no-deps .
 
 FROM python:3.11-slim AS runtime
 
