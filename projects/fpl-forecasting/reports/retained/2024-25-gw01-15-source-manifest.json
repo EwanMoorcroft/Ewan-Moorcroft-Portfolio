@@ -1,0 +1,191 @@
+{
+  "conversion": {
+    "duplicate_fixture_rows": "sum each retained numeric statistic by element and round",
+    "excluded_positions": [
+      "AM"
+    ],
+    "missing_players": "remain missing; no zero rows are created",
+    "player_id": "element",
+    "player_positions": [
+      "DEF",
+      "FWD",
+      "GK",
+      "MID"
+    ]
+  },
+  "gameweek_end": 15,
+  "gameweek_start": 1,
+  "manifest_format": "fpl-historical-import-v1",
+  "rights": {
+    "data_notice": "The source license states that the data are property of fantasy.premierleague.com and understat.com and that the repository owner does not own the data.",
+    "license_file": "https://github.com/vaastav/Fantasy-Premier-League/blob/a59a43a8343d960a58cbe7a1f9fba2d2ce431856/LICENSE",
+    "license_sha256": "f9b9b3b49e6701261d482d2900d1cf3d769904505deeab528fc73fb4c8c441bf",
+    "readme_file": "https://github.com/vaastav/Fantasy-Premier-League/blob/a59a43a8343d960a58cbe7a1f9fba2d2ce431856/README.md",
+    "readme_sha256": "128407370395932a1d2d42c2e623785c25bb02f3ddc9b5dfd34d6761361a4a88",
+    "repository_license": "MIT License; copyright 2017-19 Vaastav Anand",
+    "retention": "No source CSV or converted player record is retained in this repository; only this audit manifest and aggregate evaluation metrics are retained."
+  },
+  "season": "2024-25",
+  "source_file_count": 15,
+  "source_files": [
+    {
+      "bytes": 100786,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw1.csv",
+      "player_rows": 616,
+      "players": 616,
+      "rows": 616,
+      "sha256": "3eca38006424b1736ca8623c1db0c2da9dea8e580b77546ea3a49fb3b8e6c946"
+    },
+    {
+      "bytes": 109176,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw2.csv",
+      "player_rows": 627,
+      "players": 627,
+      "rows": 627,
+      "sha256": "3e92e32c03b620e311182de3d6a7179b6c05eff78699444f4885f63fbc62f464"
+    },
+    {
+      "bytes": 112943,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw3.csv",
+      "player_rows": 648,
+      "players": 648,
+      "rows": 648,
+      "sha256": "259daaaac953cfc889cb69b9474e21a1f9488b0e5d433b37f0327c8acc485cac"
+    },
+    {
+      "bytes": 114771,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw4.csv",
+      "player_rows": 659,
+      "players": 659,
+      "rows": 659,
+      "sha256": "3aaea260cfb00910904decbf3a91945faf33a103f2bd5d247a06ee5e4787cc8a"
+    },
+    {
+      "bytes": 114559,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw5.csv",
+      "player_rows": 661,
+      "players": 661,
+      "rows": 661,
+      "sha256": "70cabbc954ff321f2e42ea001a6dac779af5b3b584727ea58b16ea77ad04607e"
+    },
+    {
+      "bytes": 115220,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw6.csv",
+      "player_rows": 664,
+      "players": 664,
+      "rows": 664,
+      "sha256": "4594d57e87a2f37ba2508e81c5bdeba8b49f5a8d2ce424e420d911583f2f9f49"
+    },
+    {
+      "bytes": 115392,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw7.csv",
+      "player_rows": 666,
+      "players": 666,
+      "rows": 666,
+      "sha256": "024658c8cf4c8fcf5950f1af1f581f13a157978ab1deb9d28e64b1306d7079e7"
+    },
+    {
+      "bytes": 115438,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw8.csv",
+      "player_rows": 667,
+      "players": 667,
+      "rows": 667,
+      "sha256": "9e42979b450cab48399385bd74474afb5bad430fe22c473a58164921627d46d9"
+    },
+    {
+      "bytes": 115591,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw9.csv",
+      "player_rows": 670,
+      "players": 670,
+      "rows": 670,
+      "sha256": "4f5f6eb7757ece92378f2bbc60ddf04ea54884f5dbfb6a2d9d067265b8e84baa"
+    },
+    {
+      "bytes": 117141,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw10.csv",
+      "player_rows": 674,
+      "players": 674,
+      "rows": 674,
+      "sha256": "af356cd2112a4451313a2b00b84751ab327a3ff92512ab085f09144d3a9511b5"
+    },
+    {
+      "bytes": 118373,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw11.csv",
+      "player_rows": 678,
+      "players": 678,
+      "rows": 678,
+      "sha256": "270f347cd54bf52210eef4b24e8342f3aea31300ea951ce6fb262cd4d8f2a339"
+    },
+    {
+      "bytes": 119411,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw12.csv",
+      "player_rows": 684,
+      "players": 684,
+      "rows": 684,
+      "sha256": "c88c8769878ee37551c74419ecd68db5e688ec068a8d0dcb3e340060973281ec"
+    },
+    {
+      "bytes": 120100,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw13.csv",
+      "player_rows": 690,
+      "players": 690,
+      "rows": 690,
+      "sha256": "f1c5f43abf754a8c816a3e2e01434de31b4283e4ef5261767f0506edac026e25"
+    },
+    {
+      "bytes": 120719,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw14.csv",
+      "player_rows": 693,
+      "players": 693,
+      "rows": 693,
+      "sha256": "aa33d3be81cc22049821d2dd749ae80f84046d9f0bae1fd693597ab5165b0366"
+    },
+    {
+      "bytes": 109765,
+      "duplicate_fixture_rows": 0,
+      "excluded_non_player_rows": 0,
+      "file": "gw15.csv",
+      "player_rows": 630,
+      "players": 630,
+      "rows": 630,
+      "sha256": "591379faec99f0e23371b99e3175266152277ec58a948809dca8b68f3892900e"
+    }
+  ],
+  "source_files_hash_rule": "sha256 of file name, NUL, byte count, NUL, file sha256, LF in gameweek order",
+  "source_files_sha256": "125139d3b132e559aa6ea9d2f99e5dbea717d72d97bb476163742f92d42ac621",
+  "source_repository": "https://github.com/vaastav/Fantasy-Premier-League",
+  "source_revision": "a59a43a8343d960a58cbe7a1f9fba2d2ce431856",
+  "source_snapshot": {
+    "archive_sha256": "73f1cab45b5d53515aa26a90ee67bf0eb00397ddf6506ca654c89737cb868cf6",
+    "archive_url": "https://github.com/vaastav/Fantasy-Premier-League/archive/a59a43a8343d960a58cbe7a1f9fba2d2ce431856.tar.gz",
+    "revision_committed_at": "2026-01-02T07:35:49Z"
+  }
+}

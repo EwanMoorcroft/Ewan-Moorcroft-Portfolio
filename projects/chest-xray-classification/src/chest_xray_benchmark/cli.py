@@ -8,14 +8,14 @@ from collections.abc import Sequence
 from pathlib import Path
 
 from .manifest import (
-    group_duplicates,
+    group_exact_duplicates,
     read_manifest,
     scan_dataset,
     verification_report,
     write_manifest,
 )
 from .spec import DatasetSpec
-from .splitting import assign_groups, audit_partition_map, write_json, write_splits
+from .splitting import assign_exact_groups, audit_partition_map, write_json, write_splits
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -25,15 +25,20 @@ def build_parser() -> argparse.ArgumentParser:
     )
     commands = parser.add_subparsers(dest="command", required=True)
 
-    verify = commands.add_parser("verify", help="Inventory images and form duplicate groups.")
+    verify = commands.add_parser(
+        "verify",
+        help="Inventory images, group exact copies, and flag visual review candidates.",
+    )
     verify.add_argument("--data-root", type=Path, required=True)
     verify.add_argument("--spec", type=Path, required=True)
     verify.add_argument("--manifest-out", type=Path, required=True)
     verify.add_argument("--report-out", type=Path, required=True)
-    verify.add_argument("--near-hamming", type=int, default=2)
+    verify.add_argument("--visual-review-hamming", type=int, default=2)
     verify.add_argument("--strict", action="store_true")
 
-    split = commands.add_parser("split", help="Create deterministic group-level partitions.")
+    split = commands.add_parser(
+        "split", help="Create deterministic exact-identity-group partitions."
+    )
     split.add_argument("--manifest", type=Path, required=True)
     split.add_argument("--output", type=Path, required=True)
     split.add_argument("--summary-out", type=Path, required=True)
@@ -62,12 +67,18 @@ def build_parser() -> argparse.ArgumentParser:
 def _verify(args: argparse.Namespace) -> int:
     spec = DatasetSpec.load(args.spec)
     records, errors, unexpected = scan_dataset(args.data_root, spec)
-    grouped = group_duplicates(records, args.near_hamming)
-    report = verification_report(grouped, spec, errors, unexpected, args.near_hamming)
+    grouped = group_exact_duplicates(records)
+    report = verification_report(
+        grouped,
+        spec,
+        errors,
+        unexpected,
+        args.visual_review_hamming,
+    )
     write_manifest(grouped, args.manifest_out)
     write_json(report, args.report_out)
     print(json.dumps(report, indent=2, sort_keys=True))
-    return 2 if args.strict and not report["identity_matches_spec"] else 0
+    return 2 if args.strict and not report["exact_identity_split_ready"] else 0
 
 
 def _split(args: argparse.Namespace) -> int:
@@ -77,12 +88,14 @@ def _split(args: argparse.Namespace) -> int:
         "validation": args.validation_fraction,
         "test": args.test_fraction,
     }
-    partition_map = assign_groups(records, args.seed, fractions)
+    partition_map = assign_exact_groups(records, args.seed, fractions)
     summary = audit_partition_map(records, partition_map, args.seed, fractions)
-    write_splits(records, partition_map, args.output)
     write_json(summary, args.summary_out)
     print(json.dumps(summary, indent=2, sort_keys=True))
-    return 0 if summary["split_ready"] else 2
+    if not summary["split_ready"]:
+        return 2
+    write_splits(records, partition_map, args.output)
+    return 0
 
 
 def _train(args: argparse.Namespace) -> int:

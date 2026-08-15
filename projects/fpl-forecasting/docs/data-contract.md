@@ -52,3 +52,15 @@ The last supplied gameweek contributes targets to the preceding gameweek but doe
 ## Storage boundary
 
 Real downloaded data should remain under an ignored local path such as `data/raw/`. Commit a small synthetic fixture only when it is clearly labeled and contains no copied live-season records.
+
+## Historical CSV adapter
+
+The optional `import-vaastav` command converts an explicit gameweek interval from a locally
+extracted, commit-pinned Vaastav historical snapshot into this JSON contract. It requires a full
+40-character source revision and records a SHA-256 for every input CSV.
+
+Only `GK`, `DEF`, `MID`, and `FWD` rows are retained. Rows with the `AM` position are excluded because
+the forecast target is player points. When a double gameweek contains multiple fixture rows for one
+player, the retained numeric gameweek statistics are summed to match the event-level shape. Missing
+players remain missing; the adapter never adds zero records. The normal sequence, coverage, feature,
+and temporal-boundary checks run after conversion without exceptions or relaxed thresholds.

@@ -5,7 +5,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from chest_xray_benchmark.manifest import group_duplicates, scan_dataset, verification_report
+from chest_xray_benchmark.manifest import (
+    group_exact_duplicates,
+    scan_dataset,
+    verification_report,
+)
 from chest_xray_benchmark.spec import DatasetSpec
 
 
@@ -37,9 +41,18 @@ class VerifierTests(unittest.TestCase):
             spec_path.write_text(json.dumps(payload), encoding="utf-8")
             spec = DatasetSpec.load(spec_path)
             records, errors, unexpected = scan_dataset(data_root, spec)
-            grouped = group_duplicates(records, near_hamming=0)
-            report = verification_report(grouped, spec, errors, unexpected, near_hamming=0)
+            grouped = group_exact_duplicates(records)
+            report = verification_report(
+                grouped,
+                spec,
+                errors,
+                unexpected,
+                visual_review_hamming=0,
+            )
             self.assertTrue(report["identity_matches_spec"])
+            self.assertTrue(report["exact_identity_split_ready"])
+            self.assertEqual(report["automatic_grouping_policy"], "sha256_exact_identity_only")
+            self.assertEqual(report["visual_hash_policy"], "direct_pair_review_candidates_only")
             self.assertEqual(report["observed_total"], 6)
             self.assertEqual(report["unreadable_images"], [])
 

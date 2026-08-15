@@ -1,0 +1,621 @@
+{
+  "data": {
+    "evaluated_gameweek_end": 15,
+    "evaluated_gameweek_start": 6,
+    "evaluated_rows": 6684,
+    "folds": 10,
+    "players": 692,
+    "rows": 9234,
+    "target_gameweek_end": 15,
+    "target_gameweek_start": 2
+  },
+  "evidence": {
+    "completion_basis": "The source repository states that weekly updates stopped at the end of the 2024-25 season and contains GW38 data; the retained evaluation uses only GW1-GW15 files from the completed archive.",
+    "evaluated_on": "2026-08-15",
+    "notes": [
+      "Only public FPL player fields used by the existing feature allow-list were imported.",
+      "Multiple fixture rows for one player and gameweek were summed; rows with the AM position were excluded; missing players were not filled with zero records.",
+      "Ridge alpha and all split settings are the pre-existing defaults used by the synthetic protocol checks."
+    ],
+    "raw_data_retained": false,
+    "row_predictions_retained": false,
+    "selection_or_tuning_on_test_results": false,
+    "source_files_sha256": "125139d3b132e559aa6ea9d2f99e5dbea717d72d97bb476163742f92d42ac621",
+    "source_manifest_file": "2024-25-gw01-15-source-manifest.json",
+    "source_manifest_sha256": "d4b9f5e4b180f3d4c52a841fc5122d105ab0270f3ed981cf0fb6c53a3a74cf0f",
+    "source_repository": "https://github.com/vaastav/Fantasy-Premier-League",
+    "source_revision": "a59a43a8343d960a58cbe7a1f9fba2d2ce431856",
+    "source_season": "2024-25",
+    "source_season_status": "completed",
+    "source_window": {
+      "gameweek_end": 15,
+      "gameweek_start": 1
+    },
+    "status": "fresh real-data out-of-fold evaluation",
+    "window_selection": "The longest season-opening interval that passed the pre-existing 0.90 adjacent-player coverage gate was selected before model evaluation. GW15 to GW16 coverage was 0.8987, so later gameweeks were not joined across that boundary."
+  },
+  "feature_contract": [
+    "lag_1_points",
+    "lag_1_minutes",
+    "lag_1_started",
+    "lag_1_ict_index",
+    "lag_1_influence",
+    "lag_1_creativity",
+    "lag_1_threat",
+    "rolling_3_points_mean",
+    "rolling_3_minutes_mean",
+    "rolling_3_starts_rate",
+    "rolling_3_ict_mean",
+    "rolling_3_goals_mean",
+    "rolling_3_assists_mean",
+    "rolling_5_points_mean",
+    "season_points_sum",
+    "season_minutes_sum",
+    "season_appearances",
+    "season_points_per_appearance"
+  ],
+  "folds": [
+    {
+      "fold": 0,
+      "metrics": {
+        "last_gameweek": {
+          "gameweeks": 1,
+          "mae": 1.2420574886535551,
+          "ndcg_at_10": 2.565419134720131e-06,
+          "r2": -0.2667776762293068,
+          "rmse": 2.725738806701783,
+          "rows": 661,
+          "spearman": 0.6458032080448286,
+          "top_10_overlap": 0.0
+        },
+        "ridge_regression": {
+          "gameweeks": 1,
+          "mae": 1.0994586122630212,
+          "ndcg_at_10": 4.518121702244935e-05,
+          "r2": 0.24787452812231536,
+          "rmse": 2.1002896155623465,
+          "rows": 661,
+          "spearman": 0.7148722232512418,
+          "top_10_overlap": 0.1
+        },
+        "rolling_3_mean": {
+          "gameweeks": 1,
+          "mae": 1.1265758951084217,
+          "ndcg_at_10": 3.7475043128280565e-05,
+          "r2": 0.07490177505166529,
+          "rmse": 2.329313589584197,
+          "rows": 661,
+          "spearman": 0.6981832198398497,
+          "top_10_overlap": 0.1
+        },
+        "training_mean": {
+          "gameweeks": 1,
+          "mae": 1.469152502150633,
+          "ndcg_at_10": 7.442211725357553e-05,
+          "r2": -0.001852433953381638,
+          "rmse": 2.424018418512098,
+          "rows": 661,
+          "spearman": 0.0,
+          "top_10_overlap": 0.1
+        }
+      },
+      "test_gameweek_end": 6,
+      "test_gameweek_start": 6,
+      "test_rows": 661,
+      "train_gameweek_end": 5,
+      "train_gameweek_start": 2,
+      "train_rows": 2550
+    },
+    {
+      "fold": 1,
+      "metrics": {
+        "last_gameweek": {
+          "gameweeks": 1,
+          "mae": 1.1882530120481927,
+          "ndcg_at_10": 0.0014823283426198843,
+          "r2": -0.15596748573514163,
+          "rmse": 2.668140907751024,
+          "rows": 664,
+          "spearman": 0.7033001756621372,
+          "top_10_overlap": 0.0
+        },
+        "ridge_regression": {
+          "gameweeks": 1,
+          "mae": 1.1128546596382085,
+          "ndcg_at_10": 0.07520405859996354,
+          "r2": 0.29455106281669385,
+          "rmse": 2.0843408678481294,
+          "rows": 664,
+          "spearman": 0.7379559043544581,
+          "top_10_overlap": 0.1
+        },
+        "rolling_3_mean": {
+          "gameweeks": 1,
+          "mae": 1.1536144578313252,
+          "ndcg_at_10": 0.0003296917269489771,
+          "r2": 0.14376401733573607,
+          "rmse": 2.2963214865253323,
+          "rows": 664,
+          "spearman": 0.7289961937781446,
+          "top_10_overlap": 0.0
+        },
+        "training_mean": {
+          "gameweeks": 1,
+          "mae": 1.5819992833370229,
+          "ndcg_at_10": 0.00040416201216126316,
+          "r2": -0.0011796939675647877,
+          "rmse": 2.483087184145151,
+          "rows": 664,
+          "spearman": 0.0,
+          "top_10_overlap": 0.0
+        }
+      },
+      "test_gameweek_end": 7,
+      "test_gameweek_start": 7,
+      "test_rows": 664,
+      "train_gameweek_end": 6,
+      "train_gameweek_start": 2,
+      "train_rows": 3211
+    },
+    {
+      "fold": 2,
+      "metrics": {
+        "last_gameweek": {
+          "gameweeks": 1,
+          "mae": 1.2492492492492493,
+          "ndcg_at_10": 0.0033977126612184986,
+          "r2": -0.42582123758594337,
+          "rmse": 2.64688609615261,
+          "rows": 666,
+          "spearman": 0.663092750422462,
+          "top_10_overlap": 0.0
+        },
+        "ridge_regression": {
+          "gameweeks": 1,
+          "mae": 1.0952720306284522,
+          "ndcg_at_10": 0.050994082421738515,
+          "r2": 0.27696194919374584,
+          "rmse": 1.8848781917388966,
+          "rows": 666,
+          "spearman": 0.7321698191551523,
+          "top_10_overlap": 0.1
+        },
+        "rolling_3_mean": {
+          "gameweeks": 1,
+          "mae": 1.0875875875875876,
+          "ndcg_at_10": 0.0013171230862307909,
+          "r2": 0.05926491808844747,
+          "rmse": 2.149989718375987,
+          "rows": 666,
+          "spearman": 0.7198237743568044,
+          "top_10_overlap": 0.0
+        },
+        "training_mean": {
+          "gameweeks": 1,
+          "mae": 1.4894953017533663,
+          "ndcg_at_10": 0.0001126134846268965,
+          "r2": -0.0012211698833577422,
+          "rmse": 2.2180315781671545,
+          "rows": 666,
+          "spearman": 0.0,
+          "top_10_overlap": 0.0
+        }
+      },
+      "test_gameweek_end": 8,
+      "test_gameweek_start": 8,
+      "test_rows": 666,
+      "train_gameweek_end": 7,
+      "train_gameweek_start": 2,
+      "train_rows": 3875
+    },
+    {
+      "fold": 3,
+      "metrics": {
+        "last_gameweek": {
+          "gameweeks": 1,
+          "mae": 1.1934032983508245,
+          "ndcg_at_10": 0.016932233170882154,
+          "r2": -0.2978665572895407,
+          "rmse": 2.438447659168994,
+          "rows": 667,
+          "spearman": 0.6857842487997122,
+          "top_10_overlap": 0.1
+        },
+        "ridge_regression": {
+          "gameweeks": 1,
+          "mae": 1.0744584669172428,
+          "ndcg_at_10": 0.02481367497216001,
+          "r2": 0.2799253300113901,
+          "rmse": 1.8162983317213073,
+          "rows": 667,
+          "spearman": 0.7290534531492472,
+          "top_10_overlap": 0.1
+        },
+        "rolling_3_mean": {
+          "gameweeks": 1,
+          "mae": 1.0859570214892553,
+          "ndcg_at_10": 0.04062439614491097,
+          "r2": 0.09086800213171997,
+          "rmse": 2.0408537734498187,
+          "rows": 667,
+          "spearman": 0.6978390499146542,
+          "top_10_overlap": 0.2
+        },
+        "training_mean": {
+          "gameweeks": 1,
+          "mae": 1.444545399619063,
+          "ndcg_at_10": 0.0001050937962592474,
+          "r2": -0.0012889810502922927,
+          "rmse": 2.141796159357447,
+          "rows": 667,
+          "spearman": 0.0,
+          "top_10_overlap": 0.0
+        }
+      },
+      "test_gameweek_end": 9,
+      "test_gameweek_start": 9,
+      "test_rows": 667,
+      "train_gameweek_end": 8,
+      "train_gameweek_start": 2,
+      "train_rows": 4541
+    },
+    {
+      "fold": 4,
+      "metrics": {
+        "last_gameweek": {
+          "gameweeks": 1,
+          "mae": 1.1164179104477612,
+          "ndcg_at_10": 0.002851552532720872,
+          "r2": -0.21326795988319258,
+          "rmse": 2.3983825395399605,
+          "rows": 670,
+          "spearman": 0.6569953172700674,
+          "top_10_overlap": 0.0
+        },
+        "ridge_regression": {
+          "gameweeks": 1,
+          "mae": 1.012124842291183,
+          "ndcg_at_10": 0.0047372530347286525,
+          "r2": 0.3009684638937342,
+          "rmse": 1.8204907384815596,
+          "rows": 670,
+          "spearman": 0.7391477988290303,
+          "top_10_overlap": 0.0
+        },
+        "rolling_3_mean": {
+          "gameweeks": 1,
+          "mae": 1.018905472636816,
+          "ndcg_at_10": 0.003972485353186427,
+          "r2": 0.15407737006817934,
+          "rmse": 2.0026516418671774,
+          "rows": 670,
+          "spearman": 0.6981174578145238,
+          "top_10_overlap": 0.0
+        },
+        "training_mean": {
+          "gameweeks": 1,
+          "mae": 1.4386426164110324,
+          "ndcg_at_10": 5.0614128936554616e-05,
+          "r2": -0.0009246236996407475,
+          "rmse": 2.178415789123382,
+          "rows": 670,
+          "spearman": 0.0,
+          "top_10_overlap": 0.0
+        }
+      },
+      "test_gameweek_end": 10,
+      "test_gameweek_start": 10,
+      "test_rows": 670,
+      "train_gameweek_end": 9,
+      "train_gameweek_start": 2,
+      "train_rows": 5208
+    },
+    {
+      "fold": 5,
+      "metrics": {
+        "last_gameweek": {
+          "gameweeks": 1,
+          "mae": 1.182492581602374,
+          "ndcg_at_10": 0.2895484399494045,
+          "r2": -0.17325901089133855,
+          "rmse": 2.4959908506261588,
+          "rows": 674,
+          "spearman": 0.6950155936182881,
+          "top_10_overlap": 0.1
+        },
+        "ridge_regression": {
+          "gameweeks": 1,
+          "mae": 1.0825539492192433,
+          "ndcg_at_10": 0.11736119903267446,
+          "r2": 0.2991205785859401,
+          "rmse": 1.9291575380646775,
+          "rows": 674,
+          "spearman": 0.7329389696200708,
+          "top_10_overlap": 0.2
+        },
+        "rolling_3_mean": {
+          "gameweeks": 1,
+          "mae": 1.109297725024728,
+          "ndcg_at_10": 0.10909180220370586,
+          "r2": 0.14943300993913877,
+          "rmse": 2.125202420490347,
+          "rows": 674,
+          "spearman": 0.6992295675111635,
+          "top_10_overlap": 0.1
+        },
+        "training_mean": {
+          "gameweeks": 1,
+          "mae": 1.5005679276848845,
+          "ndcg_at_10": 0.0005457034145183808,
+          "r2": -1.1062338137968197e-05,
+          "rmse": 2.304349993163019,
+          "rows": 674,
+          "spearman": 0.0,
+          "top_10_overlap": 0.0
+        }
+      },
+      "test_gameweek_end": 11,
+      "test_gameweek_start": 11,
+      "test_rows": 674,
+      "train_gameweek_end": 10,
+      "train_gameweek_start": 2,
+      "train_rows": 5878
+    },
+    {
+      "fold": 6,
+      "metrics": {
+        "last_gameweek": {
+          "gameweeks": 1,
+          "mae": 1.224188790560472,
+          "ndcg_at_10": 0.24417413234070245,
+          "r2": -0.08991641608480716,
+          "rmse": 2.5882648713467846,
+          "rows": 678,
+          "spearman": 0.6334236241998683,
+          "top_10_overlap": 0.3
+        },
+        "ridge_regression": {
+          "gameweeks": 1,
+          "mae": 1.1770101223695064,
+          "ndcg_at_10": 0.263323279336896,
+          "r2": 0.25712808420547484,
+          "rmse": 2.1368256644778056,
+          "rows": 678,
+          "spearman": 0.6706627084792767,
+          "top_10_overlap": 0.3
+        },
+        "rolling_3_mean": {
+          "gameweeks": 1,
+          "mae": 1.216322517207473,
+          "ndcg_at_10": 0.2868537712238885,
+          "r2": 0.13938250211885606,
+          "rmse": 2.2999437098551194,
+          "rows": 678,
+          "spearman": 0.6373304187278677,
+          "top_10_overlap": 0.2
+        },
+        "training_mean": {
+          "gameweeks": 1,
+          "mae": 1.5597876394336574,
+          "ndcg_at_10": 0.00039030949444073746,
+          "r2": -9.644280359766277e-05,
+          "rmse": 2.4793227322213696,
+          "rows": 678,
+          "spearman": 0.0,
+          "top_10_overlap": 0.0
+        }
+      },
+      "test_gameweek_end": 12,
+      "test_gameweek_start": 12,
+      "test_rows": 678,
+      "train_gameweek_end": 11,
+      "train_gameweek_start": 2,
+      "train_rows": 6552
+    },
+    {
+      "fold": 7,
+      "metrics": {
+        "last_gameweek": {
+          "gameweeks": 1,
+          "mae": 1.2543859649122806,
+          "ndcg_at_10": 0.011358841662827805,
+          "r2": -0.1845062790094949,
+          "rmse": 2.781517949836592,
+          "rows": 684,
+          "spearman": 0.6133493836726381,
+          "top_10_overlap": 0.2
+        },
+        "ridge_regression": {
+          "gameweeks": 1,
+          "mae": 1.1322859314216773,
+          "ndcg_at_10": 0.012650724021316557,
+          "r2": 0.27688522296302676,
+          "rmse": 2.173285595673093,
+          "rows": 684,
+          "spearman": 0.6792993721134265,
+          "top_10_overlap": 0.4
+        },
+        "rolling_3_mean": {
+          "gameweeks": 1,
+          "mae": 1.0891812865497077,
+          "ndcg_at_10": 0.0009205516830326272,
+          "r2": 0.18702599826695687,
+          "rmse": 2.3043662824327074,
+          "rows": 684,
+          "spearman": 0.6573685728371979,
+          "top_10_overlap": 0.1
+        },
+        "training_mean": {
+          "gameweeks": 1,
+          "mae": 1.5134608073896128,
+          "ndcg_at_10": 3.117959195883131e-05,
+          "r2": -6.169114157517086e-06,
+          "rmse": 2.5557273635872515,
+          "rows": 684,
+          "spearman": 0.0,
+          "top_10_overlap": 0.0
+        }
+      },
+      "test_gameweek_end": 13,
+      "test_gameweek_start": 13,
+      "test_rows": 684,
+      "train_gameweek_end": 12,
+      "train_gameweek_start": 2,
+      "train_rows": 7230
+    },
+    {
+      "fold": 8,
+      "metrics": {
+        "last_gameweek": {
+          "gameweeks": 1,
+          "mae": 1.436231884057971,
+          "ndcg_at_10": 0.26915415373490054,
+          "r2": -0.4740008891807439,
+          "rmse": 3.139048134133307,
+          "rows": 690,
+          "spearman": 0.5819676177001568,
+          "top_10_overlap": 0.1
+        },
+        "ridge_regression": {
+          "gameweeks": 1,
+          "mae": 1.2496882287513849,
+          "ndcg_at_10": 0.7550823534494766,
+          "r2": 0.21378584676411805,
+          "rmse": 2.2925537741436015,
+          "rows": 690,
+          "spearman": 0.6805737787423162,
+          "top_10_overlap": 0.1
+        },
+        "rolling_3_mean": {
+          "gameweeks": 1,
+          "mae": 1.321256038647343,
+          "ndcg_at_10": 0.7549464911740759,
+          "r2": 0.016875058584862268,
+          "rmse": 2.5636188692791904,
+          "rows": 690,
+          "spearman": 0.6362461050091732,
+          "top_10_overlap": 0.1
+        },
+        "training_mean": {
+          "gameweeks": 1,
+          "mae": 1.573539828518897,
+          "ndcg_at_10": 0.01687429314542454,
+          "r2": -0.00020809691816459086,
+          "rmse": 2.585796155586924,
+          "rows": 690,
+          "spearman": 0.0,
+          "top_10_overlap": 0.1
+        }
+      },
+      "test_gameweek_end": 14,
+      "test_gameweek_start": 14,
+      "test_rows": 690,
+      "train_gameweek_end": 13,
+      "train_gameweek_start": 2,
+      "train_rows": 7914
+    },
+    {
+      "fold": 9,
+      "metrics": {
+        "last_gameweek": {
+          "gameweeks": 1,
+          "mae": 1.2587301587301587,
+          "ndcg_at_10": 0.0018685148776510802,
+          "r2": -0.5171756876306899,
+          "rmse": 2.7576732773774895,
+          "rows": 630,
+          "spearman": 0.6716615951478573,
+          "top_10_overlap": 0.1
+        },
+        "ridge_regression": {
+          "gameweeks": 1,
+          "mae": 1.058070035393508,
+          "ndcg_at_10": 0.9567000608320199,
+          "r2": 0.30532803542342224,
+          "rmse": 1.8660134055650885,
+          "rows": 630,
+          "spearman": 0.7543711264101213,
+          "top_10_overlap": 0.3
+        },
+        "rolling_3_mean": {
+          "gameweeks": 1,
+          "mae": 1.084126984126984,
+          "ndcg_at_10": 0.3161164491214114,
+          "r2": 0.08689379926009344,
+          "rmse": 2.1393681178241883,
+          "rows": 630,
+          "spearman": 0.7447808577068915,
+          "top_10_overlap": 0.3
+        },
+        "training_mean": {
+          "gameweeks": 1,
+          "mae": 1.4269110712625357,
+          "ndcg_at_10": 6.117465004424499e-05,
+          "r2": -0.001700823155824649,
+          "rmse": 2.240752495272987,
+          "rows": 630,
+          "spearman": 0.0,
+          "top_10_overlap": 0.0
+        }
+      },
+      "test_gameweek_end": 15,
+      "test_gameweek_start": 15,
+      "test_rows": 630,
+      "train_gameweek_end": 14,
+      "train_gameweek_start": 2,
+      "train_rows": 8604
+    }
+  ],
+  "models": {
+    "last_gameweek": {
+      "gameweeks": 10,
+      "mae": 1.2350388988629564,
+      "ndcg_at_10": 0.08407704746920625,
+      "r2": -0.27408418464884643,
+      "rmse": 2.672728373760463,
+      "rows": 6684,
+      "spearman": 0.6550393514538017,
+      "top_10_overlap": 0.09
+    },
+    "ridge_regression": {
+      "gameweeks": 10,
+      "mae": 1.1102518032379054,
+      "ndcg_at_10": 0.22609118669179967,
+      "r2": 0.27305773117262,
+      "rmse": 2.018857766078002,
+      "rows": 6684,
+      "spearman": 0.7171045154104341,
+      "top_10_overlap": 0.16999999999999998
+    },
+    "rolling_3_mean": {
+      "gameweeks": 10,
+      "mae": 1.1301615798922802,
+      "ndcg_at_10": 0.15142102367605198,
+      "r2": 0.11108995672596633,
+      "rmse": 2.2324650485129593,
+      "rows": 6684,
+      "spearman": 0.691791521749627,
+      "top_10_overlap": 0.11000000000000001
+    },
+    "training_mean": {
+      "gameweeks": 10,
+      "mae": 1.500566425073304,
+      "ndcg_at_10": 0.0018649565835624272,
+      "r2": -0.0002480291722832817,
+      "rmse": 2.368152216854028,
+      "rows": 6684,
+      "spearman": 0.0,
+      "top_10_overlap": 0.02
+    }
+  },
+  "protocol": {
+    "minimum_adjacent_player_coverage": 0.9,
+    "minimum_train_gameweeks": 4,
+    "random_seed": 42,
+    "ranking_top_k": 10,
+    "ridge_alpha": 4.0,
+    "split_step": 1,
+    "test_gameweeks_per_fold": 1
+  },
+  "report_format": "fpl-rolling-evaluation-v1"
+}

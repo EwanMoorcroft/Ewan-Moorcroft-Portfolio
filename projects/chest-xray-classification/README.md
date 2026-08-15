@@ -22,18 +22,25 @@ repository. See [data/README.md](data/README.md) for acquisition and attribution
 ## Why the split is different
 
 Patient identifiers are not supplied. A random image-level split can therefore
-place repeated or visually near-identical images on both sides of evaluation.
+place exact copies on both sides of evaluation. Perceptual image hashes can
+also flag visually similar pairs, but similarity is not proof that two files
+belong to the same patient or acquisition.
 The preparation pipeline:
 
 1. computes SHA-256 for exact identity;
-2. computes a 64-bit difference hash for conservative visual similarity;
-3. joins exact and near-duplicate images into indivisible groups;
-4. assigns whole groups to train, validation and test partitions;
-5. checks that no digest or group crosses a partition boundary.
+2. places exact copies into indivisible split groups;
+3. computes a 64-bit difference hash and reports direct candidate pairs for
+   manual review;
+4. never merges perceptual-hash candidates automatically or transitively;
+5. assigns exact-identity groups to train, validation and test partitions; and
+6. checks that no exact digest or exact-identity group crosses a boundary before writing the split;
+   training and evaluation repeat that audit when reading the split CSV.
 
-This reduces a known leakage route but cannot prove patient-level independence.
-A future release should replace visual grouping with verified patient keys if
-the data publisher makes them available.
+This prevents exact-copy leakage but cannot prove visual or patient-level
+independence. Difference-hash candidates are diagnostic only: the similarity
+relation can collide and is not transitive. A future release should use
+reviewed acquisition identifiers or verified patient keys as additional hard
+grouping constraints if the publisher makes them available.
 
 ## Setup
 
@@ -119,14 +126,15 @@ includes the split-manifest digest, label order, seed and run settings.
 python -m unittest discover -s tests -v
 ```
 
-The focused suite checks deterministic grouping and splitting, exact and visual
-duplicate containment, cross-partition leakage guards, source-spec parsing and
-manifest round trips.
+The focused suite checks deterministic exact-identity grouping and splitting,
+non-transitive visual-review candidates, cross-partition exact-copy guards,
+tampered split rejection, source-spec parsing and manifest round trips.
 
 ## Limitations
 
 - Patient-level keys and acquisition-site metadata are unavailable.
-- Difference hashing is a conservative heuristic, not proof of shared origin.
+- Difference hashing is a review heuristic, not proof of shared origin; it is
+  never used as an automatic split identity.
 - The collection is small and may contain source-specific shortcuts.
 - No external population has been evaluated.
 - Probability calibration and uncertainty must be reviewed on independent data.

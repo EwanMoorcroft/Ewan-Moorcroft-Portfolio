@@ -8,7 +8,9 @@ A compact forecasting project built around one rule: every reported prediction m
 
 The pipeline reads completed Fantasy Premier League live-gameweek JSON files, validates their sequence, creates strictly as-of player features, and predicts points in the next completed gameweek. It compares standardized ridge regression with three transparent baselines under an expanding-window evaluation.
 
-The repository contains no downloaded match data and no trained model. A deterministic synthetic generator supports local checks and examples without network access.
+The repository contains no downloaded match data and no trained model. It retains one compact,
+real-data evaluation report with an auditable source manifest. A deterministic synthetic generator
+supports local checks and examples without network access.
 
 ## Evidence controls
 
@@ -22,6 +24,35 @@ The repository contains no downloaded match data and no trained model. A determi
 - Evaluation uses expanding train windows followed by untouched later gameweeks.
 - Results include MAE and RMSE for point error, plus Spearman, NDCG@K, and top-K overlap for recommendation quality.
 - Saved ridge artifacts are plain JSON, not executable pickle files.
+
+## Retained real-data evaluation
+
+The retained report was generated on 15 August 2026 from gameweeks 1–15 of the completed 2024–25
+season. The source is Vaastav Anand's public FPL historical dataset at immutable revision
+[`a59a43a`](https://github.com/vaastav/Fantasy-Premier-League/tree/a59a43a8343d960a58cbe7a1f9fba2d2ce431856/data/2024-25/gws).
+The interval was chosen before model evaluation: it is the longest season-opening interval that
+passes the pre-existing 0.90 adjacent-player coverage gate. The GW15→GW16 coverage is 0.8987, so
+the pipeline rejects joining later gameweeks across that boundary.
+
+The expanding-window comparison trained first on target gameweeks 2–5, then evaluated ten
+chronologically held-out target gameweeks (GW6–GW15), covering 6,684 player-gameweek rows:
+
+| Candidate | MAE ↓ | RMSE ↓ | R² ↑ | Spearman ↑ | NDCG@10 ↑ | Top-10 overlap ↑ |
+|---|---:|---:|---:|---:|---:|---:|
+| Last gameweek | 1.235 | 2.673 | -0.274 | 0.655 | 0.084 | 0.090 |
+| Three-gameweek mean | 1.130 | 2.232 | 0.111 | 0.692 | 0.151 | 0.110 |
+| Training-window mean | 1.501 | 2.368 | -0.000 | 0.000 | 0.002 | 0.020 |
+| Ridge regression | **1.110** | **2.019** | **0.273** | **0.717** | **0.226** | **0.170** |
+
+These are out-of-fold results for this fixed historical interval, not a live-season or full-season
+claim. Ridge regularization and split settings were the existing defaults and were not selected on
+these results. See the [evaluation report](reports/retained/2024-25-gw01-15-evaluation.json) and
+[source manifest](reports/retained/2024-25-gw01-15-source-manifest.json) for exact folds, hashes,
+conversion rules, and per-file checks.
+
+The upstream repository uses an MIT licence for its software, while its licence file states that
+the underlying data belong to the named data providers. This repository therefore retains no
+source CSVs or converted player records—only aggregate metrics and file-level provenance.
 
 ## Quick start
 
@@ -69,6 +100,23 @@ fpl-forecast train \
 ```
 
 The `scratch/`, `data/`, `models/`, and generated report locations are ignored by Git.
+
+To reproduce the retained historical import, download and extract the pinned upstream archive,
+then run the adapter against its `data/2024-25/gws` directory:
+
+```bash
+fpl-forecast import-vaastav \
+  --source-dir /path/to/pinned-archive/data/2024-25/gws \
+  --output-dir data/interim/2024-25-gw01-15 \
+  --manifest reports/generated/2024-25-gw01-15-source-manifest.json \
+  --season 2024-25 \
+  --source-revision a59a43a8343d960a58cbe7a1f9fba2d2ce431856 \
+  --gameweek-start 1 \
+  --gameweek-end 15
+```
+
+The retained manifest records the archive URL and SHA-256. Run `validate` and `evaluate` with the
+same default configuration after import; raw and converted records remain ignored.
 
 ## Input contract
 
@@ -132,6 +180,7 @@ Synthetic results demonstrate plumbing and protocol behavior only. They must not
 config/default.json          Protocol settings
 demo/index.html              Self-contained visual overview
 docs/                        Data, evaluation, and model notes
+reports/retained/            Compact metrics and source audit evidence
 src/fpl_forecasting/         Validation, features, splits, metrics, model, CLI
 tests/                       Deterministic contract and end-to-end checks
 ```

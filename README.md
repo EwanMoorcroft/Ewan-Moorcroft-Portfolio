@@ -1,4 +1,4 @@
-# Ewan Moorcroft - Machine Learning & Computer Vision Portfolio
+# Ewan Moorcroft Portfolio
 
 End-to-end machine learning systems for 3D LiDAR segmentation, medical-image research,
 next-event forecasting, reinforcement learning, and neural sequence labelling. The focus is on
@@ -12,8 +12,8 @@ technical communication.
 | Project | What it solves | Technical evidence | Result status |
 |---|---|---|---|
 | [Tree LiDAR instance benchmark](projects/tree-lidar-benchmark/) | Compares six instance-segmentation methods on dense, source-aligned point clouds | 49.7M held-out points, deterministic bipartite matching, route-aware evaluation, 1,152 aggregate checks | **Current verified:** top development-selected micro F1 0.8436 |
-| [Chest X-ray classification](projects/chest-xray-classification/) | Builds a three-class transfer-learning pipeline around a public image corpus | Dataset identity contract, SHA-256 deduplication, visual-similarity grouping, group-level splits, calibration metrics | **Historical reference:** macro F1 0.9381; safer split awaits a new run |
-| [FPL next-gameweek forecasting](projects/fpl-forecasting/) | Predicts player points using only information available before the target gameweek | Empty-period rejection, as-of features, expanding-window evaluation, regression and ranking metrics, JSON model artifacts | **Rebuilt protocol:** legacy scores withdrawn; synthetic results test plumbing only |
+| [Chest X-ray classification](projects/chest-xray-classification/) | Builds a three-class transfer-learning pipeline around a public image corpus | Dataset identity contract, exact-duplicate grouping, visual-similarity review candidates, calibration metrics | **Historical reference:** macro F1 0.9381; safer split awaits a new run |
+| [FPL next-gameweek forecasting](projects/fpl-forecasting/) | Predicts player points using only information available before the target gameweek | Empty-period rejection, as-of features, expanding-window evaluation, regression and ranking metrics, JSON model artifacts | **Fresh historical evaluation:** ridge MAE 1.110 and Spearman 0.717 across GW6–15 |
 
 ## Supporting work
 
