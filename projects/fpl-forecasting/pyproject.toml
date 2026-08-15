@@ -4,26 +4,32 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fpl-next-gameweek-forecasting"
-version = "1.0.0"
+version = "2.0.0"
 description = "Next-gameweek forecasting with chronological evaluation."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 license-files = ["LICENSE"]
 dependencies = [
+  "duckdb>=1.5,<2",
+  "fastapi>=0.141,<1",
   "numpy>=2.1,<3",
   "pandas>=2.2,<3",
+  "pydantic>=2.13,<3",
   "scikit-learn>=1.6,<2",
+  "uvicorn>=0.52,<1",
 ]
 
 [project.optional-dependencies]
 test = [
+  "httpx>=0.28,<1",
   "pytest>=8,<10",
   "ruff>=0.9,<1",
 ]
 
 [project.scripts]
 fpl-forecast = "fpl_forecasting.cli:main"
+fpl-forecast-service = "fpl_forecasting.service:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

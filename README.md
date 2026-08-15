@@ -24,7 +24,7 @@ the city. It is one result from the [urban-accessibility analysis](projects/live
 | Project | Work completed | Evidence available |
 |---|---|---|
 | [Liverpool urban accessibility](projects/liverpool-urban-accessibility/) | Used DuckDB, GeoPandas, spatial weights, count models, and a separate R check to analyse Census workplace flows across 61 MSOAs | Fresh public-data analysis. Local fixed-workplace retention was 68.37%; Moran's I was 0.4901 |
-| [FPL next-gameweek forecasting](projects/fpl-forecasting/) | Built a chronological forecasting pipeline with strict as-of features, recent-form baselines, regression metrics, ranking metrics, and a non-root Docker image | Fresh historical evaluation. Ridge MAE was 1.110 and Spearman correlation was 0.717 across GW6 to GW15 |
+| [FPL next-gameweek forecasting](projects/fpl-forecasting/) | Built a chronological forecasting pipeline with strict as-of features, season-bound JSON artifacts, hashed batch evidence, transactional DuckDB storage, and a read-only local service | Fresh historical evaluation. Ridge MAE was 1.110 and Spearman correlation was 0.717 across GW6 to GW15 |
 | [Tree LiDAR benchmark](projects/tree-lidar-benchmark/) | Evaluated six tree-instance segmentation methods, each with a published/default and development-selected route, on 49.7 million aligned test points | Current verified evidence. The highest development-selected micro F1 was 0.8436 |
 | [Chest X-ray classification](projects/chest-xray-classification/) | Rebuilt a three-class training pipeline around an identified public dataset, exact-copy grouping, strict split checks, and calibration metrics | Historical reference only. Macro F1 was 0.9381 on an older image-level split; the safer split needs a new run |
 
@@ -58,7 +58,7 @@ made explicit.
 ```text
 projects/
   liverpool-urban-accessibility/ public Census data, GIS, statistics, SQL, R and Docker
-  fpl-forecasting/              chronological forecasting and ranking evaluation
+  fpl-forecasting/              chronological forecasting, batch evidence and local serving
   tree-lidar-benchmark/         3D tree-instance evaluation and retained evidence
   chest-xray-classification/    image classification and duplicate-safe data preparation
   neural-chunking/              BIO sequence labelling with two neural encoders

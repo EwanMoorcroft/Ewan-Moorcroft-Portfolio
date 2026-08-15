@@ -10,9 +10,24 @@ The reader accepts JSON filenames containing `gameweek-<positive integer>`, foll
 
 Exactly one file may claim each gameweek.
 
+The filename gameweek must equal the wrapper gameweek. Every file in a sequence must use the same
+canonical `YYYY-YY` season, such as `2025-26`. Operational commands check that season against the
+caller request and fitted artifact.
+
 ## Required shape
 
-The top-level value must be an object with a non-empty `elements` list. Every element must contain:
+The top-level object must contain exactly:
+
+- `snapshot_format` with value `fpl-completed-gameweek-v1`;
+- `season_id` as a canonical consecutive season;
+- `gameweek` as a positive integer matching the filename; and
+- a non-empty `elements` list.
+
+Raw public FPL live payloads contain `elements` but do not carry this season and gameweek wrapper,
+so they are rejected. A caller must verify the source event and convert it explicitly. The
+`synthetic` and `import-vaastav` commands write the accepted wrapper.
+
+Every element must contain:
 
 - a positive integer `id`;
 - a `stats` object;
@@ -23,10 +38,15 @@ The reader also accepts `starts`, `ict_index`, `influence`, `creativity`, `threa
 
 ## Completion boundary
 
-The accepted live-gameweek payload does not contain an event-completion flag. Each file is treated
-as caller-declared completed data, so official event status must be checked when the snapshot is
-captured. An empty `elements` list is rejected as an obvious placeholder; a non-empty in-progress
-snapshot cannot be proven complete from this file alone.
+The raw live-gameweek payload does not contain an event-completion flag. The accepted wrapper names
+the file as completed, but that remains a caller assertion. Official event status must be checked
+before conversion. An empty `elements` list is rejected as an obvious placeholder; the wrapper
+cannot prove that a non-empty source payload was captured after completion.
+
+Operational prediction adds two fail-closed declarations. The caller must provide the expected
+latest gameweek, which must equal the latest supplied filename, and must pass the literal completion
+status `completed`. These checks prevent accidental stale or future boundaries, but they do not
+query the official FPL event status.
 
 ## Sequence checks
 
@@ -35,6 +55,9 @@ Before feature construction, the complete directory is checked for:
 | Check | Reason |
 |---|---|
 | At least two completed gameweeks | One is needed for features and one for a target. |
+| Exact wrapper fields and format | Season and gameweek identity must be explicit. |
+| One season across the sequence | Cross-season windows are not meaningful. |
+| Wrapper gameweek matches filename | File selection and content identity must agree. |
 | No empty `elements` list | An obvious future placeholder is not usable result data. |
 | No duplicate gameweek number | File selection must be unambiguous. |
 | Consecutive gameweeks | Silent gaps change rolling windows and target meaning. |
@@ -52,6 +75,16 @@ The last supplied gameweek contributes targets to the preceding gameweek but doe
 ## Storage boundary
 
 Real downloaded data should remain under an ignored local path such as `data/raw/`. Commit a small synthetic fixture only when it is clearly labeled and contains no copied live-season records.
+
+## Operational output identity
+
+The prediction command hashes the exact artifact bytes and each exact input file. The ordered input
+aggregate includes gameweek, file name, byte count, and file SHA-256. The accompanying manifest also
+binds the effective protocol configuration, semantic feature schema, and canonical prediction JSON.
+Outputs cannot overwrite an input snapshot, configuration, or artifact.
+
+The manifest intentionally omits wall-clock time and machine-local paths. Retrieval time and proof
+that an event was officially complete belong in the caller's acquisition log.
 
 ## Historical CSV adapter
 

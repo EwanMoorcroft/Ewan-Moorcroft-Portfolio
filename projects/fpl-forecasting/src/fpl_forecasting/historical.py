@@ -7,8 +7,11 @@ import hashlib
 import json
 import math
 from dataclasses import dataclass
+from numbers import Integral
 from pathlib import Path
 
+from .contracts import validate_season_id
+from .data import completed_snapshot_payload
 from .errors import DataContractError
 
 SOURCE_REPOSITORY = "https://github.com/vaastav/Fantasy-Premier-League"
@@ -48,7 +51,7 @@ def _number(raw: str | None, *, field: str, gameweek: int, row: int) -> float:
         raise DataContractError(f"GW{gameweek} row {row}: {field} is missing")
     try:
         value = float(raw)
-    except ValueError as exc:
+    except (OverflowError, ValueError) as exc:
         raise DataContractError(f"GW{gameweek} row {row}: {field} must be numeric") from exc
     if not math.isfinite(value):
         raise DataContractError(f"GW{gameweek} row {row}: {field} must be finite")
@@ -142,12 +145,18 @@ def import_historical_gameweeks(
     the forecast target is player points. Missing player rows remain missing.
     """
 
-    if not season.strip():
-        raise DataContractError("season cannot be empty")
+    season_id = validate_season_id(season)
     revision = source_revision.strip().lower()
     if len(revision) != 40 or any(character not in "0123456789abcdef" for character in revision):
         raise DataContractError("source_revision must be a full 40-character Git commit SHA")
-    if gameweek_start < 1 or gameweek_end < gameweek_start:
+    if (
+        isinstance(gameweek_start, bool)
+        or isinstance(gameweek_end, bool)
+        or not isinstance(gameweek_start, Integral)
+        or not isinstance(gameweek_end, Integral)
+        or gameweek_start < 1
+        or gameweek_end < gameweek_start
+    ):
         raise DataContractError("gameweek interval is invalid")
 
     source = Path(source_dir)
@@ -167,7 +176,15 @@ def import_historical_gameweeks(
         aggregate.update(f"{audit['file']}\0{audit['bytes']}\0{audit['sha256']}\n".encode("ascii"))
         output_path = destination / f"gameweek-{gameweek:02d}.json"
         output_path.write_text(
-            json.dumps({"elements": elements}, separators=(",", ":")) + "\n",
+            json.dumps(
+                completed_snapshot_payload(
+                    season_id=season_id,
+                    gameweek=gameweek,
+                    elements=elements,
+                ),
+                separators=(",", ":"),
+            )
+            + "\n",
             encoding="utf-8",
         )
         paths.append(output_path)
@@ -177,7 +194,7 @@ def import_historical_gameweeks(
         "manifest_format": "fpl-historical-import-v1",
         "source_repository": SOURCE_REPOSITORY,
         "source_revision": revision,
-        "season": season,
+        "season": season_id,
         "gameweek_start": gameweek_start,
         "gameweek_end": gameweek_end,
         "source_file_count": len(source_files),
