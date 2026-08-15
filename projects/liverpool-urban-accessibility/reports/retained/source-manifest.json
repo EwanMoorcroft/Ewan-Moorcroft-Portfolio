@@ -1,0 +1,52 @@
+{
+  "analysis_area": {
+    "area_code": "E08000012",
+    "area_name": "Liverpool",
+    "geography": "2021 Middle layer Super Output Areas",
+    "msoa_count": 61
+  },
+  "contract": "liverpool-source-manifest-v1",
+  "retrieved_at_utc": "2026-08-15T19:04:27Z",
+  "sources": [
+    {
+      "archive_bytes": 80621150,
+      "archive_sha256": "9e32ababfd9f77e353411d399e463f812942440df115a2d6c296c74dbeea70d7",
+      "archive_url": "https://www.nomisweb.co.uk/output/census/2021/odwp01ew.zip",
+      "bytes": 197658221,
+      "file": "ODWP01EW_MSOA.csv",
+      "licence": "Open Government Licence v3.0",
+      "name": "Census 2021 origin-destination workplace flows ODWP01EW",
+      "publisher": "Office for National Statistics via Nomis",
+      "release_page": "https://www.nomisweb.co.uk/sources/census_2021_od",
+      "role": "flow_csv",
+      "sha256": "8af475023e18227fdcee3ac4a547d6549b1fcb87138bd93d177a7a698d1a10dd",
+      "transformation": "MSOA member read directly; Liverpool origins retained; indicator 3 forms fixed-workplace flows; indicators 1 and 2 remain separate; indicator -8 is excluded from employed metrics",
+      "user_guide": "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/methodologies/userguidetocensus2021origindestinationdataenglandandwales"
+    },
+    {
+      "bytes": 190892,
+      "catalogue": "https://geoportal.statistics.gov.uk/datasets/6b282db29762450881ed5159259a6e4e/about",
+      "licence": "Open Government Licence v3.0",
+      "name": "MSOA December 2021 boundaries EW BGC V3",
+      "publisher": "Office for National Statistics",
+      "query_crs": "EPSG:4326",
+      "query_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Middle_layer_Super_Output_Areas_December_2021_Boundaries_EW_BGC_V3/FeatureServer/0/query?where=%28MSOA21CD%3E%3D%27E02001347%27%20AND%20MSOA21CD%3C%3D%27E02001405%27%29%20OR%20MSOA21CD%20IN%20%28%27E02006932%27%2C%27E02006933%27%2C%27E02006934%27%29&outFields=MSOA21CD%2CMSOA21NM&orderByFields=MSOA21CD%20ASC&returnGeometry=true&outSR=4326&f=geojson",
+      "role": "boundaries",
+      "sha256": "2fed47c4278747fcde3e5cf2008442a0572da8712499d2e92e61c62fa8dc6951"
+    },
+    {
+      "bytes": 8379,
+      "licence": "Open Government Licence v3.0",
+      "name": "MSOA December 2021 population-weighted centroids EW PWC V2",
+      "publisher": "Office for National Statistics",
+      "query_crs": "EPSG:4326",
+      "query_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/MSOA_December_2021_EW_PWC_V2/FeatureServer/0/query?where=%28MSOA21CD%3E%3D%27E02001347%27%20AND%20MSOA21CD%3C%3D%27E02001405%27%29%20OR%20MSOA21CD%20IN%20%28%27E02006932%27%2C%27E02006933%27%2C%27E02006934%27%29&outFields=MSOA21CD&orderByFields=MSOA21CD%20ASC&returnGeometry=true&outSR=4326&f=geojson",
+      "role": "centroids",
+      "sha256": "18d271e247a385f5edbf4f9a948ce23e504d204bb7d226193e5c789b1ca3448d"
+    }
+  ],
+  "required_attribution": [
+    "Source: Office for National Statistics licensed under the Open Government Licence v.3.0",
+    "Contains OS data © Crown copyright and database right 2026"
+  ]
+}
