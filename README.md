@@ -24,15 +24,15 @@ the city. It is one result from the [urban-accessibility analysis](projects/live
 | Project | Work completed | Evidence available |
 |---|---|---|
 | [Liverpool urban accessibility](projects/liverpool-urban-accessibility/) | Used DuckDB, GeoPandas, spatial weights, count models, and a separate R check to analyse Census workplace flows across 61 MSOAs | Fresh public-data analysis. Local fixed-workplace retention was 68.37%; Moran's I was 0.4901 |
-| [FPL next-gameweek forecasting](projects/fpl-forecasting/) | Built a chronological forecasting pipeline with strict as-of features, season-bound JSON artifacts, hashed batch evidence, transactional DuckDB storage, and a read-only local service | Fresh historical evaluation. Ridge MAE was 1.110 and Spearman correlation was 0.717 across GW6 to GW15 |
+| [FPL next-gameweek forecasting](projects/fpl-forecasting/) | Built a chronological forecasting pipeline with strict as-of features, season-bound JSON artifacts, hashed batch evidence, transactional DuckDB storage, and a read-only local service | Pinned public-data evaluation. Ridge MAE was 1.110 and Spearman correlation was 0.717 across GW6 to GW15 |
 | [Tree LiDAR benchmark](projects/tree-lidar-benchmark/) | Evaluated six tree-instance segmentation methods, each with a published/default and development-selected route, on 49.7 million aligned test points | Current verified evidence. The highest development-selected micro F1 was 0.8436 |
-| [Chest X-ray classification](projects/chest-xray-classification/) | Rebuilt a three-class training pipeline around an identified public dataset, exact-copy grouping, strict split checks, and calibration metrics | Historical reference only. Macro F1 was 0.9381 on an older image-level split; the safer split needs a new run |
+| [Chest X-ray classification](projects/chest-xray-classification/) | Built a three-class ResNet18 training pipeline around an identified public dataset, exact-copy grouping, strict split checks, and calibration metrics | The earlier run reached macro F1 0.9381 on 522 test images. The grouped-split pipeline needs a new run |
 
 Two smaller projects show other parts of my MSc work:
 
-- [Neural chunking](projects/neural-chunking/) compares BiLSTM and Transformer encoders, masks
-  variable-length sequences correctly, and scores exact BIO spans. Its retained token macro F1 is a
-  historical result, not a new benchmark.
+- [Neural chunking](projects/neural-chunking/) implements BiLSTM and Transformer encoders, masks
+  variable-length sequences correctly, and scores exact BIO spans. The available BiLSTM run reached
+  token macro F1 0.7521; its source corpus identity was not preserved.
 - [LunarLander Double DQN](projects/lunar-lander-double-dqn/) covers replay memory, online and target
   networks, terminal handling, checkpoints, and deterministic evaluation. The retained reward came
   from one training seed, which is stated plainly in the project.
@@ -86,8 +86,8 @@ python3 scripts/audit_repository.py .
 
 Project environments are separate. Enter the project you want to inspect and follow its README.
 The [reproducibility note](docs/REPRODUCIBILITY.md) explains the shared conventions, while
-[evidence and claim rules](docs/EVIDENCE.md) explain why a current verified result, a historical
-number, and a software-only check are labelled differently.
+[evidence and claim rules](docs/EVIDENCE.md) explain why a current verified result, a retained
+earlier number, and a software-only check are described differently.
 
 Code is available under the [MIT License](LICENSE). Data licences remain with the original
 publishers and are recorded beside each project.
