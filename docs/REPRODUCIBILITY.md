@@ -30,6 +30,7 @@ and `pip` can be used instead.
 | Project | Included | Kept local |
 |---|---|---|
 | Tree LiDAR | Aggregate v2 tables, route manifest, evaluator, figures | Raw point clouds and prediction arrays |
+| Liverpool urban accessibility | Derived 61-area metrics, boundaries, centroids, spatial edges, models, figures, source and result manifests | National Census workplace-flow table and rebuild outputs |
 | Chest X-ray | Source specification, duplicate evidence, preparation code | 3,475 source images and checkpoints |
 | FPL | Protocol code, retained aggregate evaluation, source manifest | Downloaded gameweek snapshots, row predictions and fitted models |
 | LunarLander | Retained figures and scoped metric JSON | Model checkpoint and new run outputs |
