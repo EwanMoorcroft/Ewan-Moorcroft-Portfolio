@@ -11,11 +11,14 @@ This definition fixes both the prediction horizon and the information boundary. 
 | Family | Fields | Availability |
 |---|---|---|
 | Latest gameweek | points, minutes, started, ICT, influence, creativity, threat | End of `t` |
-| Three-gameweek window | mean points, mean minutes, start rate, mean ICT, mean goals, mean assists | No later than `t` |
-| Five-gameweek window | mean points | No later than `t` |
+| Latest three recorded player rows | mean points, mean minutes, start rate, mean ICT, mean goals, mean assists | No later than `t` |
+| Latest five recorded player rows | mean points | No later than `t` |
 | Season to date | points sum, minutes sum, appearances, points per appearance | No later than `t` |
 
-At the beginning of a season, rolling windows use the history available so far. There is no padding with future values. An appearance is a gameweek with more than zero minutes.
+At the beginning of a season, rolling windows use the history available so far. There is no padding
+with future values. If a player is absent from a snapshot, that gameweek is not inserted as a zero
+row; the window therefore means recent recorded observations rather than consecutive gameweeks. An
+appearance is a recorded gameweek with more than zero minutes.
 
 The feature list is constant and ordered. Training and prediction both select exactly that list. Any target, identifier, or extra future-facing field stays outside the model matrix.
 
@@ -28,7 +31,7 @@ Test windows do not overlap. A row can appear in at most one out-of-fold result.
 ## Candidates
 
 - **Last gameweek:** latest observed points.
-- **Three-gameweek mean:** mean points over the available last-three window.
+- **Three-observation mean:** mean points over the available latest three player rows.
 - **Training-window mean:** mean target among current training rows.
 - **Ridge regression:** all approved features are standardized from the current training fold, then fitted with L2 regularization.
 

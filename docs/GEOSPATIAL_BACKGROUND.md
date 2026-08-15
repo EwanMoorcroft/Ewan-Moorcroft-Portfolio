@@ -1,64 +1,49 @@
-# Academic Geospatial and Analytical Background
+# Geography and data analysis background
 
-## Education
+I completed a BSc in Geography at the University of Liverpool in June 2025. I am now studying for
+an MSc in Data Science and Artificial Intelligence there, with completion expected in September
+2026. Geography is still a large part of how I approach data: I look for the spatial unit, the scale,
+the way a measurement was collected, and what might have been lost when the real world became a
+table.
 
-- MSc Data Science and Artificial Intelligence, University of Liverpool — expected September 2026
-- BSc Geography, University of Liverpool — completed June 2025
+## River Soar research
 
-This combination gives me a foundation in spatial and environmental reasoning alongside machine
-learning, statistical analysis, and reproducible software engineering.
+My undergraduate research examined how riparian buffers and surrounding land use related to
+nutrient conditions in the River Soar. I collected and organised observations from six sites over 20
+days, then combined them with river-height data used as a proxy for rainfall occurrence.
 
-## Independent environmental research
+The work included field planning, repeated sampling, data cleaning, maps, charts, correlation and
+group comparisons. It also forced a useful limitation into the analysis: local rainfall observations
+were unavailable, so the proxy could support a cautious comparison but not a precise rainfall model.
+The final report had to connect those analytical choices to practical land-management questions for
+a non-specialist reader.
 
-My BSc independent research project investigated how riparian buffers and land use affected
-nutrient dynamics in the River Soar. The study combined primary environmental observations from
-six sites over 20 days with secondary river-height data used as a rainfall proxy.
+The raw observations and exact site locations are not public here. This is a summary of the work, not
+a repackaged software project.
 
-The work involved:
+## GIS work
 
-- planning and conducting field sampling;
-- cleaning and structuring repeated environmental observations;
-- producing study-area maps and analytical graphics;
-- comparing buffered and non-buffered locations;
-- exploring rainfall interactions, distributions, correlations, and group differences; and
-- communicating methods, limitations, results, and practical implications in a long-form report.
+I have used QGIS for cartography, coordinate reference systems, buffers, overlays, catchments, and
+choropleth maps. In Python I have worked with GeoPandas, Rasterio, Rasterstats, and PySAL; in R, with
+`sf`, `tmap`, and `dplyr`. The exercises covered spatial joins, raster masking, zonal statistics,
+administrative boundaries, census data, transport flows, and OpenStreetMap-derived information.
 
-This is evidence of applied research and analytical judgement rather than a packaged software
-project. The source report, exact locations, and raw observations remain outside this repository.
+Two Liverpool analyses are worth separating because they answered different questions. One looked
+at retail site-selection evidence. The other used commuting origin-destination flows, Moran's I, and
+Poisson regression to examine urban movement. Their original files mixed my work with teaching
+scaffolding and data whose redistribution terms were incomplete, so I did not copy them into Git.
+Instead, I rebuilt the stronger ideas with official public sources in
+[Liverpool urban accessibility](../projects/liverpool-urban-accessibility/).
 
-## GIS and spatial analysis
+## Statistics, databases, and presentation
 
-Academic projects provided practical experience with:
+My wider work includes exploratory analysis, environmental time series, hypothesis tests, analysis
+of variance, regression, clustering, and data visualisation. Database study covered relational
+design, joins, aggregation, nested queries, keys, constraints, transactions, and locking. The public
+Liverpool project puts some of that into practice through a 197.7 MB Census flow
+table transformed with DuckDB, followed by spatial analysis in Python and an independent check in R.
 
-- QGIS cartography, coordinate reference systems, buffers, overlays, catchments, and choropleths;
-- Python geospatial tooling including GeoPandas, Rasterio, Rasterstats, and PySAL;
-- R spatial workflows using `sf`, `tmap`, and `dplyr`;
-- raster masking, zonal statistics, vector joins, and administrative-boundary analysis;
-- origin-destination flow mapping and spatial autocorrelation; and
-- combining census, transport, environmental, and OpenStreetMap-derived information.
-
-Liverpool-focused analyses considered urban accessibility, retail-location evidence, and commuting
-flows. They used maps, socioeconomic variables, origin-destination data, and Poisson regression to
-connect spatial patterns with planning decisions. The original academic files contain instructional
-scaffolding and data with incomplete redistribution records, so they are not copied here. The clean
-[Liverpool urban-accessibility rebuild](../projects/liverpool-urban-accessibility/) now uses official
-public sources, strict spatial contracts, DuckDB, Python, R, retained evidence and explicit limits.
-
-## Quantitative and data-analysis experience
-
-The broader academic work includes exploratory data analysis, time-series environmental data,
-hypothesis testing, analysis of variance, correlation, regression, clustering, and data
-visualisation. Database work includes relational modelling, SQL joins and aggregation, nested
-queries, keys and constraints, and transaction-safe updates.
-
-These capabilities complement the repository's current machine learning projects by showing how I
-move from a real-world question through data preparation and analysis to a defensible technical
-conclusion.
-
-## Public boundary
-
-This page is a skills summary, not a claim that every academic analysis is independently
-reproducible here. Source reports, teaching materials, raw observations, collaborator information,
-personal identifiers, credentials, and third-party data without confirmed redistribution rights
-remain local. The public Liverpool rebuild demonstrates how later geospatial work is separated from
-those source files and reconstructed under documented licences.
+I have deliberately kept this page concrete. It records skills I have used, but it does not pretend
+that every university analysis is independently reproducible from this repository. Reports, teaching
+material, raw field data, private identifiers, and third-party datasets without clear redistribution
+rights remain outside the public portfolio.

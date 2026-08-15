@@ -1,10 +1,10 @@
 # LunarLander Double DQN
 
-A compact reinforcement-learning system that trains a discrete-control policy with Double DQN,
-experience replay, a softly updated target network, gradient clipping, deterministic evaluation,
-and portable Apple Metal/CPU device selection.
+This was my reinforcement-learning study of discrete control in LunarLander. The implementation uses
+Double DQN, replay memory, a softly updated target network, and a separate greedy evaluation path. It
+runs on Apple Metal when available and otherwise uses CPU.
 
-## Result snapshot
+## Earlier run
 
 | Retained run | Value |
 |---|---:|
@@ -15,15 +15,16 @@ and portable Apple Metal/CPU device selection.
 | Mean episode length | 254.4 steps |
 | Centred landing rate | 90% |
 
-These numbers come from a retained reference run using one training seed. They demonstrate a
-successful run, not expected performance across arbitrary seeds. The repository does not include
-the checkpoint; training and evaluation can be repeated with the documented configuration.
+These numbers come from one retained training seed. The run learned a successful policy, but it is
+not an estimate of expected performance across arbitrary seeds. The repository does not include the
+checkpoint, so the historical JSON cannot be tied back to exact model bytes. New evaluations record
+the checkpoint SHA-256, evaluation seed, first environment seed, and software versions.
 Fresh evaluations define a centred landing as a true terminal state with both leg-contact flags set
 and an absolute horizontal position below the configured centre threshold.
 
 ![Greedy LunarLander rollout](artifacts/figures/lunar_lander_trained_agent.gif)
 
-## Engineering design
+## Implementation
 
 - Double DQN separates action selection from target-network value estimation.
 - A NumPy-backed circular replay buffer avoids per-transition object overhead.
@@ -55,7 +56,7 @@ uv run pytest
 For a quick software smoke run, reduce `--episodes`. A short run validates the pipeline but is not
 expected to learn a stable landing policy.
 
-## Repository map
+## Files
 
 ```text
 src/lunar_dqn/     agent, replay, network, training, and command line
@@ -85,6 +86,3 @@ Retained figures and result metadata are pinned in
 - Gymnasium and Box2D version changes can affect exact trajectories.
 - Seeded runs are designed to be repeatable, but exact floating-point results can still vary across
   PyTorch versions and compute backends.
-
-The strongest next improvement would be a multi-seed comparison against DQN and a random-policy
-baseline with confidence intervals and equal interaction budgets.
