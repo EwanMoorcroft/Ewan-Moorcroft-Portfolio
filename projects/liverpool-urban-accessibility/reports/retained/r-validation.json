@@ -1,0 +1,9 @@
+{
+  "contract": "liverpool-r-validation-v1",
+  "areas": 61,
+  "moran_statistic": 0.490135550389972,
+  "moran_difference": 1.27675647831893e-15,
+  "maximum_coefficient_difference": 1.05146794049382e-12,
+  "passed": true,
+  "r_version": "R version 4.3.3 (2024-02-29)"
+}

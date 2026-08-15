@@ -2,16 +2,16 @@
 
 [![Quality checks](https://github.com/EwanMoorcroft/Ewan-Moorcroft-Portfolio/actions/workflows/quality.yml/badge.svg)](https://github.com/EwanMoorcroft/Ewan-Moorcroft-Portfolio/actions/workflows/quality.yml)
 
-MSc Data Science and Artificial Intelligence student at the University of Liverpool, with a BSc
-in Geography from the same institution.
+MSc Data Science and Artificial Intelligence at the University of Liverpool — expected September
+2026. BSc Geography at the University of Liverpool — completed June 2025.
 
 I build reproducible machine learning systems across computer vision, 3D spatial data,
 forecasting, reinforcement learning, and natural-language processing. My work emphasises
 defensible evaluation, data integrity, tested Python packages, and clear technical communication.
 
-**Core stack:** Python · PyTorch · scikit-learn · pandas · NumPy · pytest · Docker · GitHub Actions
+**Core stack:** Python · PyTorch · scikit-learn · pandas · GeoPandas · DuckDB · R · pytest · Docker · GitHub Actions
 
-**Technical focus:** computer vision · 3D LiDAR · spatial data · temporal modelling · rigorous model evaluation
+**Technical focus:** computer vision · 3D LiDAR · spatial statistics · temporal modelling · rigorous model evaluation
 
 ![Paired LiDAR benchmark results](projects/tree-lidar-benchmark/assets/micro_f1_paired.png)
 
@@ -23,6 +23,7 @@ defensible evaluation, data integrity, tested Python packages, and clear technic
 | Project | What I built and evaluated | Technical evidence | Result status |
 |---|---|---|---|
 | [Tree LiDAR instance benchmark](projects/tree-lidar-benchmark/) | Compares six instance-segmentation methods on dense, source-aligned point clouds | 49.7M held-out points, deterministic bipartite matching, route-aware evaluation, 1,152 aggregate checks | **Current verified:** top development-selected micro F1 0.8436 |
+| [Liverpool urban accessibility](projects/liverpool-urban-accessibility/) | Analyses Census workplace flows across 61 MSOAs with reproducible spatial and count methods | DuckDB transformation, population-weighted centroids, Queen-contiguity Moran's I, Poisson/NB2 and binomial diagnostics, independent R parity | **Fresh public-data analysis:** 68.37% local fixed-workplace retention; Moran's I 0.4901 |
 | [FPL next-gameweek forecasting](projects/fpl-forecasting/) | Predicts player points using only information available before the target gameweek | Empty-period rejection, as-of features, expanding-window evaluation, regression and ranking metrics, JSON model artifacts | **Fresh historical evaluation:** ridge MAE 1.110 and Spearman 0.717 across GW6–15 |
 | [Chest X-ray classification](projects/chest-xray-classification/) | Builds a three-class transfer-learning pipeline around a public image corpus | Dataset identity contract, exact-duplicate grouping, visual-similarity review candidates, calibration metrics | **Historical reference:** macro F1 0.9381; safer split awaits a new run |
 
@@ -41,16 +42,16 @@ software-only validation are never presented as equivalent. See [Evidence and cl
 | Capability | Public evidence and bounded experience |
 |---|---|
 | 3D computer vision and spatial data | Point-aligned LiDAR contracts, semantic eligibility rules, IoU matching, qualitative point-cloud comparison |
-| GIS and geospatial analysis | [Academic experience summary](docs/GEOSPATIAL_BACKGROUND.md): QGIS, GeoPandas, Rasterio, Rasterstats, PySAL, R `sf`/`tmap`, CRS handling, spatial joins, zonal statistics, origin-destination flows and spatial autocorrelation |
+| GIS and geospatial analysis | [Liverpool public-data project](projects/liverpool-urban-accessibility/) and [academic experience summary](docs/GEOSPATIAL_BACKGROUND.md): GeoPandas, CRS contracts, population-weighted centroids, origin-destination flows, spatial weights, Moran's I, QGIS, raster analysis and R |
 | Image classification | ResNet18 transfer learning, conservative augmentation, group-aware data preparation, calibration-aware evaluation |
 | Temporal machine learning | Strict as-of features, next-gameweek targets, expanding windows, error and ranking measures |
 | Deep learning systems | PyTorch CNN, BiLSTM, Transformer, and Double DQN implementations with Apple Metal/CPU selection |
-| Statistics and data analysis | [Academic experience summary](docs/GEOSPATIAL_BACKGROUND.md): environmental observations, data cleaning, exploratory visualisation, hypothesis tests, analysis of variance and Poisson regression |
-| Relational data and SQL | [Academic experience summary](docs/GEOSPATIAL_BACKGROUND.md): relational modelling, joins, grouping, nested queries, constraints, transactions and concurrency-safe updates |
+| Statistics and data analysis | Exposure-offset Poisson and NB2 diagnostics, independent R parity, spatial permutation inference, environmental observations, exploratory visualisation, hypothesis tests and analysis of variance |
+| Relational data and SQL | DuckDB transformation of a 197.7 MB national flow table plus relational modelling, joins, grouping, nested queries, constraints, transactions and concurrency-safe updates |
 | Dataset engineering | Schema validation, hashing, duplicate containment, immutable manifests, raw-data exclusion |
 | Evaluation design | Development-only selection, untouched held-out sets, leakage guards, baselines, limitations tied to each claim |
 | Python engineering | Typed packages, command-line interfaces, JSON/TOML configuration, safe persistence, unit and integration tests |
-| Delivery tooling | Ruff, pytest, repository safety checks, GitHub Actions, and non-root Docker packaging for the forecasting CLI |
+| Delivery tooling | Ruff, pytest, repository safety checks, GitHub Actions, dependency locking, and non-root Docker packaging for the forecasting and geospatial CLIs |
 
 ## Education and geospatial background
 
@@ -59,15 +60,17 @@ learning work above. It includes raster and vector geodata, census and urban-mob
 environmental observations, cartography, spatial statistics, and communicating results to
 non-specialist audiences.
 
-The [academic geospatial and analytical background](docs/GEOSPATIAL_BACKGROUND.md) page documents
-this experience without publishing raw field observations, instructional material, private
-identifiers, or third-party datasets with unclear redistribution terms.
+The [Liverpool urban-accessibility project](projects/liverpool-urban-accessibility/) turns that
+background into a reproducible public-data study. The broader
+[academic geospatial and analytical background](docs/GEOSPATIAL_BACKGROUND.md) remains a bounded
+skills summary without raw field observations, private identifiers, or data with unclear terms.
 
 ## Repository navigation
 
 ```text
 projects/
   tree-lidar-benchmark/         flagship 3D instance-segmentation evidence pack
+  liverpool-urban-accessibility/ public-data GIS, spatial statistics and R parity
   chest-xray-classification/    image-classification lifecycle and data controls
   fpl-forecasting/              corrected chronological forecasting system
   lunar-lander-double-dqn/      reinforcement-learning control system

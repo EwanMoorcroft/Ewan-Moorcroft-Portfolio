@@ -87,6 +87,27 @@ def test_repository_auditor_scans_vector_text(tmp_path: Path) -> None:
     assert any(finding.detail == "machine-specific home path" for finding in findings)
 
 
+def test_repository_auditor_scans_r_source(tmp_path: Path) -> None:
+    """R source must receive the same machine-path and terminology checks."""
+    auditor = _load_script("audit_repository")
+    home_fragment = "/home/" + "example/private.csv"
+    (tmp_path / "analysis.R").write_text(f"path <- '{home_fragment}'", encoding="utf-8")
+    findings = auditor["audit_tree"](tmp_path)
+    assert any(finding.detail == "machine-specific home path" for finding in findings)
+
+
+def test_repository_auditor_scans_geojson(tmp_path: Path) -> None:
+    """Text geodata properties must not bypass public-safety checks."""
+    auditor = _load_script("audit_repository")
+    home_fragment = "/home/" + "example/private.geojson"
+    (tmp_path / "areas.geojson").write_text(
+        '{"type":"Feature","properties":{"source":"' + home_fragment + '"}}',
+        encoding="utf-8",
+    )
+    findings = auditor["audit_tree"](tmp_path)
+    assert any(finding.detail == "machine-specific home path" for finding in findings)
+
+
 def test_repository_auditor_flags_authorship_term(tmp_path: Path) -> None:
     """Public prose should not contain tool-authorship terminology."""
     auditor = _load_script("audit_repository")

@@ -1,0 +1,29 @@
+{
+  "contract": "liverpool-source-spec-v1",
+  "geography": {
+    "area": "Liverpool local authority E08000012",
+    "count": 61,
+    "distance_crs": "EPSG:27700",
+    "identity": "2021 MSOA",
+    "input_crs": "EPSG:4326"
+  },
+  "sources": [
+    {
+      "archive_url": "https://www.nomisweb.co.uk/output/census/2021/odwp01ew.zip",
+      "dataset": "Census 2021 ODWP01EW",
+      "licence": "Open Government Licence v3.0",
+      "member": "ODWP01EW_MSOA.csv",
+      "release_page": "https://www.nomisweb.co.uk/sources/census_2021_od"
+    },
+    {
+      "dataset": "MSOA December 2021 boundaries EW BGC V3",
+      "licence": "Open Government Licence v3.0",
+      "query_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Middle_layer_Super_Output_Areas_December_2021_Boundaries_EW_BGC_V3/FeatureServer/0/query?where=%28MSOA21CD%3E%3D%27E02001347%27%20AND%20MSOA21CD%3C%3D%27E02001405%27%29%20OR%20MSOA21CD%20IN%20%28%27E02006932%27%2C%27E02006933%27%2C%27E02006934%27%29&outFields=MSOA21CD%2CMSOA21NM&orderByFields=MSOA21CD%20ASC&returnGeometry=true&outSR=4326&f=geojson"
+    },
+    {
+      "dataset": "MSOA December 2021 population-weighted centroids EW PWC V2",
+      "licence": "Open Government Licence v3.0",
+      "query_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/MSOA_December_2021_EW_PWC_V2/FeatureServer/0/query?where=%28MSOA21CD%3E%3D%27E02001347%27%20AND%20MSOA21CD%3C%3D%27E02001405%27%29%20OR%20MSOA21CD%20IN%20%28%27E02006932%27%2C%27E02006933%27%2C%27E02006934%27%29&outFields=MSOA21CD&orderByFields=MSOA21CD%20ASC&returnGeometry=true&outSR=4326&f=geojson"
+    }
+  ]
+}

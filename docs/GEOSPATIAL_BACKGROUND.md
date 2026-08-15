@@ -2,8 +2,8 @@
 
 ## Education
 
-- MSc Data Science and Artificial Intelligence, University of Liverpool — current
-- BSc Geography, University of Liverpool
+- MSc Data Science and Artificial Intelligence, University of Liverpool — expected September 2026
+- BSc Geography, University of Liverpool — completed June 2025
 
 This combination gives me a foundation in spatial and environmental reasoning alongside machine
 learning, statistical analysis, and reproducible software engineering.
@@ -40,8 +40,9 @@ Academic projects provided practical experience with:
 Liverpool-focused analyses considered urban accessibility, retail-location evidence, and commuting
 flows. They used maps, socioeconomic variables, origin-destination data, and Poisson regression to
 connect spatial patterns with planning decisions. The original academic files contain instructional
-scaffolding and data with incomplete redistribution records, so they are not copied here. A clean
-public-data rebuild is a future project candidate.
+scaffolding and data with incomplete redistribution records, so they are not copied here. The clean
+[Liverpool urban-accessibility rebuild](../projects/liverpool-urban-accessibility/) now uses official
+public sources, strict spatial contracts, DuckDB, Python, R, retained evidence and explicit limits.
 
 ## Quantitative and data-analysis experience
 
@@ -59,5 +60,5 @@ conclusion.
 This page is a skills summary, not a claim that every academic analysis is independently
 reproducible here. Source reports, teaching materials, raw observations, collaborator information,
 personal identifiers, credentials, and third-party data without confirmed redistribution rights
-remain local. Any future standalone geospatial project will be rebuilt from documented public
-sources with clean code, validation, provenance, and an explicit evidence status.
+remain local. The public Liverpool rebuild demonstrates how later geospatial work is separated from
+those source files and reconstructed under documented licences.

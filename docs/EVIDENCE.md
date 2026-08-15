@@ -1,6 +1,6 @@
 # Evidence and Claim Rules
 
-This repository uses four result labels so a reader can tell exactly what has been verified.
+This repository uses five result labels so a reader can tell exactly what has been verified.
 
 ## Current verified
 
@@ -21,6 +21,15 @@ The included protocol has been run on a completed, commit-pinned public dataset 
 out-of-fold report and source manifest are retained. FPL forecasting uses this label for its fixed
 2024–25 GW1–15 interval. The label does not imply full-season coverage, live-season performance, or
 retention of raw records, row predictions, or a fitted model.
+
+## Fresh public-data analysis
+
+The included methods have been executed on dated, documented public sources. Compact transformed
+inputs, source identities, licences, aggregate outputs and hashes are retained, while a large raw
+source may remain outside Git. The Liverpool project uses this label. Its verifier proves retained
+integrity and reconstructs the Python aggregates and coefficients; a separate R script checks the
+cross-language values. The label does not claim that the national source can be rebuilt offline
+without downloading the identified archive.
 
 ## Rebuilt protocol
 
