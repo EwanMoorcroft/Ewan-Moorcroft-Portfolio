@@ -1,0 +1,50 @@
+name: Quality checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  repository:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.11"
+      - run: uv sync --extra quality
+      - run: uv run ruff check scripts tests
+      - run: uv run ruff format --check scripts tests
+      - run: uv run pytest tests
+      - run: uv run python scripts/check_markdown_links.py .
+      - run: uv run python scripts/audit_repository.py .
+
+  project-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - tree-lidar-benchmark
+          - chest-xray-classification
+          - fpl-forecasting
+          - lunar-lander-double-dqn
+          - neural-chunking
+    defaults:
+      run:
+        working-directory: projects/${{ matrix.project }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.11"
+      - run: uv sync --extra test
+      - run: uv run pytest
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
