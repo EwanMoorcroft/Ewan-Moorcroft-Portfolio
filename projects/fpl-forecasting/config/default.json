@@ -1,0 +1,10 @@
+{
+  "minimum_train_gameweeks": 4,
+  "test_gameweeks_per_fold": 1,
+  "split_step": 1,
+  "minimum_adjacent_player_coverage": 0.9,
+  "ranking_top_k": 10,
+  "ridge_alpha": 4.0,
+  "random_seed": 42
+}
+

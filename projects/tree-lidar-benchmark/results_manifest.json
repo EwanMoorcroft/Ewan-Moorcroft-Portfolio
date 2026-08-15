@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "fact_status": "final_current",
+  "dataset": "FOR-instance",
+  "source_evidence": {
+    "review_revision": "6b927f7d12c0ab87fd29280ad6684dff23c0354a",
+    "qa_status": "BUILD ALL: PASS",
+    "aggregate_reconstruction_checks": 1152,
+    "aggregate_discrepancies": 0,
+    "qualitative_accepted_pairs": 20
+  },
+  "protocol": {
+    "id": "for_instance_pointwise_v2",
+    "reference_classes": [4, 5, 6],
+    "prediction_eligibility": "exclude an entire prediction only when class 3 is strictly more than half of its source-aligned points",
+    "evaluation_mask": "union_of_reference_tree_and_eligible_prediction_points",
+    "matching_policy": "maximum_cardinality_one_to_one",
+    "iou_threshold": 0.5,
+    "aggregation": "sum TP, FP and FN before computing micro metrics"
+  },
+  "evaluation_inventory": {
+    "held_out_plots": 11,
+    "source_points": 49709922,
+    "reference_instances": 323,
+    "methods": 6,
+    "routes_per_method": 2
+  },
+  "row_counts": {
+    "per_plot": 132,
+    "by_site": 60,
+    "overall": 12
+  },
+  "headline_result": {
+    "scope": "this fixed benchmark only",
+    "method": "ForestFormer3D",
+    "route": "development_tuned",
+    "true_positives": 259,
+    "false_positives": 32,
+    "false_negatives": 64,
+    "micro_f1": 0.8436482084690554
+  },
+  "retained_files": [
+    {
+      "path": "data/benchmark_per_plot.csv",
+      "role": "canonical plot-level result table",
+      "sha256": "b75f72f40f2f85dd6b1048ca138e06cc57a36c6f63eb72af0faaa94a11dc9c11"
+    },
+    {
+      "path": "data/benchmark_by_site.csv",
+      "role": "canonical site-level result table",
+      "sha256": "d40d904288fb28f6f52117d21962cff8b155939e16934e122122ba7e97a9d484"
+    },
+    {
+      "path": "data/benchmark_overall.csv",
+      "role": "canonical overall result table",
+      "sha256": "90fcb7f306cf85553f59d04981445c1307bb3b42206bf5a0b69f61c85a082b30"
+    },
+    {
+      "path": "data/route_manifest.json",
+      "role": "route and checkpoint identity contract",
+      "sha256": "c1ddc98a8889c9a2fe0288f40ca32bd9b7c71e43044eb37d31d34773dcd30832"
+    },
+    {
+      "path": "assets/micro_f1_paired.svg",
+      "role": "vector paired-route comparison",
+      "sha256": "af90c498a5ace0a04c94fe3576549bf64e5ea46acf72a2732ae9ef164b9c226b"
+    },
+    {
+      "path": "assets/micro_f1_paired.png",
+      "role": "raster paired-route comparison",
+      "sha256": "a5964810accb3896fe1924a410cdf1dd376391d179d7392038c58fbc7f096957"
+    },
+    {
+      "path": "assets/forestformer3d_matched_comparison.png",
+      "role": "matched-colour qualitative comparison",
+      "sha256": "64ef0eb4012a88ca4cca14317fd33b35bac77e059e07712aea7e8817cf4f5c75"
+    }
+  ]
+}
+

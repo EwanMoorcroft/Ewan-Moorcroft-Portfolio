@@ -1,0 +1,30 @@
+{
+  "evidence_status": "historical digest audit",
+  "reproduced_in_this_repository": false,
+  "hash_algorithm": "SHA-256",
+  "class": "Viral Pneumonia",
+  "duplicate_groups": [
+    {
+      "sha256": "5218db2be5db8e93affe66f20bd32956afd6a09c36f74a6740b9cf00b737a968",
+      "members": ["Pneumonia/1055.jpg", "Pneumonia/134.jpg"]
+    },
+    {
+      "sha256": "7514923ace30caab6be4f5a951bc5610a593ca64f78cfb8422bbdc5abc1f6b6e",
+      "members": ["Pneumonia/610.jpg", "Pneumonia/991.jpg"]
+    },
+    {
+      "sha256": "9accf3e4a7177ab82239c8136e47320c329c160a9581f73ec3c543a530dfa58c",
+      "members": ["Pneumonia/482.jpg", "Pneumonia/963.jpg"]
+    },
+    {
+      "sha256": "9b5519f1ea8c9fbb4a2df9b2383d27851d913bfc0785ea095247575331131851",
+      "members": ["Pneumonia/299.jpg", "Pneumonia/402.jpg"]
+    },
+    {
+      "sha256": "a85039cd904cd221f617a75a32315996616dba36982a70af265e653ee95abc79",
+      "members": ["Pneumonia/505.jpg", "Pneumonia/994.jpg"]
+    }
+  ],
+  "use": "Reference only. The verifier recomputes all digests from the acquired data."
+}
+
