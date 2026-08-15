@@ -1,5 +1,5 @@
 {
-  "status": "retained_reference_run",
+  "status": "retained_run",
   "selected_architecture": "BiLSTM",
   "selection_rule": "highest validation token macro F1 with validation loss as tie-breaker",
   "best_epoch": 16,
@@ -20,4 +20,3 @@
   },
   "scope_note": "The retained predictions are unavailable, so exact-span F1 cannot be reconstructed. The current evaluator reports it for new runs."
 }
-

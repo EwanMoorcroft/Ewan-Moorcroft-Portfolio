@@ -1,46 +1,54 @@
 # Neural Chunking with BiLSTM and Transformer Encoders
 
-This project compares a bidirectional LSTM and a compact Transformer on BIO chunk tagging. The most
-important implementation detail is padding: it must be absent from recurrent state updates, loss,
-attention, decoded labels, and every metric. Complete sentences are also split by content hash so an
-exact duplicate cannot cross a data boundary.
+This project labels the role of every token in a sentence using the BIO format. For example, `New` can begin a noun phrase with `B-NP` and `York` can continue it with `I-NP`. It is a compact sequence-labelling pipeline built around the parts that make token classification reliable: sentence-aware splitting, padding-safe neural models, and both token and exact-span evaluation.
 
-## Earlier result
+The package implements a bidirectional LSTM and a compact Transformer behind the same training and evaluation interface. The retained metrics below are for the BiLSTM only. No Transformer metrics were preserved, so the two architectures are not presented as an empirical comparison.
 
-A retained reference run selected the BiLSTM at epoch 16 using validation token macro F1.
+[Open the saved project walkthrough](notebooks/neural_chunking_walkthrough.ipynb) to see the result table, training curves, confusion matrix, and direct links to the main implementation.
 
-| Held-out token metric | Value |
+## Results
+
+The stored BiLSTM evaluation selected epoch 16 and scored 31,833 tokens from 1,339 held-out sentences.
+
+| Metric | Score |
 |---|---:|
-| Accuracy | 0.9430 |
-| Macro F1 | 0.7521 |
-| Weighted F1 | 0.9423 |
-| Matthews correlation | 0.9288 |
+| Token accuracy | 0.9430 |
+| Token macro F1 | 0.7521 |
+| Token weighted F1 | 0.9423 |
+| Matthews correlation coefficient | 0.9288 |
+| Loss | 0.2158 |
 
-These are token-level results from the retained run. Exact-span predictions were not retained, so a
-span F1 is deliberately not inferred. The rebuilt evaluator reports exact-span precision, recall,
-and F1 for every new run.
-
-Retained figures and result metadata are pinned in
-[`artifacts/SHA256SUMS`](artifacts/SHA256SUMS). Verify them with
-`shasum -a 256 -c artifacts/SHA256SUMS`.
+Macro F1 is lower than weighted F1 because it gives rare BIO labels the same importance as frequent labels. That makes it a useful check that strong performance is not confined to the common `O` label.
 
 ![BiLSTM confusion matrix](artifacts/figures/best_bilstm_confusion_matrix.png)
 
-## Changes in the current pipeline
+![BiLSTM token accuracy by epoch](artifacts/figures/bilstm_accuracy_curve.png)
 
-- Complete sentences are split by a stable content hash, keeping exact token duplicates together.
-- Token and label vocabularies are built only from the training partition.
-- Padding is excluded from recurrent state updates, loss, attention, output labels, and every
-  reported metric.
-- Validation exact-span F1 controls early stopping; the test partition is evaluated once.
-- Invalid `I-` transitions are interpreted consistently as new spans during scoring.
-- Both neural encoders share the same data, training, and evaluation interfaces.
-- Apple Metal acceleration is used when available, with a CPU fallback.
+![BiLSTM loss by epoch](artifacts/figures/bilstm_loss_curve.png)
 
-## Data contract
+The figures and [stored metrics](artifacts/results/retained_metrics.json) are integrity-pinned in [`artifacts/SHA256SUMS`](artifacts/SHA256SUMS). Verify them with `shasum -a 256 -c artifacts/SHA256SUMS`.
 
-The command line expects a UTF-8 file with one `token BIO-label` pair per line and blank lines between
-sentences. Raw text is not redistributed in this repository. A valid input looks like:
+## How it works
+
+1. Read token and BIO-label pairs, preserving sentence boundaries.
+2. Keep exact duplicate sentences together when splitting the data, then build token and label vocabularies from the training partition only.
+3. Batch variable-length sentences with masks so padding cannot affect recurrent states, attention, loss, decoded labels, or metrics.
+4. Train either encoder, choose a checkpoint from validation evidence, then evaluate that selected checkpoint once on the held-out partition.
+5. Report token accuracy, F1, Matthews correlation, and exact BIO-span precision, recall, and F1 for new runs.
+
+## Skills demonstrated
+
+| Area | Where to look |
+|---|---|
+| Data validation, duplicate-aware splitting, vocabulary construction, and batching | [`data.py`](src/neural_chunking/data.py) |
+| PyTorch BiLSTM and Transformer sequence encoders | [`models.py`](src/neural_chunking/models.py) |
+| BIO decoding and exact-span metrics | [`metrics.py`](src/neural_chunking/metrics.py) |
+| Reproducible training, checkpoint selection, and evaluation safeguards | [`training.py`](src/neural_chunking/training.py) |
+| Command-line training and evaluation workflow | [`cli.py`](src/neural_chunking/cli.py) |
+
+## Run it
+
+The input is a UTF-8 text file containing one `token BIO-label` pair per line, with blank lines between sentences. Keep source data outside version control and use a corpus whose licence allows the intended use.
 
 ```text
 New B-NP
@@ -49,55 +57,18 @@ works B-VP
 
 ```
 
-Use a corpus whose licence permits your intended use and keep it outside version control.
-
-The Transformer supports at most 512 tokens per sentence by default. That limit is part of the
-persisted training configuration. Training and evaluation reject a longer sentence before token
-indices reach the embedding layer; the BiLSTM does not use this positional-encoding limit.
-
-## Run
-
 ```bash
 uv sync --extra test
 uv run neural-chunking train /path/to/chunks.txt --architecture bilstm --output runs/bilstm
-uv run neural-chunking train /path/to/chunks.txt --architecture transformer --output runs/transformer
-
-# Freeze the architecture and settings from validation evidence, then evaluate only that checkpoint.
-uv run neural-chunking evaluate \
-  /path/to/chunks.txt runs/bilstm/chunker_checkpoint.pt \
-  --output runs/bilstm/test-results.json
-uv run pytest
+uv run neural-chunking evaluate /path/to/chunks.txt runs/bilstm/chunker_checkpoint.pt --output runs/bilstm/test-results.json
 ```
 
-Training outputs include the selected checkpoint, data split counts, epoch history, validation token
-metrics, and validation exact-span metrics. `training-results.json` records the first epoch attaining
-the maximum validation span F1, the complete configuration, and the selected checkpoint's SHA-256.
-The separate evaluation command verifies that selection contract, the checkpoint digest, and the
-input-file digest before loading model tensors or using the test partition. Test results repeat the
-selection, configuration, checkpoint, and selection-record identities. The default settings are
-sized for an 8 GB Apple laptop.
-Fresh macro F1 gives each training-vocabulary label equal weight, including a zero contribution for
-an unsupported label. Exact-span scores aggregate matching BIO spans across complete sentences
-before calculating precision, recall, and F1.
-
-## Files
-
-```text
-src/neural_chunking/data.py      parsing, hash splitting, vocabularies, batching
-src/neural_chunking/models.py    BiLSTM and Transformer encoders
-src/neural_chunking/metrics.py   BIO span extraction and aggregate metrics
-src/neural_chunking/training.py  validation selection, explicit test evaluation, persistence
-tests/                           split, span, masking, and shape checks
-artifacts/                       retained figures and scoped result metadata
-```
+To run the Transformer, change `--architecture bilstm` to `--architecture transformer`. Its positional encoding supports sentences up to 512 tokens by default. The BiLSTM has no positional-encoding limit.
 
 ## Limitations
 
-- The retained run reports token metrics but cannot support a retrospective exact-span score.
-- The source corpus name, version, hash, and licence were not preserved with that run, so the
-  historical number cannot be traced to an exact public dataset.
-- Rare BIO labels have very small support, making macro metrics sensitive to a few examples.
-- Content hashing protects exact duplicates, not paraphrases or unknown source-level groups.
+- The source corpus name, version, hash, and licence were not retained with the stored metrics, so this repository does not claim a dataset-specific benchmark.
+- Predictions from that BiLSTM run are unavailable. Exact-span F1 cannot be recovered and is therefore not reported above.
+- Transformer metrics were not retained.
+- Content hashing keeps exact duplicate sentences together, but it cannot identify paraphrases or source-level groups that are not represented in the input.
 - Neither encoder uses pretrained language representations.
-- Seeded runs are designed to be repeatable, but exact floating-point results can still vary across
-  PyTorch versions and compute backends.
