@@ -96,6 +96,28 @@ def test_repository_auditor_flags_authorship_term(tmp_path: Path) -> None:
     assert any(finding.detail == f"blocked content term: {term}" for finding in findings)
 
 
+def test_repository_auditor_allows_confirmed_education(tmp_path: Path) -> None:
+    """Confirmed public education should be valid portfolio content."""
+    auditor = _load_script("audit_repository")
+    (tmp_path / "README.md").write_text(
+        "MSc Data Science and Artificial Intelligence student at the "
+        "University of Liverpool, with a BSc in Geography.",
+        encoding="utf-8",
+    )
+    assert auditor["audit_tree"](tmp_path) == []
+
+
+def test_repository_auditor_still_blocks_raw_academic_material(tmp_path: Path) -> None:
+    """Allowing education must not allow source academic material into the public tree."""
+    auditor = _load_script("audit_repository")
+    restricted = "assign" + "ment"
+    (tmp_path / "README.md").write_text(
+        f"Original {restricted} materials are included.", encoding="utf-8"
+    )
+    findings = auditor["audit_tree"](tmp_path)
+    assert any(finding.detail == f"blocked content term: {restricted}" for finding in findings)
+
+
 def test_repository_auditor_skips_operating_system_metadata(tmp_path: Path) -> None:
     """Ignored desktop metadata should not be decoded as repository text."""
     auditor = _load_script("audit_repository")

@@ -42,11 +42,9 @@ def _joined(*parts: str) -> str:
 
 
 BLOCKED_PHRASES = (
-    _joined("uni", "versity"),
     _joined("assign", "ment"),
     _joined("course", "work"),
     _joined("assess", "ment"),
-    _joined("stu", "dent"),
     _joined("lec", "turer"),
     _joined("gra", "de"),
     _joined("mar", "ks"),
@@ -65,7 +63,6 @@ BLOCKED_PHRASES = (
     _joined("auto", "mation"),
     _joined("auto", "mated"),
     _joined("auto", "generated"),
-    _joined("artificial", " intelligence"),
 )
 BLOCKED_PATTERNS = tuple(
     (

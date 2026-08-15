@@ -42,3 +42,10 @@ Every numerical claim should answer:
 Missing evidence is stated rather than inferred. In particular, this repository does not reconstruct
 unavailable prediction-level outputs, invent patient identities, or rerun expensive experiments to
 make a historical number appear current.
+
+## Academic background
+
+The geospatial and analytical background page is a verified skills summary, not a fifth model-result
+label. It describes completed academic experience while keeping source reports, raw observations,
+private identifiers, and data with unclear redistribution rights outside the repository. It does not
+promote archived numerical results to current reproducible evidence.
