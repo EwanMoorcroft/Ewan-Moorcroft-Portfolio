@@ -1,0 +1,4 @@
+class,precision,recall,f1,support,evidence_status
+Normal,0.9016,0.9255,0.9134,188,retained earlier run
+Lung Opacity,0.9212,0.8994,0.9102,169,retained earlier run
+Viral Pneumonia,0.9939,0.9879,0.9909,165,retained earlier run

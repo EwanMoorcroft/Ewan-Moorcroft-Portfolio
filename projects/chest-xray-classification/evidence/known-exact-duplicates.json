@@ -1,5 +1,5 @@
 {
-  "evidence_status": "historical digest audit",
+  "evidence_status": "retained digest audit",
   "reproduced_in_this_repository": false,
   "hash_algorithm": "SHA-256",
   "class": "Viral Pneumonia",
@@ -27,4 +27,3 @@
   ],
   "use": "Reference only. The verifier recomputes all digests from the acquired data."
 }
-

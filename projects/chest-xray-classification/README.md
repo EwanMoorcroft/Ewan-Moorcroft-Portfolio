@@ -1,50 +1,85 @@
 # Chest X-Ray Classification
 
-The main problem here is not choosing a larger neural network. It is knowing exactly which public
-dataset is being used and stopping identical files from appearing on both sides of evaluation. The
-package compares a compact convolutional network with ResNet18 transfer learning, records file
-identity, and rechecks both split structure and source-image bytes before training or evaluation.
+This project builds a three-class chest X-ray image classifier for **Normal**,
+**Lung Opacity** and **Viral Pneumonia**. It uses transfer learning with
+ResNet18, a validation-based checkpoint selection step and a held-out test
+evaluation. Alongside the model, the repository contains the data checks and
+split controls needed to make training and evaluation auditable.
 
-## Safety boundary
+The source is the public [Chest X-Ray dataset on Mendeley Data](https://data.mendeley.com/datasets/p5rm59k7ph/1),
+version 1, containing 3,475 labelled images. It is the three-class collection
+described by the dataset contract in [`data/dataset-spec.json`](data/dataset-spec.json).
 
-This is a research benchmark, not a medical device. It must not be used for
-diagnosis, treatment, triage or patient-facing decisions. Class labels come from
-the source collection and have not been independently reviewed here.
+## Results
+
+These numbers came from the earlier run and were not reproduced here. That run
+used the older image-level split; a later audit identified five exact duplicate
+pairs, and patient identifiers were unavailable. The current pipeline uses a
+grouped split, so a new run is needed before claiming current model performance.
+
+| Result | Value |
+| --- | ---: |
+| Selected model | ResNet18 fine-tuning with dropout |
+| Validation macro F1 | 0.9512 |
+| Test images | 522 |
+| Test accuracy | 0.9368 |
+| Test balanced accuracy | 0.9376 |
+| Test macro F1 | 0.9381 |
+| Test Matthews correlation coefficient | 0.9051 |
+
+The values are retained for provenance in [`evidence/retained-results.json`](evidence/retained-results.json).
+
+![Model aggregate metrics and per-class F1](assets/model-results.svg)
+
+The [project walkthrough](notebooks/chest_xray_walkthrough.ipynb) opens the
+committed evidence, shows the class balance and duplicate audit, and connects
+each part of the analysis to the code that implements it. Exact values are also
+available as simple tables in [`results/`](results/).
+
+## Skills demonstrated in the code
+
+| Skill | Main evidence |
+| --- | --- |
+| Dataset contracts and provenance | [`data/dataset-spec.json`](data/dataset-spec.json), [`spec.py`](src/chest_xray_benchmark/spec.py) |
+| Image inventory and integrity checks | [`manifest.py`](src/chest_xray_benchmark/manifest.py) |
+| Leakage-aware, deterministic splitting | [`splitting.py`](src/chest_xray_benchmark/splitting.py) |
+| Transfer learning and reproducible training | [`modeling.py`](src/chest_xray_benchmark/modeling.py), [`training.py`](src/chest_xray_benchmark/training.py), [`default.toml`](configs/default.toml) |
+| Evaluation and calibration metrics | [`evaluation.py`](src/chest_xray_benchmark/evaluation.py), [`metrics.py`](src/chest_xray_benchmark/metrics.py) |
+| Command-line workflow | [`cli.py`](src/chest_xray_benchmark/cli.py) |
+
+## Why the split needs an integrity check
+
+If the same image file appears in both training and held-out test data, the
+model can see an example during fitting and appear to perform well when it is
+tested on that same example. This is data leakage, not evidence of reliable
+generalisation. The pipeline computes a SHA-256 digest for every image and
+keeps exact copies in one partition. It rechecks each file before a data loader
+is built. Difference hashes can flag visually similar pairs for review, but
+they do not prove that two images came from the same patient. Patient-level
+independence cannot be established because patient identifiers are not supplied
+with the public collection.
 
 ## Dataset
 
 The expected source is **Chest X-Ray**, version 1, DOI
 [`10.17632/p5rm59k7ph.1`](https://doi.org/10.17632/p5rm59k7ph.1), licensed
-under CC BY 4.0. It contains 3,475 images: Normal 1,250, Lung Opacity 1,125
-and Viral Pneumonia 1,100. Images are deliberately excluded from this
-repository. See [data/README.md](data/README.md) for acquisition and attribution.
+under CC BY 4.0. The expected class counts are:
 
-## Why the split is different
+| Class | Images |
+| --- | ---: |
+| Normal | 1,250 |
+| Lung Opacity | 1,125 |
+| Viral Pneumonia | 1,100 |
+| **Total** | **3,475** |
 
-Patient identifiers are not supplied. A random image-level split can therefore
-place exact copies on both sides of evaluation. Perceptual image hashes can
-also flag visually similar pairs, but similarity is not proof that two files
-belong to the same patient or acquisition.
-The preparation pipeline:
+![Expected class counts from the dataset contract](assets/dataset-composition.svg)
 
-1. computes SHA-256 for exact identity;
-2. places exact copies into indivisible split groups;
-3. computes a 64-bit difference hash and reports direct candidate pairs for
-   manual review;
-4. never merges perceptual-hash candidates automatically or transitively;
-5. assigns exact-identity groups to train, validation and test partitions; and
-6. checks that no exact digest or exact-identity group crosses a boundary before writing the split;
-   training and evaluation repeat that audit and re-hash every source image before building a loader.
+Images are deliberately excluded from this repository. See
+[`data/README.md`](data/README.md) for acquisition and attribution details.
 
-This prevents exact-copy leakage but cannot prove visual or patient-level
-independence. Difference-hash candidates are diagnostic only: the similarity
-relation can collide and is not transitive. A future release should use
-reviewed acquisition identifiers or verified patient keys as additional hard
-grouping constraints if the publisher makes them available.
+## Reproducible workflow
 
-## Setup
-
-Python 3.11 or newer is required.
+Create an environment with Python 3.11 or newer:
 
 ```bash
 python -m venv .venv
@@ -52,7 +87,8 @@ source .venv/bin/activate
 python -m pip install -e ".[train,test]"
 ```
 
-Prepare the data:
+After downloading the public data and extracting it into `data/raw`, build and
+verify the image manifest:
 
 ```bash
 cxr-benchmark verify \
@@ -69,7 +105,8 @@ cxr-benchmark split \
   --seed 534
 ```
 
-Train and evaluate:
+Train with the settings in [`configs/default.toml`](configs/default.toml),
+then evaluate the selected checkpoint explicitly on the test partition:
 
 ```bash
 cxr-benchmark train \
@@ -86,58 +123,53 @@ cxr-benchmark evaluate \
   --output outputs/resnet18/test-metrics.json
 ```
 
-The default model is ResNet18 with ImageNet weights, dropout and a new
-three-class output layer. Augmentation uses small rotations only; horizontal
-flips are excluded because they can reverse laterality markers. Model selection
-uses validation macro F1. The test partition is evaluated only by the explicit
-evaluation command.
+The default model uses ImageNet initialisation, dropout and a new three-class
+output layer. Small rotations are used for training; horizontal flips are
+excluded because they can reverse laterality markers. The validation partition
+selects the checkpoint by macro F1. The test partition is not read by the
+training command.
 
 On Apple silicon, `device = "auto"` selects MPS when available. The default
-batch size of 32 and zero worker processes are intended to remain practical on
-an 8 GB machine; reduce the batch size if memory pressure appears. The first
-pretrained run may fetch ImageNet weights. Set `pretrained = false` for a fully
-offline run, with the expectation that results will differ.
+batch size and worker count are intended to remain practical on an 8 GB
+machine. Set `pretrained = false` for an offline run, with the expectation
+that its results will differ from the ImageNet-initialised run.
 
-## Earlier result
-
-A retained earlier run selected ResNet18 fine-tuning with dropout and recorded
-validation macro F1 **0.9512**. Its test record reported accuracy **0.9368**,
-balanced accuracy **0.9376**, macro F1 **0.9381** and Matthews correlation
-coefficient **0.9051** across 522 images.
-
-These are **historical, not freshly reproduced results**. That earlier split was
-image-level, five exact duplicate pairs were subsequently identified, and
-patient-level independence was not established. The values are retained only
-as provenance in [evidence/historical-results.json](evidence/historical-results.json);
-they are not the expected score of the safer split implemented here. The retained
-digest audit is available in
-[evidence/known-exact-duplicates.json](evidence/known-exact-duplicates.json).
-
-## Metrics written by a new run
+## What each run records
 
 Evaluation writes accuracy, balanced accuracy, macro and per-class
-precision/recall/F1, Matthews correlation coefficient, multiclass log loss,
-Brier score, expected calibration error and the confusion matrix. Every output
-includes the split-manifest digest, selected-checkpoint digest, label order, seed and run settings.
+precision, recall and F1, Matthews correlation coefficient, multiclass log
+loss, Brier score, expected calibration error and a confusion matrix. Outputs
+also retain the split digest, selected checkpoint digest, label order, seed and
+run settings so that a result can be tied back to the exact inputs used.
 
-## Checks
+## Checks and implementation detail
+
+Run the focused test suite with:
 
 ```bash
 python -m pytest
 ```
 
-The focused suite checks deterministic exact-identity grouping and splitting,
+The tests cover deterministic exact-identity grouping and splitting,
 non-transitive visual-review candidates, cross-partition exact-copy guards,
-tampered split and source-image rejection, checkpoint binding, source-spec parsing, manifest round
-trips and a synthetic CPU smoke pass over the optional training stack.
+tampered split and source-image rejection, checkpoint binding, source-spec
+parsing, manifest round trips and a synthetic CPU smoke test over the optional
+training stack.
 
-## Limitations
+The verifier records image dimensions, colour mode, embedded metadata, byte
+size, SHA-256 and a difference hash. Exact grouping uses cryptographic identity
+only. Perceptual candidates are reported for direct manual review and are not
+merged automatically or treated as patient identity. Directory aliases and
+symlink targets must remain inside the declared data root.
 
-- Patient-level keys and acquisition-site metadata are unavailable.
-- Difference hashing is a review heuristic, not proof of shared origin; it is
-  never used as an automatic split identity.
+## Safety and limitations
+
+This is a research benchmark, not a medical device. It must not be used for
+diagnosis, treatment, triage or patient-facing decisions. The class labels come
+from the source collection and have not been independently reviewed here.
+
+- Patient identifiers and acquisition-site metadata are unavailable.
+- Difference hashing is a review heuristic, not proof of shared origin.
 - The collection is small and may contain source-specific shortcuts.
 - No external population has been evaluated.
-- Probability calibration and uncertainty must be reviewed on independent data.
-- Any future result must state whether it came from the grouped split in this
-  repository or from historical evidence.
+- Probability calibration and uncertainty need review on independent data.
