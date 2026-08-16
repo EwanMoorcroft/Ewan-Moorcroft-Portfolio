@@ -5,7 +5,6 @@
   "contributor": "Dwi Sugianto",
   "doi": "10.17632/p5rm59k7ph.1",
   "landing_page": "https://data.mendeley.com/datasets/p5rm59k7ph/1",
-  "mirror": "https://www.kaggle.com/datasets/fatemehmehrparvar/lung-disease/data",
   "license": "CC BY 4.0",
   "archive_name": "Lung X-Ray.zip",
   "expected_total": 3475,
@@ -24,4 +23,3 @@
     }
   }
 }
-

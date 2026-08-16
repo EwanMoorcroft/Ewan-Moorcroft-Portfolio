@@ -86,10 +86,10 @@ Outputs cannot overwrite an input snapshot, configuration, or artifact.
 The manifest intentionally omits wall-clock time and machine-local paths. Retrieval time and proof
 that an event was officially complete belong in the caller's acquisition log.
 
-## Historical CSV adapter
+## Pinned CSV adapter
 
 The optional `import-vaastav` command converts an explicit gameweek interval from a locally
-extracted, commit-pinned Vaastav historical snapshot into this JSON contract. It requires a full
+extracted, commit-pinned Vaastav season snapshot into this JSON contract. It requires a full
 40-character source revision and records a SHA-256 for every input CSV.
 
 Only `GK`, `DEF`, `MID`, and `FWD` rows are retained. Rows with the `AM` position are excluded because

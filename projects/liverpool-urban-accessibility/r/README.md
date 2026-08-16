@@ -1,6 +1,6 @@
 # Independent R validation
 
-The Python-derived area table and spatial edge list are deliberately small enough for an
+The Python-derived area table and spatial edge list are small enough for an
 independent base-R check. The script refits the fixed Poisson model and reconstructs observed
 Moran's I without downloading data or requiring additional R packages.
 

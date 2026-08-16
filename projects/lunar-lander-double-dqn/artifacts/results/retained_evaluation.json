@@ -13,4 +13,3 @@
   "centred_landing_rate": 0.9,
   "scope_note": "One training seed and ten deterministic evaluation seeds; not a multi-seed robustness estimate."
 }
-

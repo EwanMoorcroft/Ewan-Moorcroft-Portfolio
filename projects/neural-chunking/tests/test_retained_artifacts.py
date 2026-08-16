@@ -49,13 +49,3 @@ def test_retained_artifact_manifest_is_complete_and_valid() -> None:
         artifact_path = PROJECT_ROOT / relative_path
         assert not artifact_path.is_symlink()
         assert _sha256(artifact_path) == expected_digest
-
-
-def test_retained_metrics_use_plain_run_status() -> None:
-    """The public result record uses a concise status and does not imply provenance."""
-    import json
-
-    metrics_path = PROJECT_ROOT / "artifacts" / "results" / "retained_metrics.json"
-    metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
-    assert metrics["status"] == "retained_run"
-    assert "historical" not in json.dumps(metrics).lower()

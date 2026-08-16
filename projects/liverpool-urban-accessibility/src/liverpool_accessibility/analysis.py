@@ -317,7 +317,7 @@ def prepare_evidence(
 
 
 def write_prepared(evidence: PreparedEvidence, output_dir: str | Path) -> list[Path]:
-    """Write stable, public-safe analysis inputs."""
+    """Write stable analysis inputs."""
     destination = Path(output_dir)
     destination.mkdir(parents=True, exist_ok=True)
     metrics_path = destination / "area-metrics.csv"
