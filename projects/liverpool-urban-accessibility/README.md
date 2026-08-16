@@ -87,4 +87,5 @@ demand or personal accessibility. MSOA averages hide variation within each area,
 distances simplify real routes. The full set of interpretation limits is in
 [`docs/limitations.md`](docs/limitations.md).
 
-Software is MIT licensed. Census and boundary data remain under the Open Government Licence v3.0.
+The current software is available under the repository's evaluation-only licence. Census and
+boundary data remain under the Open Government Licence v3.0.

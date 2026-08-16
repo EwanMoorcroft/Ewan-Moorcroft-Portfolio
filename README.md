@@ -57,5 +57,7 @@ Geography degree and current data-science work. The [reproducibility note](docs/
 explains the shared approach to environments, data sources and saved outputs.
 
 Each folder under [`projects/`](projects/) is self-contained, with its own README, source code and
-results. Software is provided under the [MIT License](LICENSE); data licences are recorded within
-the relevant project.
+results. The current source is published under an [evaluation-only licence](LICENSE): it may be
+viewed, cited and run for professional assessment, but not reused in other work. Data and
+third-party materials retain the licences recorded within the relevant project. Earlier versions
+remain governed by the licence supplied with those versions.

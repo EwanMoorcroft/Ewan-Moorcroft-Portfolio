@@ -7,7 +7,7 @@ name = "lunar-double-dqn"
 version = "0.1.0"
 description = "A reproducible Double DQN pipeline for LunarLander"
 readme = "README.md"
-license = "MIT"
+license = "LicenseRef-Portfolio-Evaluation-Only"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
 dependencies = [

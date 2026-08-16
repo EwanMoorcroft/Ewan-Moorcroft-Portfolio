@@ -7,7 +7,7 @@ name = "tree-lidar-benchmark"
 version = "1.0.0"
 description = "Reproducible instance-segmentation evaluation for tree LiDAR point clouds"
 readme = "README.md"
-license = "MIT"
+license = "LicenseRef-Portfolio-Evaluation-Only"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
 dependencies = []
