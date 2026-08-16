@@ -7,7 +7,7 @@ name = "chest-xray-benchmark"
 version = "0.1.0"
 description = "A reproducible three-class chest X-ray image benchmark with leakage-resistant splitting."
 readme = "README.md"
-license = "MIT"
+license = "LicenseRef-Portfolio-Evaluation-Only"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
 dependencies = [
