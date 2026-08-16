@@ -1,6 +1,6 @@
 # Reproducibility
 
-## Environment strategy
+## Project environments
 
 Each project has its own `pyproject.toml` and can be installed independently. A geospatial analysis
 should not need the same environment as a reinforcement-learning run or an image classifier. Python
@@ -14,42 +14,39 @@ uv sync --extra test
 uv run pytest
 ```
 
-Project READMEs document any additional training or plotting extra. A standard virtual environment
-and `pip` can be used instead.
+Each project README covers any additional training or plotting packages. A standard virtual
+environment and `pip` can be used instead.
 
-## Compute profiles
+## Compute
 
-- Verification and unit tests run on CPU and do not require raw datasets.
+- Unit tests run on CPU and do not require the source datasets.
 - PyTorch projects select Apple Metal acceleration when available and fall back to CPU.
 - Neural training is never part of CI.
 - Local defaults favour low worker counts and modest batch sizes for an 8 GB machine.
-- Short smoke runs validate software flow but are not presented as trained-model evidence.
+- Short smoke runs check that the software works; they are not model results.
 
-## Data boundaries
+## Data and outputs
 
 | Project | Included | Kept local |
 |---|---|---|
-| Tree LiDAR | Aggregate v2 tables, route manifest, evaluator, figures | Raw point clouds and prediction arrays |
-| Liverpool urban accessibility | Derived 61-area metrics, boundaries, centroids, spatial edges, models, figures, source and result manifests | National Census workplace-flow table and rebuild outputs |
-| Chest X-ray | Source specification, duplicate evidence, preparation code | 3,475 source images and checkpoints |
-| FPL | Protocol code, retained aggregate evaluation, source manifest | Downloaded gameweek snapshots, row predictions and fitted models |
-| LunarLander | Retained figures and scoped metric JSON | Model checkpoint and new run outputs |
-| Neural chunking | Model/evaluator code, figures, scoped metric JSON | Source corpus, checkpoints, new run outputs |
-| Academic geospatial background | Public-safe skills and methods summary | Source reports, raw observations, instructional material, personal identifiers and third-party datasets |
+| Tree LiDAR | Result tables, route details, evaluator and figures | Raw point clouds and prediction arrays |
+| Liverpool urban accessibility | Derived area metrics, boundaries, centroids, spatial edges, models and figures | National Census workplace-flow table |
+| Chest X-ray | Dataset specification, duplicate analysis and preparation code | 3,475 source images and checkpoints |
+| FPL | Forecasting code, aggregate model comparison and source details | Downloaded gameweek snapshots, row predictions and fitted models |
+| LunarLander | Figures and evaluation summary | Model checkpoint and new run outputs |
+| Neural chunking | Model code, figures and evaluation summary | Source corpus, checkpoints and new run outputs |
 
 The X-ray corpus is the CC BY 4.0 [Chest X-Ray V1 dataset](https://data.mendeley.com/datasets/p5rm59k7ph/1),
-DOI `10.17632/p5rm59k7ph.1`. The project verifier checks its expected class counts before preparation.
+DOI `10.17632/p5rm59k7ph.1`.
 
 ## Determinism
 
-Projects fix Python, NumPy, and PyTorch seeds where relevant, record configuration with outputs, and
-use stable hashes for data grouping or artifact identity. Hardware and dependency changes can still
-affect floating-point training trajectories, so exact reproducibility and practical repeatability are
-distinguished in the project limitations.
+Projects set Python, NumPy and PyTorch seeds where relevant and record configuration with outputs.
+Hardware and dependency changes can still affect floating-point training trajectories; the project
+limitations note where that matters.
 
 ## Safe persistence
 
-The forecasting project saves its coefficients and preprocessing values as JSON instead of executable
-pickle data.
-PyTorch projects write state dictionaries and metadata for locally produced checkpoints. Only trusted
-local checkpoints should be loaded.
+The forecasting project saves coefficients and preprocessing values as JSON rather than executable
+pickle data. PyTorch projects write state dictionaries and metadata for locally produced
+checkpoints. Only trusted local checkpoints should be loaded.

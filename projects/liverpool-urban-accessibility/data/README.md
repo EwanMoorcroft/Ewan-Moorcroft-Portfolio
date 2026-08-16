@@ -1,6 +1,6 @@
 # Data boundary
 
-No national flow archive is stored here. The retained project includes only:
+The national flow archive is not stored in this repository. The project includes only:
 
 - a compact 61-row derived metrics table;
 - a 151-edge Queen-contiguity table;
