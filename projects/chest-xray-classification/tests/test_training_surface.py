@@ -14,7 +14,7 @@ from chest_xray_benchmark.evaluation import evaluate_checkpoint
 from chest_xray_benchmark.image_data import LABEL_ORDER, build_transforms
 from chest_xray_benchmark.metrics import classification_metrics
 from chest_xray_benchmark.modeling import build_resnet18
-from chest_xray_benchmark.training import file_digest
+from chest_xray_benchmark.training import file_digest, predict_probabilities
 
 
 def test_training_dependencies_and_current_model_api_are_available() -> None:
@@ -36,6 +36,63 @@ def test_training_dependencies_and_current_model_api_are_available() -> None:
     assert metrics["accuracy"] == 1.0
     assert torch.__version__
     assert torchvision.__version__
+
+
+def test_predict_probabilities_copies_reused_tensor_storage() -> None:
+    images = torch.zeros((2, 3, 8, 8), dtype=torch.float32)
+    labels = torch.tensor([0, 1], dtype=torch.int64)
+    logits = torch.tensor([[4.0, 1.0, 0.0], [0.0, 4.0, 1.0]])
+    probability_buffer = torch.empty((2, 3), dtype=torch.float32)
+    probability_batches = iter(
+        (
+            torch.tensor([[0.8, 0.1, 0.1], [0.1, 0.8, 0.1]]),
+            torch.tensor([[0.1, 0.1, 0.8], [0.8, 0.1, 0.1]]),
+        )
+    )
+
+    class FixedNetwork(torch.nn.Module):
+        def forward(self, batch):
+            return logits[: len(batch)]
+
+    def loader():
+        yield images, labels
+        labels.copy_(torch.tensor([2, 0]))
+        yield images, labels
+
+    def reuse_probability_storage(_logits, dim):
+        assert dim == 1
+        probability_buffer.copy_(next(probability_batches))
+        return probability_buffer
+
+    with patch("torch.softmax", side_effect=reuse_probability_storage):
+        observed_labels, observed_probabilities, _ = predict_probabilities(
+            FixedNetwork(),
+            loader(),
+            torch.nn.CrossEntropyLoss(),
+            torch.device("cpu"),
+        )
+
+    np.testing.assert_array_equal(observed_labels, np.array([0, 1, 2, 0]))
+    np.testing.assert_allclose(
+        observed_probabilities,
+        np.array(
+            [
+                [0.8, 0.1, 0.1],
+                [0.1, 0.8, 0.1],
+                [0.1, 0.1, 0.8],
+                [0.8, 0.1, 0.1],
+            ]
+        ),
+    )
+
+
+def test_classification_metrics_rejects_out_of_range_labels() -> None:
+    with pytest.raises(ValueError, match="outside the configured label range"):
+        classification_metrics(
+            np.array([0, 20]),
+            np.array([[0.8, 0.1, 0.1], [0.1, 0.1, 0.8]]),
+            ("A", "B", "C"),
+        )
 
 
 def test_evaluation_rejects_checkpoint_mismatch_before_torch_load() -> None:
