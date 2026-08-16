@@ -1,21 +1,75 @@
-MIT License
+EWAN MOORCROFT PORTFOLIO EVALUATION-ONLY LICENCE
+Version 1.0 - 16 August 2026
 
-Copyright (c) 2026 Ewan Moorcroft
+Copyright (c) 2026 Ewan Moorcroft. All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. Scope
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This licence applies to the source code, documentation, figures, reports and
+other material in this repository for which Ewan Moorcroft owns the copyright
+(the "Work"). Third-party software, data, publications, model weights and other
+materials remain subject to their own terms.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+2. Permission for viewing, citation and evaluation
+
+You may:
+
+a. view the Work through GitHub or another service on which the copyright owner
+   has made it available;
+b. link to, cite and accurately describe the Work; and
+c. make a temporary local copy and execute the software solely to assess Ewan
+   Moorcroft's skills for recruitment, employment, education admission or a
+   comparable professional evaluation.
+
+A temporary evaluation copy must not be shared and must be deleted when the
+evaluation is complete. Rights necessarily granted by GitHub's Terms of Service
+for a public repository are unaffected, but no additional permission is granted
+by this licence.
+
+3. No permission for reuse
+
+Except for the limited permission in section 2, you may not:
+
+a. use or incorporate the Work, in whole or in substantial part, in any
+   software, product, service, workflow, research project, publication,
+   teaching material, coursework, benchmark or dataset;
+b. copy, modify, adapt, merge, publish, distribute, sublicense, sell or
+   commercially exploit the Work;
+c. use the Work to train, fine-tune, evaluate or supply data to an artificial
+   intelligence or machine-learning system; or
+d. remove or alter copyright, attribution or licence notices.
+
+Permission to cite or describe the Work does not grant permission to reproduce
+source code, figures, tables or substantial text beyond what applicable law
+independently permits.
+
+4. No endorsement or additional rights
+
+Citation or evaluation must not imply endorsement by Ewan Moorcroft. No patent,
+trade mark or other intellectual-property rights are granted.
+
+5. Earlier versions
+
+A repository version is governed by the licence file included with that
+version. Versions previously released under the MIT License, including the
+v1.0.0 release, remain available under the terms supplied with those versions.
+This licence governs the current version and later versions that include it.
+
+6. Termination
+
+The permissions in section 2 terminate automatically if you breach these terms.
+On termination, you must stop exercising those permissions and delete copies
+made under this licence.
+
+7. Disclaimer
+
+THE WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NON-INFRINGEMENT. TO THE MAXIMUM EXTENT PERMITTED BY LAW, EWAN
+MOORCROFT IS NOT LIABLE FOR ANY CLAIM, LOSS, DAMAGE OR OTHER LIABILITY ARISING
+FROM THE WORK OR ITS USE.
+
+8. Governing law
+
+This licence is governed by the law of England and Wales, and the courts of
+England and Wales have exclusive jurisdiction.
