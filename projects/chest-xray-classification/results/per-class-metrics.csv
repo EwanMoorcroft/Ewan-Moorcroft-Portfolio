@@ -1,4 +1,4 @@
 class,precision,recall,f1,support,evidence_status
-Normal,0.9016,0.9255,0.9134,188,retained earlier run
-Lung Opacity,0.9212,0.8994,0.9102,169,retained earlier run
-Viral Pneumonia,0.9939,0.9879,0.9909,165,retained earlier run
+Normal,0.8805031446540881,0.7446808510638298,0.8069164265129684,188,retained grouped-split evaluation
+Lung Opacity,0.6785714285714286,0.8994082840236687,0.7735368956743003,169,retained grouped-split evaluation
+Viral Pneumonia,0.9280575539568345,0.7818181818181819,0.8486842105263158,165,retained grouped-split evaluation

@@ -1,0 +1,4 @@
+partition,images,exact_identity_groups,Normal,Lung Opacity,Viral Pneumonia
+train,2432,2429,875,787,770
+validation,521,520,187,169,165
+test,522,521,188,169,165
