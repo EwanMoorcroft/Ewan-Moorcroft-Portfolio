@@ -17,7 +17,8 @@ and Docker where they suit the problem.
 
 ### [Liverpool urban accessibility](projects/liverpool-urban-accessibility/)
 
-I used DuckDB, GeoPandas and spatial statistics to study workplace movement within Liverpool.
+This project examines workplace movement within Liverpool using Census 2021 origin-destination data.
+I used DuckDB, GeoPandas and spatial statistics to prepare, map and analyse the flows.
 Of the fixed-workplace flows represented in the data, 68.37% remained within the city. The area
 pattern was spatially clustered, with Moran's I of 0.4901. A separate R implementation checks the
 main numerical results.
@@ -31,8 +32,9 @@ storage, a read-only local service and a non-root Docker image.
 
 ### [Tree LiDAR benchmark](projects/tree-lidar-benchmark/)
 
-I compared six tree-instance segmentation methods on 49.7 million aligned LiDAR points. The
-benchmark handles one-to-one tree matching, class-aware scoring and two result routes per method.
+This benchmark compares six individual-tree segmentation methods under one scoring protocol for
+terrestrial LiDAR data. It handles point alignment, one-to-one tree matching, class-aware scoring
+and two result routes per method across 49.7 million aligned points.
 ForestFormer3D achieved the highest development-selected micro F1 at 0.8436.
 
 ### [Chest X-ray classification](projects/chest-xray-classification/)
