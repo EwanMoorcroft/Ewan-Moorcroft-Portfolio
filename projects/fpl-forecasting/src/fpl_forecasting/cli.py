@@ -122,7 +122,7 @@ def _parser() -> argparse.ArgumentParser:
 
     historical = commands.add_parser(
         "import-vaastav",
-        help="convert a pinned historical CSV interval into completed gameweek JSON",
+        help="convert a pinned completed-season CSV interval into completed gameweek JSON",
     )
     historical.add_argument("--source-dir", required=True)
     historical.add_argument("--output-dir", required=True)

@@ -1,13 +1,12 @@
 # LunarLander Double DQN
 
-This was my reinforcement-learning study of discrete control in LunarLander. The implementation uses
-Double DQN, replay memory, a softly updated target network, and a separate greedy evaluation path. It
-runs on Apple Metal when available and otherwise uses CPU.
+## Results
 
-## Earlier run
+This reinforcement-learning project trains a Double DQN agent to control the discrete LunarLander environment. One 1,000-episode training run produced a successful greedy policy when evaluated for ten episodes.
 
-| Retained run | Value |
+| Evaluation | Value |
 |---|---:|
+| Training seed | 532 |
 | Training episodes | 1,000 |
 | Greedy evaluation episodes | 10 |
 | Mean raw reward | 283.56 +/- 12.07 |
@@ -15,35 +14,34 @@ runs on Apple Metal when available and otherwise uses CPU.
 | Mean episode length | 254.4 steps |
 | Centred landing rate | 90% |
 
-These numbers come from one retained training seed. The run learned a successful policy, but it is
-not an estimate of expected performance across arbitrary seeds. The repository does not include the
-checkpoint, so the historical JSON cannot be tied back to exact model bytes. New evaluations record
-the checkpoint SHA-256, evaluation seed, first environment seed, and software versions.
-Fresh evaluations define a centred landing as a true terminal state with both leg-contact flags set
-and an absolute horizontal position below the configured centre threshold.
-
 ![Greedy LunarLander rollout](artifacts/figures/lunar_lander_trained_agent.gif)
+
+The figure and table describe one training seed and ten deterministic evaluation seeds. They show that this run learned a landing policy, not how the method performs across arbitrary seeds or configurations. The checkpoint is not included, so the evaluation file cannot be linked back to exact model bytes.
+
+## How the agent learns
+
+Double DQN uses the online network to select the next action and the target network to estimate its value, reducing the tendency to overestimate action values. Experience is stored in a NumPy-backed circular replay buffer, sampled during training, and used to update the online network. A softly updated target network supplies the bootstrap target.
+
+True terminal transitions are masked from bootstrapping, while time-limit truncations can still contribute a future-value estimate. Reward shaping was used only during training to encourage controlled, centred landings; the table reports raw environment reward. Training can use Apple Metal where PyTorch supports it and otherwise runs on CPU. Separate commands keep the fixed evaluation seeds out of training.
+
+![Reward curve](artifacts/figures/lunar_rewards.png)
+
+The reward plot covers all 1,000 episodes and includes a 100-episode rolling mean. The loss and exploration traces show the learning signal and epsilon schedule used by the same run.
+
+![Training loss](artifacts/figures/lunar_loss.png)
+
+![Exploration schedule](artifacts/figures/lunar_epsilon.png)
 
 ## Implementation
 
-- Double DQN separates action selection from target-network value estimation.
-- A NumPy-backed circular replay buffer avoids per-transition object overhead.
-- Terminal transitions are explicitly masked from future-value bootstrapping.
-- Training-only reward shaping is configurable and raw environment rewards remain the reported
-  performance measure.
-- Time-limit truncations remain eligible for value bootstrapping; true terminal states are masked.
-- Checkpoints contain weights, optimiser state, configuration, and run metadata and use PyTorch's
-  restricted weights-only loading.
-- Separate commands prevent training from consuming the fixed evaluation seeds.
+- [agent.py](src/lunar_dqn/agent.py) implements Double DQN updates, target-network handling, and checkpoints.
+- [replay.py](src/lunar_dqn/replay.py) provides the fixed-capacity replay buffer; [network.py](src/lunar_dqn/network.py) defines the value network.
+- [training.py](src/lunar_dqn/training.py) runs training and greedy evaluation; [cli.py](src/lunar_dqn/cli.py) exposes the command-line interface.
+- [retained_evaluation.json](artifacts/results/retained_evaluation.json) and [SHA256SUMS](artifacts/SHA256SUMS) provide the evaluation metadata and file checksums.
 
-The reference run used mild shaping to favour controlled, centred landings. This is an intentional
-environment-specific inductive bias, so both shaped learning reward and raw reward are logged
-separately.
+## Reproduce it
 
-## Reproduce
-
-Python 3.11 or newer is recommended. On Apple hardware, PyTorch uses the Metal backend when
-available; otherwise it falls back to CPU.
+Python 3.11 or newer is recommended. On Apple hardware, PyTorch uses Metal when available and otherwise falls back to CPU.
 
 ```bash
 uv sync --extra test --extra plot
@@ -53,36 +51,10 @@ uv run lunar-dqn evaluate runs/reference/double_dqn_checkpoint.pt \
 uv run pytest
 ```
 
-For a quick software smoke run, reduce `--episodes`. A short run validates the pipeline but is not
-expected to learn a stable landing policy.
+For a quick software smoke run, reduce `--episodes`. A short run checks the pipeline but is not expected to learn a stable landing policy. Verify the supplied files with `shasum -a 256 -c artifacts/SHA256SUMS`.
 
-## Files
+## What this run does not show
 
-```text
-src/lunar_dqn/     agent, replay, network, training, and command line
-tests/             deterministic unit tests for critical value-learning logic
-artifacts/figures/ retained plots and one rendered rollout
-artifacts/results/ retained evaluation metrics with scope notes
-```
-
-## Retained evidence
-
-![Reward curve](artifacts/figures/lunar_rewards.png)
-
-The raw episode reward and its 100-episode rolling mean cover all 1,000 episodes. The loss and
-exploration traces are also retained in `artifacts/figures/`.
-
-Retained figures and result metadata are pinned in
-[`artifacts/SHA256SUMS`](artifacts/SHA256SUMS). Verify them with
-`shasum -a 256 -c artifacts/SHA256SUMS`.
-
-## Limitations
-
-- The reference metric covers one training seed and ten deterministic evaluation seeds.
-- The fixed evaluation seeds should be used only after configuration choices are frozen.
-- Reward shaping improves this specific objective but makes the learned policy less general.
-- The presentation rollout was selected from deterministic candidates; it is illustrative and is
-  not used as evaluation evidence.
-- Gymnasium and Box2D version changes can affect exact trajectories.
-- Seeded runs are designed to be repeatable, but exact floating-point results can still vary across
-  PyTorch versions and compute backends.
+- This evaluation covers one training seed and ten deterministic evaluation seeds, so it is not a multi-seed robustness estimate.
+- Reward shaping is specific to centred LunarLander landings and does not make the policy broadly general.
+- Exact trajectories can vary with Gymnasium, Box2D, PyTorch, and compute-backend versions.

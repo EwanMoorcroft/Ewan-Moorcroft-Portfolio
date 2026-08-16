@@ -1,31 +1,26 @@
 # Data acquisition and attribution
 
-This repository does not redistribute the images. Download version 1 from the
-[Mendeley Data record](https://data.mendeley.com/datasets/p5rm59k7ph/1), then
-extract `Lung X-Ray.zip` into `data/raw/`.
+The images are not redistributed in this repository. Download version 1 of
+[Chest X-Ray on Mendeley Data](https://data.mendeley.com/datasets/p5rm59k7ph/1)
+and extract `Lung X-Ray.zip` into `data/raw/`.
 
-Expected classes and counts:
-
-| Class | Images |
-|---|---:|
+| Class | Expected images |
+| --- | ---: |
 | Normal | 1,250 |
 | Lung Opacity | 1,125 |
 | Viral Pneumonia | 1,100 |
-| Total | 3,475 |
+| **Total** | **3,475** |
 
-The record identifies the Kaggle collection
-[`fatemehmehrparvar/lung-disease`](https://www.kaggle.com/datasets/fatemehmehrparvar/lung-disease/data)
-as its source. This is a three-class, 3,475-image collection. A differently named binary pneumonia
-collection is not interchangeable with it and will fail the class-count contract.
+This is a three-class collection; a binary pneumonia dataset is not a substitute
+for this project.
 
-The data record is licensed under
-[Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/).
-Retain attribution to:
+The data is available under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+Please retain this attribution:
 
 > Sugianto, Dwi (2025), “Chest X-Ray”, Mendeley Data, V1,
 > https://doi.org/10.17632/p5rm59k7ph.1
 
-After extraction, run the verifier before creating any split:
+Before splitting, verify the download:
 
 ```bash
 cxr-benchmark verify \
@@ -36,17 +31,5 @@ cxr-benchmark verify \
   --strict
 ```
 
-The verifier checks identity, class counts, readability, dimensions, SHA-256
-digests, embedded metadata presence and exact duplicates. It assigns automatic
-split groups only from exact SHA-256 identity. A 64-bit difference hash reports
-direct visual-review candidate pairs, but those candidates are never merged or
-used as automatic split constraints. The output stores only relative paths and
-derived metadata.
-
-The derived CSV contract is `exact-identity-v1`: `sha256` must be exactly 64 lowercase hexadecimal
-characters and `exact_group_id` must equal `sha256-<sha256>`. Legacy `group_id` manifests are
-rejected and should be regenerated. The split command validates this invariant before allocation,
-writes no split CSV unless leakage and class-coverage checks pass, and every training or evaluation
-read repeats the cross-partition identity audit and verifies each current image against its retained
-byte count and SHA-256 before a data loader is built. Directory aliases and symlink targets must stay
-inside the declared data root.
+This checks the expected classes, readable images and exact copied files, then
+writes a manifest used by the split and training commands.
