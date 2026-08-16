@@ -1,5 +1,5 @@
 metric,value,image_count,evidence_status
-accuracy,0.9368,522,retained earlier run
-balanced_accuracy,0.9376,522,retained earlier run
-macro_f1,0.9381,522,retained earlier run
-matthews_correlation_coefficient,0.9051,522,retained earlier run
+accuracy,0.8065134099616859,522,retained grouped-split evaluation
+balanced_accuracy,0.8086357723018934,522,retained grouped-split evaluation
+macro_f1,0.8097125109045282,522,retained grouped-split evaluation
+matthews_correlation_coefficient,0.7190200103784589,522,retained grouped-split evaluation

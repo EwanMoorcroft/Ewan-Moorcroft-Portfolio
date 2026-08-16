@@ -1,6 +1,6 @@
 {
   "evidence_status": "retained digest audit",
-  "reproduced_in_this_repository": false,
+  "reproduced_in_this_repository": true,
   "hash_algorithm": "SHA-256",
   "class": "Viral Pneumonia",
   "duplicate_groups": [

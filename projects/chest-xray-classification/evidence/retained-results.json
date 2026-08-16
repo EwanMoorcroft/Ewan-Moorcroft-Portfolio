@@ -1,40 +1,131 @@
 {
-  "evidence_status": "retained earlier run",
-  "reproduced_in_this_repository": false,
-  "dataset_identity": {
+  "evidence_status": "retained grouped-split evaluation",
+  "reproduced_in_this_repository": true,
+  "dataset": {
+    "name": "Chest X-Ray",
+    "version": 1,
+    "doi": "10.17632/p5rm59k7ph.1",
     "image_count": 3475,
     "classes": {
       "Normal": 1250,
       "Lung Opacity": 1125,
       "Viral Pneumonia": 1100
+    },
+    "identity_matches_spec": true,
+    "exact_duplicate_group_count": 5,
+    "exact_identity_group_count": 3470,
+    "perceptual_review_candidate_pair_count": 3255,
+    "cross_label_perceptual_review_candidate_pair_count": 634,
+    "perceptual_review_policy": "direct_pair_review_candidates_only"
+  },
+  "split": {
+    "policy": "sha256_exact_identity_only",
+    "seed": 534,
+    "fractions": {
+      "train": 0.7,
+      "validation": 0.15,
+      "test": 0.15
+    },
+    "leakage_checks_passed": true,
+    "class_coverage_passed": true,
+    "split_ready": true,
+    "sha256_cross_partition_violation_count": 0,
+    "partitions": {
+      "train": {
+        "images": 2432,
+        "exact_identity_groups": 2429,
+        "class_counts": {
+          "Normal": 875,
+          "Lung Opacity": 787,
+          "Viral Pneumonia": 770
+        }
+      },
+      "validation": {
+        "images": 521,
+        "exact_identity_groups": 520,
+        "class_counts": {
+          "Normal": 187,
+          "Lung Opacity": 169,
+          "Viral Pneumonia": 165
+        }
+      },
+      "test": {
+        "images": 522,
+        "exact_identity_groups": 521,
+        "class_counts": {
+          "Normal": 188,
+          "Lung Opacity": 169,
+          "Viral Pneumonia": 165
+        }
+      }
     }
   },
-  "selection_rule": "highest validation macro F1 among eight recorded experiments",
-  "selected_model": "ResNet18 fine-tuning with dropout",
-  "validation": {
-    "macro_f1": 0.951185265036763,
-    "matthews_correlation_coefficient": 0.9251658836731356
+  "model": {
+    "architecture": "ResNet18",
+    "training": "ImageNet-initialised full fine-tuning with dropout",
+    "selection_metric": "validation_macro_f1",
+    "selected_epoch": 7,
+    "epochs_ran": 12,
+    "validation": {
+      "loss": 0.9521609404036728,
+      "balanced_accuracy": 0.8252915510834061,
+      "macro_f1": 0.824411826382284,
+      "matthews_correlation_coefficient": 0.7427187710729204
+    }
+  },
+  "provenance": {
+    "manifest_digest": "54dc53ca55714aafb33b068c6a3e2433b8dfa0288dc49a53fa8955b1e27867f0",
+    "split_file_sha256": "ada0cb2996419ebc33dc90d38c72e8b350487292bd364670923534187b239bcf",
+    "config_file_sha256": "7c94dc52a9b3802326b27b02f5f2c891f38ca94a704a7ffde4f58339140e776c",
+    "checkpoint_file_sha256": "5aff448ce94537a53ba2a70bc3a8314ce0a5b4beb45242fecc2f545fb55933ca",
+    "label_order": [
+      "Normal",
+      "Lung Opacity",
+      "Viral Pneumonia"
+    ]
   },
   "test": {
     "image_count": 522,
-    "accuracy": 0.9368,
-    "balanced_accuracy": 0.9376,
-    "macro_precision": 0.9389,
-    "macro_recall": 0.9376,
-    "macro_f1": 0.9381,
-    "matthews_correlation_coefficient": 0.9051,
+    "loss": 0.3967259263626917,
+    "accuracy": 0.8065134099616859,
+    "balanced_accuracy": 0.8086357723018934,
+    "macro_precision": 0.8290440423941171,
+    "macro_recall": 0.8086357723018934,
+    "macro_f1": 0.8097125109045282,
+    "matthews_correlation_coefficient": 0.7190200103784589,
+    "log_loss": 0.6555965392865973,
+    "multiclass_brier_score": 0.40134192764600835,
+    "expected_calibration_error_15_bins": 0.2472756918362731,
+    "confusion_matrix": [
+      [140, 38, 10],
+      [17, 152, 0],
+      [2, 34, 129]
+    ],
     "per_class": {
-      "Normal": {"precision": 0.9016, "recall": 0.9255, "f1": 0.9134, "support": 188},
-      "Lung Opacity": {"precision": 0.9212, "recall": 0.8994, "f1": 0.9102, "support": 169},
-      "Viral Pneumonia": {"precision": 0.9939, "recall": 0.9879, "f1": 0.9909, "support": 165}
+      "Normal": {
+        "precision": 0.8805031446540881,
+        "recall": 0.7446808510638298,
+        "f1": 0.8069164265129684,
+        "support": 188
+      },
+      "Lung Opacity": {
+        "precision": 0.6785714285714286,
+        "recall": 0.8994082840236687,
+        "f1": 0.7735368956743003,
+        "support": 169
+      },
+      "Viral Pneumonia": {
+        "precision": 0.9280575539568345,
+        "recall": 0.7818181818181819,
+        "f1": 0.8486842105263158,
+        "support": 165
+      }
     }
   },
-  "known_limitations": [
-    "The recorded split was image-level and did not enforce exact-copy grouping.",
-    "Perceptual-hash review candidates were not adjudicated for the recorded split.",
-    "Five exact duplicate pairs were later identified within the Viral Pneumonia class.",
-    "Patient identifiers were unavailable, so patient-level independence was not established.",
-    "No external cohort, calibration study or uncertainty analysis was recorded.",
-    "These values are retained for provenance and are not fresh benchmark results."
+  "limitations": [
+    "Patient identifiers are unavailable, so patient-level independence cannot be established.",
+    "Perceptual-hash pairs are unadjudicated review candidates and are not automatic split groups.",
+    "The model has not been evaluated on an external population.",
+    "This research benchmark is not suitable for clinical use."
   ]
 }

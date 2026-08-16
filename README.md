@@ -37,9 +37,9 @@ ForestFormer3D achieved the highest development-selected micro F1 at 0.8436.
 
 ### [Chest X-ray classification](projects/chest-xray-classification/)
 
-A three-class image-classification project using ResNet18 transfer learning. The available run
-reached macro F1 of 0.9381 on 522 test images. The data pipeline identifies byte-identical images
-and keeps each exact copy group in one partition.
+A three-class image-classification project using ResNet18 transfer learning. The grouped-split run
+reached macro F1 of 0.8097 on 522 test images. The data pipeline identifies byte-identical images,
+keeps each exact copy group in one partition and reports calibration alongside classification metrics.
 
 ## Other work
 
