@@ -109,13 +109,14 @@ def predict_probabilities(network, loader, loss_function, device):
     total_images = 0
     with torch.inference_mode():
         for images, labels in loader:
+            labels_cpu = labels.numpy().copy()
             images = images.to(device, non_blocking=True)
             labels = labels.to(device, non_blocking=True)
             logits = network(images)
             loss = loss_function(logits, labels)
             probabilities = torch.softmax(logits, dim=1)
-            labels_out.append(labels.cpu().numpy())
-            probabilities_out.append(probabilities.cpu().numpy())
+            labels_out.append(labels_cpu)
+            probabilities_out.append(probabilities.cpu().numpy().copy())
             total_loss += float(loss.detach()) * len(labels)
             total_images += len(labels)
     return (

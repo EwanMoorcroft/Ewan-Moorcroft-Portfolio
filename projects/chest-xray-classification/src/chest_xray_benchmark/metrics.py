@@ -44,8 +44,21 @@ def classification_metrics(
         precision_recall_fscore_support,
     )
 
-    labels = np.asarray(labels, dtype=np.int64)
+    labels = np.asarray(labels)
     probabilities = np.asarray(probabilities, dtype=np.float64)
+    if labels.ndim != 1:
+        raise ValueError("labels must be a one-dimensional array")
+    if probabilities.ndim != 2:
+        raise ValueError("probabilities must be a two-dimensional array")
+    if probabilities.shape != (len(labels), len(label_names)):
+        raise ValueError("probabilities must have one row per label and one column per class")
+    if not np.issubdtype(labels.dtype, np.integer):
+        raise ValueError("labels must contain integer class indices")
+    labels = labels.astype(np.int64, copy=False)
+    if labels.size and (np.any(labels < 0) or np.any(labels >= len(label_names))):
+        raise ValueError("labels contain class indices outside the configured label range")
+    if not np.all(np.isfinite(probabilities)):
+        raise ValueError("probabilities must contain only finite values")
     predictions = probabilities.argmax(axis=1)
     indices = np.arange(len(label_names))
     precision, recall, f1, support = precision_recall_fscore_support(
