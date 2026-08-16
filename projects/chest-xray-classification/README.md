@@ -11,26 +11,28 @@ charts and the code behind them.
 
 ## Results
 
-These figures come from the available ResNet18 run. It used an image-level split;
-a later audit found five exact duplicate pairs, and the dataset contains no
-patient identifiers. The current grouped split therefore needs a new evaluation
-before it can support a new performance claim.
+These figures come from the current ResNet18 run on a deterministic grouped
+split. SHA-256-identical files stay in one partition: 3,475 images formed 3,470
+exact-identity groups, with no exact copies crossing the train, validation or
+test boundaries.
 
 | Measure | Value |
 | --- | ---: |
-| Selected model | ResNet18 fine-tuning with dropout |
-| Validation macro F1 | 0.9512 |
+| Selected model | ResNet18 full fine-tuning with dropout |
+| Selected epoch | 7 |
+| Validation macro F1 | 0.8244 |
 | Test images | 522 |
-| Test accuracy | 0.9368 |
-| Test balanced accuracy | 0.9376 |
-| Test macro F1 | 0.9381 |
-| Test Matthews correlation coefficient | 0.9051 |
+| Test accuracy | 0.8065 |
+| Test balanced accuracy | 0.8086 |
+| Test macro F1 | 0.8097 |
+| Test Matthews correlation coefficient | 0.7190 |
 
 ![Model aggregate metrics and per-class F1](assets/model-results.svg)
 
 The [results tables](results/) and
-[saved result record](evidence/retained-results.json) contain the underlying
-values, including per-class performance.
+[compact evidence record](evidence/retained-results.json) contain the split
+summary, confusion matrix, per-class performance and SHA-256 provenance. The
+checkpoint, images and full perceptual-review candidate list remain excluded.
 
 ## Skills and implementation
 
@@ -48,9 +50,9 @@ values, including per-class performance.
 When an identical image is placed in both training and test data, the model has
 already seen the test example while learning. That can make a test score look
 better than it should. Each image receives a SHA-256 digest, and exact matches
-are kept in the same partition. Near-duplicate checks are only prompts for
-review: they do not establish patient identity, which cannot be assessed from
-this public collection.
+are kept in the same partition. Perceptual-hash matches are direct review pairs,
+not automatic or transitive groups. They do not establish patient identity,
+which cannot be assessed from this public collection.
 
 ## Dataset
 
@@ -121,4 +123,6 @@ only after selection.
 This is a research exercise using public images, not a medical device. It is
 not suitable for diagnosis, triage, treatment or patient-facing decisions.
 The labels have not been independently clinically reviewed here, and no
-external population has been evaluated.
+external population has been evaluated. Patient identifiers are unavailable,
+so patient-level independence cannot be established. Perceptual-hash review
+candidates also remain unadjudicated and are not presented as duplicate facts.
