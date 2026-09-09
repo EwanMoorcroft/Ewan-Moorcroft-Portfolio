@@ -1,5 +1,7 @@
 # FPL Next-Gameweek Forecasting
 
+[Read the portfolio case study](https://ewanmoorcroft.github.io/projects/fpl-forecasting/)
+
 This project forecasts a Fantasy Premier League player's points in the following gameweek from completed gameweek snapshots. It is a compact tabular modelling exercise with the timing constraints that make sports data easy to mishandle. On the public 2024-25 evaluation window, ridge regression had the lowest point error of four candidates: **1.110 MAE**, **2.019 RMSE**, and **0.717 Spearman correlation** across ten gameweeks.
 
 [Open the walkthrough notebook](notebooks/fpl_forecasting_walkthrough.ipynb) or [view the visual overview](demo/index.html).
