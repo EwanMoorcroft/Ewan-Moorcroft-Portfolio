@@ -1,5 +1,7 @@
 # Liverpool Urban Accessibility
 
+[Read the portfolio case study](https://ewanmoorcroft.github.io/projects/liverpool-urban-accessibility/)
+
 How much recorded workplace movement stayed within Liverpool in the 2021 Census, and did that
 pattern vary spatially? I reduced the 197.7 MB national origin-destination table to the city's 61
 Middle layer Super Output Areas (MSOAs), joined the flows to official boundaries and analysed the
