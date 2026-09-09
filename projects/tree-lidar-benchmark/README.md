@@ -1,14 +1,16 @@
 # Tree LiDAR Instance Benchmark
 
-This project compares six methods for identifying individual trees in terrestrial laser-scanning point clouds. Different methods produce different labels and have been developed under different settings, so the benchmark converts their aligned predictions into one common, reproducible evaluation on 11 held-out plots: 49,709,922 points and 323 reference trees.
+[Read the portfolio case study](https://ewanmoorcroft.github.io/projects/tree-lidar-benchmark/)
 
-![Published/default and development-selected micro F1](assets/micro_f1_paired.png)
+This project compares six methods for identifying individual trees in UAV/airborne LiDAR point clouds from the FOR-instance dataset. Different methods produce different labels and have been developed under different settings, so the benchmark converts their aligned predictions into one common, reproducible evaluation on 11 held-out plots: 49,709,922 points and 323 reference trees.
+
+![Author-released and project-adapted micro F1](assets/micro_f1_paired.png)
 
 ## Results
 
-All figures use `for_instance_pointwise_v2`. The two routes are intentionally kept apart: `published_default` is the published or default setup, while `development_tuned` is a checkpoint or parameter set selected with development data only.
+All figures use `for_instance_pointwise_v2`. The two routes are intentionally kept apart: `published_default` is labelled the author-released route, while `development_tuned` is labelled the project-adapted route. Literal result identifiers are unchanged. Historical revision/checkpoint provenance is documented in the route manifest; the display label does not fill gaps in that record.
 
-| Method | Published/default micro F1 | Development-selected micro F1 |
+| Method | Author-released micro F1 | Project-adapted micro F1 |
 |---|---:|---:|
 | ForestFormer3D | 0.814 | **0.844** |
 | ForAINet | 0.742 | 0.759 |
@@ -17,7 +19,7 @@ All figures use `for_instance_pointwise_v2`. The two routes are intentionally ke
 | TreeLearn | 0.132 | 0.502 |
 | TLS2trees | 0.000 | 0.276 |
 
-ForestFormer3D reaches the highest micro F1 on the development-selected route in this comparison. ForestFormer3D, ForAINet, and SegmentAnyTree change only modestly between the routes, while TreeLearn and TLS2trees improve more substantially. These are route-specific descriptions, not controlled estimates of training benefit: the methods received unequal development effort. TreeX and TLS2trees use parameter selection rather than neural fine-tuning.
+ForestFormer3D reaches the highest micro F1 on the project-adapted route in this comparison. ForestFormer3D, ForAINet, and SegmentAnyTree change only modestly between the routes, while TreeLearn and TLS2trees improve more substantially. These are route-specific descriptions, not controlled estimates of training benefit: the methods received unequal development effort. TreeX and TLS2trees use parameter selection rather than neural fine-tuning.
 
 ## What is being measured
 
