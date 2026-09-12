@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from collections.abc import Sequence
 from pathlib import Path
 
+from tree_lidar_benchmark.evaluator import evaluate_aligned_labels
 from tree_lidar_benchmark.verification import load_overall_rows, verify_project
 
 DISPLAY_NAMES = {
@@ -49,6 +51,10 @@ def _build_parser() -> argparse.ArgumentParser:
     summary = subparsers.add_parser("summary", help="Show paired micro F1 values")
     summary.add_argument("--root", type=Path, help="Project root; inferred by default")
     summary.add_argument("--json", action="store_true", help="Emit JSON")
+    evaluate = subparsers.add_parser("evaluate", help="Score small source-row-aligned label arrays")
+    evaluate.add_argument(
+        "--labels", required=True, type=Path, help="JSON with four aligned arrays"
+    )
     return parser
 
 
@@ -56,6 +62,27 @@ def main(argv: Sequence[str] | None = None) -> int:
     """Run the selected command and return its process status."""
 
     args = _build_parser().parse_args(argv)
+    if args.command == "evaluate":
+        try:
+            payload = json.loads(
+                args.labels.read_text(encoding="utf-8"), object_pairs_hook=_unique_object
+            )
+            fields = {
+                "predicted_tree_id",
+                "reference_tree_id",
+                "classification",
+                "source_row_index",
+            }
+            if not isinstance(payload, dict) or set(payload) != fields:
+                raise ValueError("labels must contain exactly the four aligned arrays")
+            if any(not isinstance(value, list) for value in payload.values()):
+                raise ValueError("each label field must be an array")
+            result = evaluate_aligned_labels(**payload)
+        except (OSError, ValueError, TypeError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        print(json.dumps(result.to_dict(), indent=2, sort_keys=True, allow_nan=False))
+        return 0
     if args.command == "verify":
         payload = verify_project(args.root).to_dict()
         if args.json:
@@ -83,6 +110,15 @@ def main(argv: Sequence[str] | None = None) -> int:
                 f"{row['difference']:>+11.3f}"
             )
     return 0
+
+
+def _unique_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    payload: dict[str, object] = {}
+    for key, value in pairs:
+        if key in payload:
+            raise ValueError(f"duplicate label field: {key}")
+        payload[key] = value
+    return payload
 
 
 if __name__ == "__main__":

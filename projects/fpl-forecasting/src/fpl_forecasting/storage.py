@@ -15,6 +15,7 @@ from typing import Any
 import duckdb
 
 from .contracts import canonical_json_sha256, validate_season_id
+from .data import MAX_PLAYER_ID
 from .errors import DataContractError, ForecastingError
 
 SCHEMA_VERSION = 1
@@ -191,6 +192,8 @@ class StoredPrediction:
 
     def __post_init__(self) -> None:
         _positive_integer(self.player_id, "player_id")
+        if self.player_id > MAX_PLAYER_ID:
+            raise DataContractError(f"player_id must be at most {MAX_PLAYER_ID}")
         _positive_integer(self.rank, "rank")
         if isinstance(self.prediction, bool) or not isinstance(self.prediction, (int, float)):
             raise DataContractError("prediction must be numeric")
@@ -449,6 +452,8 @@ class OperationalStore:
         season_id: str,
         target_gw: int,
         limit: int,
+        after_rank: int = 0,
+        run_id: str | None = None,
     ) -> StoredBatch | None:
         """Read a bounded page from the latest immutable run for one target."""
 
@@ -457,6 +462,16 @@ class OperationalStore:
         target = _positive_integer(target_gw, "target_gw")
         if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 500:
             raise DataContractError("limit must be an integer from 1 to 500")
+        if (
+            isinstance(after_rank, bool)
+            or not isinstance(after_rank, int)
+            or not 0 <= after_rank <= MAX_PLAYER_ID
+        ):
+            raise DataContractError("after_rank must be a non-negative 32-bit integer")
+        if after_rank and run_id is None:
+            raise DataContractError("Pagination requires run_id from the first page")
+        if run_id is not None:
+            _safe_token(run_id, "run_id")
         with self._reader() as connection:
             run = connection.execute(
                 """
@@ -465,10 +480,11 @@ class OperationalStore:
                        created_at, prediction_count
                 FROM batch_runs
                 WHERE model_id = ? AND season_id = ? AND target_gw = ?
+                  AND (? IS NULL OR run_id = ?)
                 ORDER BY created_at DESC, run_id DESC
                 LIMIT 1
                 """,
-                [model, season, target],
+                [model, season, target, run_id, run_id],
             ).fetchone()
             if run is None:
                 return None
@@ -476,11 +492,11 @@ class OperationalStore:
                 """
                 SELECT player_id, prediction, rank
                 FROM predictions
-                WHERE run_id = ?
+                WHERE run_id = ? AND rank > ?
                 ORDER BY rank, player_id
                 LIMIT ?
                 """,
-                [run[0], limit],
+                [run[0], after_rank, limit],
             ).fetchall()
         return StoredBatch(
             run_id=str(run[0]),

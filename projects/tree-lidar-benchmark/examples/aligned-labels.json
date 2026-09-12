@@ -1,0 +1,6 @@
+{
+  "predicted_tree_id": [10, 10, 20, 20, 30, 30, 30],
+  "reference_tree_id": [1, 1, 2, 0, 3, 0, 0],
+  "classification": [4, 4, 5, 3, 6, 3, 3],
+  "source_row_index": [0, 1, 2, 3, 4, 5, 6]
+}

@@ -1,7 +1,5 @@
 # Tree LiDAR Instance Benchmark
 
-[Read the portfolio case study](https://ewanmoorcroft.github.io/projects/tree-lidar-benchmark/)
-
 This project compares six methods for identifying individual trees in UAV/airborne LiDAR point clouds from the FOR-instance dataset. Different methods produce different labels and have been developed under different settings, so the benchmark converts their aligned predictions into one common, reproducible evaluation on 11 held-out plots: 49,709,922 points and 323 reference trees.
 
 ![Author-released and project-adapted micro F1](assets/micro_f1_paired.png)
@@ -39,25 +37,35 @@ The held-out `CULS/plot_2_annotated` example uses the same colour for each accep
 
 - [evaluator.py](src/tree_lidar_benchmark/evaluator.py) contains aligned-label scoring and one-to-one matching.
 - [verification.py](src/tree_lidar_benchmark/verification.py) checks the result files, route identities, coverage, and aggregate reconstruction.
-- [cli.py](src/tree_lidar_benchmark/cli.py) exposes `verify` and `summary`; [results_manifest.json](results_manifest.json) records the protocol and result inventory.
+- [cli.py](src/tree_lidar_benchmark/cli.py) exposes `evaluate`, `verify` and `summary`; [results_manifest.json](results_manifest.json) records the protocol and result inventory.
 - [PROVENANCE.md](PROVENANCE.md) describes evidence scope, and [asset captions](assets/CAPTIONS.md) give context for the figures.
 
 The raw point clouds and prediction arrays are not included. The published tables support deterministic aggregate verification without distributing those larger inputs.
 
 ## Run the evaluator
 
-Python 3.11 or newer is sufficient; no third-party packages are required.
+Python 3.11 or newer and [uv](https://docs.astral.sh/uv/) provide the locked development setup.
+The evaluator itself has no third-party runtime dependencies.
 
 ```bash
-PYTHONPATH=src python3 -m tree_lidar_benchmark verify
-PYTHONPATH=src python3 -m tree_lidar_benchmark summary
-PYTHONPATH=src python3 -m unittest discover -s tests -v
+uv sync --locked --extra test
+uv run tree-lidar-benchmark verify
+uv run tree-lidar-benchmark summary
+uv run tree-lidar-benchmark evaluate --labels examples/aligned-labels.json
+uv run python -m unittest discover -s tests -v
 ```
 
-The packaged wheel contains the same manifest-checked tables:
+The seven-point [aligned-label example](examples/aligned-labels.json) is fictional. It produces
+two matches, no false positives and one false negative (F1 = 0.8). Prediction 20 is exactly half
+class 3 and remains eligible; prediction 30 is mostly class 3 and is excluded. The arrays must
+share source-row order, with `source_row_index` equal to `0..n-1`. Integer instance IDs remain
+exact, including values above `2**53`. This small example does not rerun any segmentation method.
+
+Install from the project directory to use the console command. The built package includes the
+same manifest-checked tables:
 
 ```bash
-python -m pip install tree_lidar_benchmark-1.0.0-py3-none-any.whl
+python -m pip install .
 tree-lidar-benchmark verify
 tree-lidar-benchmark summary
 ```
@@ -73,4 +81,7 @@ The test data are from the [FOR-instance dataset](https://doi.org/10.5281/zenodo
 - [ForAINet](https://doi.org/10.1016/j.rse.2024.114078)
 - [TLS2trees](https://doi.org/10.1111/2041-210X.14233)
 
-The exact code revisions and checkpoint identities for the result rows are in [`data/route_manifest.json`](data/route_manifest.json).
+Available code revisions and checkpoint identities for the result rows are in
+[`data/route_manifest.json`](data/route_manifest.json). Both TreeX routes lack a retained upstream
+commit, and the project-adapted SegmentAnyTree route lacks its checkpoint SHA-256. Those historical
+identities remain unknown; aggregate verification does not establish full prediction reproducibility.

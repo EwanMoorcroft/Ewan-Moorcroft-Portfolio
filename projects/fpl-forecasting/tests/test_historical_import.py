@@ -12,6 +12,7 @@ from fpl_forecasting.historical import import_historical_gameweeks
 
 FIELDS = (
     "element",
+    "fixture",
     "position",
     "round",
     "total_points",
@@ -29,9 +30,12 @@ FIELDS = (
 )
 
 
-def _row(player_id: int, position: str, gameweek: int, points: float) -> dict[str, object]:
+def _row(
+    player_id: int, position: str, gameweek: int, points: float, fixture: int = 1
+) -> dict[str, object]:
     return {
         "element": player_id,
+        "fixture": fixture,
         "position": position,
         "round": gameweek,
         "total_points": points,
@@ -64,7 +68,7 @@ def test_historical_import_aggregates_fixtures_without_filling_absence(tmp_path:
         source / "gw1.csv",
         [
             _row(11, "MID", 1, 2),
-            _row(11, "MID", 1, 3),
+            _row(11, "MID", 1, 3, fixture=2),
             _row(12, "DEF", 1, 1),
             _row(900, "AM", 1, 10),
         ],
@@ -91,7 +95,7 @@ def test_historical_import_aggregates_fixtures_without_filling_absence(tmp_path:
     assert "season_id" not in result.manifest
     audits = result.manifest["source_files"]
     assert isinstance(audits, list)
-    assert audits[0]["duplicate_fixture_rows"] == 1
+    assert audits[0]["additional_fixture_rows"] == 1
     assert audits[0]["excluded_non_player_rows"] == 1
 
 
@@ -150,3 +154,18 @@ def test_historical_import_output_is_deterministic(tmp_path: Path) -> None:
     assert first_payload["gameweek"] == 1
     assert [record["id"] for record in first_payload["elements"]] == [11, 12]
     assert first.paths[0].read_bytes() == second.paths[0].read_bytes()
+
+
+def test_historical_import_rejects_duplicate_player_fixture(tmp_path):
+    source = tmp_path / "source"
+    source.mkdir()
+    _write(source / "gw1.csv", [_row(11, "MID", 1, 2), _row(11, "MID", 1, 2)])
+    with pytest.raises(DataContractError, match="duplicate player.fixture"):
+        import_historical_gameweeks(
+            source,
+            tmp_path / "output",
+            season="2024-25",
+            source_revision="c" * 40,
+            gameweek_start=1,
+            gameweek_end=1,
+        )

@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from types import SimpleNamespace
 
+import numpy as np
 import pytest
 import statsmodels.api as sm
 
@@ -50,6 +51,23 @@ def test_model_uses_fixed_workplace_exposure(tmp_path: Path) -> None:
     assert negative_binomial.converged
     assert binomial.converged
     assert 0 <= binomial.predicted_rate_min <= binomial.predicted_rate_max <= 1
+
+
+def test_binomial_hc0_treats_each_area_as_one_observation(tmp_path: Path) -> None:
+    """Repeating area proportions by exposure must not shrink the robust uncertainty."""
+    metrics = _fixture_evidence(tmp_path).metrics
+    frame = model_frame(metrics)
+    design = sm.add_constant(frame.loc[:, ["log_accessibility_5km", "home_or_no_fixed_share"]])
+    result = fit_binomial_sensitivity(metrics)
+    coefficients = result.coefficients.set_index("term")
+    probability = 1 / (1 + np.exp(-(design.to_numpy() @ coefficients["estimate"].to_numpy())))
+    trials = frame["fixed_workplace"].to_numpy()
+    residual = frame["local_fixed"].to_numpy() - trials * probability
+    x = design.to_numpy()
+    bread = np.linalg.inv(x.T @ ((trials * probability * (1 - probability))[:, None] * x))
+    scores = residual[:, None] * x
+    covariance = bread @ (scores.T @ scores) @ bread
+    np.testing.assert_allclose(coefficients["robust_se"], np.sqrt(np.diag(covariance)), rtol=1e-8)
 
 
 @pytest.mark.parametrize(

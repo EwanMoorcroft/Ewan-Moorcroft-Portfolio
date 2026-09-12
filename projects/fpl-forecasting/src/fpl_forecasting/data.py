@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import re
@@ -9,6 +10,7 @@ from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from numbers import Integral, Real
 from pathlib import Path
+from types import MappingProxyType
 from typing import Any
 
 from .contracts import (
@@ -25,6 +27,7 @@ from .errors import (
 
 _GAMEWEEK_PATTERN = re.compile(r"gameweek-(\d+)(?:-|\.)")
 SNAPSHOT_FORMAT = "fpl-completed-gameweek-v1"
+MAX_PLAYER_ID = 2_147_483_647
 _SNAPSHOT_FIELDS = {"snapshot_format", "season_id", "gameweek", "elements"}
 _OPTIONAL_STATS: dict[str, float] = {
     "starts": 0.0,
@@ -67,6 +70,8 @@ class GameweekSnapshot:
     season_id: str
     players: Mapping[int, PlayerWeek]
     source: Path
+    source_sha256: str | None = None
+    source_bytes: int | None = None
 
 
 @dataclass(frozen=True)
@@ -124,10 +129,14 @@ def _parse_player(record: Any, *, gameweek: int, index: int) -> PlayerWeek:
         raise DataContractError(f"{context}: record must be a JSON object")
     if "id" not in record:
         raise DataContractError(f"{context}: missing player id")
-    player_id_number = _finite_number(record["id"], field="id", context=context)
-    player_id = int(player_id_number)
-    if player_id_number != player_id or player_id < 1:
-        raise DataContractError(f"{context}: id must be a positive integer")
+    player_id = record["id"]
+    if (
+        isinstance(player_id, bool)
+        or not isinstance(player_id, Integral)
+        or not 1 <= player_id <= MAX_PLAYER_ID
+    ):
+        raise DataContractError(f"{context}: id must be a positive integer at most {MAX_PLAYER_ID}")
+    player_id = int(player_id)
 
     stats = record.get("stats")
     if not isinstance(stats, dict):
@@ -193,9 +202,10 @@ def read_gameweek(path: str | Path) -> GameweekSnapshot:
 
     source = Path(path)
     gameweek = gameweek_from_filename(source)
+    raw = source.read_bytes()
     try:
         payload = json.loads(
-            source.read_text(encoding="utf-8"),
+            raw.decode("utf-8"),
             object_pairs_hook=object_without_duplicate_keys,
             parse_constant=reject_nonfinite_json_constant,
         )
@@ -240,9 +250,35 @@ def read_gameweek(path: str | Path) -> GameweekSnapshot:
     return GameweekSnapshot(
         gameweek=gameweek,
         season_id=season_id,
-        players=players,
+        players=MappingProxyType(players),
         source=source,
+        source_sha256=hashlib.sha256(raw).hexdigest(),
+        source_bytes=len(raw),
     )
+
+
+def snapshot_input_audit(
+    snapshots: Iterable[GameweekSnapshot],
+) -> tuple[list[dict[str, object]], str]:
+    """Audit the exact bytes parsed, without reopening mutable input paths."""
+    files: list[dict[str, object]] = []
+    aggregate = hashlib.sha256()
+    for snapshot in sorted(snapshots, key=lambda item: item.gameweek):
+        if snapshot.source_sha256 is None or snapshot.source_bytes is None:
+            raise DataContractError("Snapshot has no captured source-byte identity")
+        name = snapshot.source.name
+        aggregate.update(
+            f"{snapshot.gameweek}\0{name}\0{snapshot.source_bytes}\0{snapshot.source_sha256}\n".encode()
+        )
+        files.append(
+            {
+                "gameweek": snapshot.gameweek,
+                "file": name,
+                "bytes": snapshot.source_bytes,
+                "sha256": snapshot.source_sha256,
+            }
+        )
+    return files, aggregate.hexdigest()
 
 
 def validate_sequence(

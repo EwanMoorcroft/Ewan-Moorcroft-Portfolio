@@ -1,0 +1,48 @@
+{
+  "analysis_contract": "liverpool-commuting-access-v1",
+  "areas": 61,
+  "binomial_sensitivity": {
+    "log_likelihood": -51385.65260650587,
+    "observations": 61,
+    "predicted_rate_max": 0.6971071207193423,
+    "predicted_rate_min": 0.6411510415145066,
+    "uncertainty": "bounded-response sensitivity; descriptive associations only"
+  },
+  "employed_total": 205768,
+  "fixed_workplace_total": 123689,
+  "geography": "2021 Middle layer Super Output Areas",
+  "home_or_no_fixed_share": 0.3944150693985459,
+  "home_or_no_fixed_total": 81158,
+  "interpretation_boundary": "Census 2021 workplace flows were collected during pandemic disruption; results are ecological, descriptive, and not current travel demand.",
+  "local_fixed_total": 84567,
+  "local_retention_share": 0.6837067160378045,
+  "moran": {
+    "permutations": 9999,
+    "pseudo_p_value_two_sided": 0.0001,
+    "seed": 2026,
+    "statistic": 0.4901355503899729,
+    "variable": "area local-retention share",
+    "weights": "row-standardized Queen contiguity"
+  },
+  "negative_binomial_nb2": {
+    "aic": 711.8501205525997,
+    "alpha": 0.0025004006654222245,
+    "converged": true,
+    "log_likelihood": -351.92506027629986,
+    "observations": 61,
+    "predicted_rate_max": 0.6989892027802282,
+    "predicted_rate_min": 0.6402986477432189,
+    "uncertainty": "HC0 robust standard errors; sensitivity to Poisson overdispersion"
+  },
+  "poisson": {
+    "aic": 836.184452751977,
+    "exposure": "all fixed-workplace workers from the origin area",
+    "log_likelihood": -415.0922263759885,
+    "observations": 61,
+    "outcome": "local fixed-workplace count",
+    "pearson_dispersion": 4.746774577300458,
+    "predicted_rate_max": 0.6975417258086171,
+    "predicted_rate_min": 0.6425769651991263,
+    "uncertainty": "HC0 robust standard errors; descriptive associations only"
+  }
+}

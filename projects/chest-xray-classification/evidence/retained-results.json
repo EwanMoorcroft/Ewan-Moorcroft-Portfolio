@@ -67,10 +67,11 @@
     "selected_epoch": 7,
     "epochs_ran": 12,
     "validation": {
-      "loss": 0.9521609404036728,
+      "loss": null,
       "balanced_accuracy": 0.8252915510834061,
       "macro_f1": 0.824411826382284,
-      "matthews_correlation_coefficient": 0.7427187710729204
+      "matthews_correlation_coefficient": 0.7427187710729204,
+      "loss_status": "Historical weighted batch-mean aggregation is incorrect; this value has not been recomputed."
     }
   },
   "provenance": {
@@ -85,47 +86,78 @@
     ]
   },
   "test": {
-    "image_count": 522,
-    "loss": 0.3967259263626917,
     "accuracy": 0.8065134099616859,
     "balanced_accuracy": 0.8086357723018934,
+    "confusion_matrix": [
+      [
+        140,
+        38,
+        10
+      ],
+      [
+        17,
+        152,
+        0
+      ],
+      [
+        2,
+        34,
+        129
+      ]
+    ],
+    "expected_calibration_error_15_bins": 0.24727569095198831,
+    "image_count": 522,
+    "log_loss": 0.6555965369488604,
+    "macro_f1": 0.8097125109045282,
     "macro_precision": 0.8290440423941171,
     "macro_recall": 0.8086357723018934,
-    "macro_f1": 0.8097125109045282,
     "matthews_correlation_coefficient": 0.7190200103784589,
-    "log_loss": 0.6555965392865973,
-    "multiclass_brier_score": 0.40134192764600835,
-    "expected_calibration_error_15_bins": 0.2472756918362731,
-    "confusion_matrix": [
-      [140, 38, 10],
-      [17, 152, 0],
-      [2, 34, 129]
-    ],
+    "multiclass_brier_score": 0.40134192460025486,
     "per_class": {
       "Normal": {
+        "f1": 0.8069164265129684,
         "precision": 0.8805031446540881,
         "recall": 0.7446808510638298,
-        "f1": 0.8069164265129684,
         "support": 188
       },
       "Lung Opacity": {
+        "f1": 0.7735368956743003,
         "precision": 0.6785714285714286,
         "recall": 0.8994082840236687,
-        "f1": 0.7735368956743003,
         "support": 169
       },
       "Viral Pneumonia": {
+        "f1": 0.8486842105263158,
         "precision": 0.9280575539568345,
         "recall": 0.7818181818181819,
-        "f1": 0.8486842105263158,
         "support": 165
       }
-    }
+    },
+    "loss": 0.655596531670669
   },
   "limitations": [
     "Patient identifiers are unavailable, so patient-level independence cannot be established.",
     "Perceptual-hash pairs are unadjudicated review candidates and are not automatic split groups.",
     "The model has not been evaluated on an external population.",
     "This research benchmark is not suitable for clinical use."
-  ]
+  ],
+  "reevaluation": {
+    "date": "2026-09-12",
+    "checkpoint_retrained": false,
+    "model_selection_repeated": false,
+    "record": "results/checkpoint-reevaluation-locked-mps-2026-09-12.json",
+    "predictions": "results/checkpoint-reevaluation-locked-mps-2026-09-12-predictions.csv",
+    "predictions_file_sha256": "6dffd830f0b945c935104ebc38a09a84624ab7a91c44bd27b6ed2cc52ec805a0",
+    "device_type": "mps",
+    "software_versions": {
+      "numpy": "2.4.6",
+      "pillow": "12.3.0",
+      "python": "3.11.16",
+      "scikit_learn": "1.9.1",
+      "torch": "2.14.0",
+      "torchvision": "0.29.0"
+    },
+    "superseded_record": "evidence/superseded-retained-results-2026-08-16.json",
+    "correction_note": "results/CORRECTION.md"
+  }
 }

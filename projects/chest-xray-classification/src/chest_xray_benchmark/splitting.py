@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import io
 import json
 import math
 from collections import Counter, defaultdict
@@ -298,7 +299,12 @@ def audit_split_rows(rows: Iterable[dict[str, str]]) -> dict[str, Any]:
 
 
 def read_split_rows(path: Path, split: str | None = None) -> list[dict[str, str]]:
-    with path.open(newline="", encoding="utf-8") as stream:
+    return parse_split_rows(path.read_bytes(), split)
+
+
+def parse_split_rows(raw: bytes, split: str | None = None) -> list[dict[str, str]]:
+    """Parse and audit captured bytes without reopening their source path."""
+    with io.StringIO(raw.decode("utf-8"), newline="") as stream:
         reader = csv.DictReader(stream)
         fields = reader.fieldnames or []
         if len(fields) != len(set(fields)):

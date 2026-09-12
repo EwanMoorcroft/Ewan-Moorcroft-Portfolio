@@ -1,0 +1,13 @@
+{
+  "contract": "liverpool-retained-evidence-v1",
+  "files": {
+    "area-metrics.csv": "7253efe8512298ad9a420b8212dae0084b82e38c67d77a6ac046fec750f66812",
+    "liverpool-msoa-boundaries.geojson": "581cdecc07b8f006c67482cac0eceb6bc1e7e64113b344a17fc660f50049d01c",
+    "liverpool-msoa-centroids.geojson": "394b4b13fdc91e82fe7b49c595c60433b328856694642a32e3edd87e7081b00b",
+    "model-coefficients.csv": "19451a030e8ff119c4f792bc1569bcc9558c362d9cb34073863d8e3290416d07",
+    "r-validation.json": "7272aabd9ca4699a9eb7efc86730363d1f0da363ba9fc1866410d51041ecf0fa",
+    "results.json": "0c9f173115a8f2ed0cc0876b443c865341573b0124d0f7942846691353954868",
+    "source-manifest.json": "1e86bc6a0f23884bcaaa08820101e9f0c43b825de31ee18430b0408e83963eb2",
+    "spatial-edges.csv": "307d895e8afb6094ae0e6198a023383d070cde0a8294de63c37cf06d36580b69"
+  }
+}

@@ -1,8 +1,8 @@
 # LunarLander Double DQN
 
-## Results
+This reinforcement-learning project trains a Double DQN agent to control the discrete LunarLander environment. The retained raw rewards describe one 1,000-episode training run evaluated greedily for ten episodes.
 
-This reinforcement-learning project trains a Double DQN agent to control the discrete LunarLander environment. One 1,000-episode training run produced a successful greedy policy when evaluated for ten episodes.
+## Results
 
 | Evaluation | Value |
 |---|---:|
@@ -12,11 +12,19 @@ This reinforcement-learning project trains a Double DQN agent to control the dis
 | Mean raw reward | 283.56 +/- 12.07 |
 | Reward range | 254.90 to 297.04 |
 | Mean episode length | 254.4 steps |
-| Centred landing rate | 90% |
+| Legacy centred-contact terminal rate | 90% (success interpretation withdrawn) |
 
 ![Greedy LunarLander rollout](artifacts/figures/lunar_lander_trained_agent.gif)
 
-The figure and table describe one training seed and ten deterministic evaluation seeds. They show that this run learned a landing policy, not how the method performs across arbitrary seeds or configurations. The checkpoint is not included, so the evaluation file cannot be linked back to exact model bytes.
+The figure and table describe one training seed and ten deterministic evaluation seeds. The checkpoint and per-episode trajectories are unavailable in the portfolio, so the saved evaluation cannot be independently revalidated against exact model bytes.
+
+The historical 90% field counted centred terminal states with two leg contacts.
+That predicate can count a crash and is therefore not a validated success rate.
+The corrected code requires LunarLander-v3's successful terminal reward (+100),
+two contacts and the centre threshold, excluding crashes (-100) and truncations.
+The same correction removes the +8 touchdown bonus from crashes during future
+training. Raw reward summaries and original artifacts remain unchanged; there
+has been no new benchmark training or replacement success-rate estimate.
 
 ## How the agent learns
 
@@ -44,7 +52,7 @@ The reward plot covers all 1,000 episodes and includes a 100-episode rolling mea
 Python 3.11 or newer is recommended. On Apple hardware, PyTorch uses Metal when available and otherwise falls back to CPU.
 
 ```bash
-uv sync --extra test --extra plot
+uv sync --locked --extra test --extra plot
 uv run lunar-dqn train --output runs/reference --episodes 1000 --seed 532
 uv run lunar-dqn evaluate runs/reference/double_dqn_checkpoint.pt \
   --output runs/reference/evaluation.json --episodes 10 --seed 532
@@ -52,6 +60,12 @@ uv run pytest
 ```
 
 For a quick software smoke run, reduce `--episodes`. A short run checks the pipeline but is not expected to learn a stable landing policy. Verify the supplied files with `shasum -a 256 -c artifacts/SHA256SUMS`.
+
+New runs retain every optimiser update loss, episode seed/outcome, final raw
+reward and terminal flags. Training metadata records the checkpoint SHA-256;
+evaluation adds final observations and checks its seed range against the saved
+training configuration, including when `--seed` is overridden. A caller-imposed
+step limit is recorded separately from an environment terminal.
 
 ## What this run does not show
 

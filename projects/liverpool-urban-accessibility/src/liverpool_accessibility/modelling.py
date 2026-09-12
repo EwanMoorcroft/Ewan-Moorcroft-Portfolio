@@ -136,12 +136,14 @@ def fit_binomial_sensitivity(metrics: pd.DataFrame) -> CountModelResult:
     frame = model_frame(metrics)
     design = sm.add_constant(frame.loc[:, PREDICTORS], has_constant="add")
     exposure = frame["fixed_workplace"].to_numpy(dtype=float)
-    response = frame["local_fixed"].to_numpy(dtype=float) / exposure
+    successes = frame["local_fixed"].to_numpy(dtype=float)
+    # One score contribution per MSOA. Frequency weights would instead repeat
+    # each area's proportion once per worker and understate HC0 uncertainty.
+    response = np.column_stack([successes, exposure - successes])
     fitted = sm.GLM(
         response,
         design,
         family=sm.families.Binomial(),
-        freq_weights=exposure,
     ).fit(cov_type="HC0")
     converged = bool(getattr(fitted, "converged", False))
     if not converged:

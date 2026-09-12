@@ -43,11 +43,18 @@ weights <- weights / degrees
 centred <- metrics$local_retention_share - mean(metrics$local_retention_share)
 moran <- (length(codes) / sum(weights)) *
   (sum(weights * outer(centred, centred)) / sum(centred^2))
-moran_line <- grep('"statistic":', result_lines, value = TRUE)
-if (length(moran_line) != 1) {
-  stop("retained results must contain one Moran statistic")
+section_number <- function(section, key) {
+  start <- grep(sprintf('^  "%s": \\{', section), result_lines)
+  if (length(start) != 1) stop("missing or duplicate result section")
+  remaining <- result_lines[(start + 1):length(result_lines)]
+  end <- grep('^  \\}', remaining)[[1]]
+  field <- grep(sprintf('"%s":', key), remaining[seq_len(end)], value = TRUE)
+  if (length(field) != 1) stop("missing or duplicate result number")
+  value <- as.numeric(sub('.*: *([-+0-9.eE]+),? *$', '\\1', field))
+  if (!is.finite(value)) stop("non-finite result number")
+  value
 }
-python_moran <- as.numeric(sub('.*: *([-+0-9.eE]+),? *$', '\\1', moran_line))
+python_moran <- section_number("moran", "statistic")
 moran_difference <- abs(moran - python_moran)
 
 coefficient_names <- c("const", "log_accessibility_5km", "home_or_no_fixed_share")
@@ -55,15 +62,49 @@ r_estimates <- unname(coef(fitted))
 python_poisson <- python_coefficients[python_coefficients$family == "poisson", ]
 python_estimates <- python_poisson$estimate[match(coefficient_names, python_poisson$term)]
 maximum_difference <- max(abs(r_estimates - python_estimates))
-passed <- is.finite(moran) && moran_difference <= 1e-12 && maximum_difference <= 1e-7
+
+# Grouped counts retain the MSOA as the observational unit. Construct the
+# sandwich explicitly in base R, independently of statsmodels' HC0 routine.
+binomial_fit <- glm(
+  cbind(local_fixed, fixed_workplace - local_fixed) ~
+    log_accessibility_5km + home_or_no_fixed_share,
+  family = binomial(link = "logit"), data = metrics
+)
+x <- model.matrix(binomial_fit)
+probability <- fitted(binomial_fit)
+trials <- metrics$fixed_workplace
+score <- x * as.vector(metrics$local_fixed - trials * probability)
+bread <- solve(crossprod(x, x * as.vector(trials * probability * (1 - probability))))
+robust_covariance <- bread %*% crossprod(score) %*% bread
+binomial_se <- sqrt(diag(robust_covariance))
+python_binomial <- python_coefficients[python_coefficients$family == "binomial_sensitivity", ]
+aligned <- match(coefficient_names, python_binomial$term)
+binomial_estimate_difference <- max(abs(unname(coef(binomial_fit)) - python_binomial$estimate[aligned]))
+binomial_se_difference <- max(abs(binomial_se - python_binomial$robust_se[aligned]))
+residual <- residuals(fitted, type = "pearson")
+residual <- residual - mean(residual)
+residual_moran <- (length(codes) / sum(weights)) *
+  (sum(weights * outer(residual, residual)) / sum(residual^2))
+residual_moran_difference <- abs(residual_moran - section_number("residual_moran", "statistic"))
+differences <- c(moran_difference, maximum_difference, binomial_estimate_difference,
+                 binomial_se_difference, residual_moran_difference)
+passed <- all(is.finite(differences)) && fitted$converged && binomial_fit$converged &&
+  moran_difference <= 1e-12 && maximum_difference <= 1e-7 &&
+  binomial_estimate_difference <= 1e-7 && binomial_se_difference <= 1e-7 &&
+  residual_moran_difference <= 1e-10
 
 json_lines <- c(
   "{",
-  sprintf("  \"contract\": \"liverpool-r-validation-v1\","),
+  sprintf("  \"contract\": \"liverpool-r-validation-v2\","),
   sprintf("  \"areas\": %d,", nrow(metrics)),
   sprintf("  \"moran_statistic\": %.15g,", moran),
   sprintf("  \"moran_difference\": %.15g,", moran_difference),
   sprintf("  \"maximum_coefficient_difference\": %.15g,", maximum_difference),
+  sprintf("  \"binomial_maximum_coefficient_difference\": %.15g,", binomial_estimate_difference),
+  sprintf("  \"binomial_maximum_robust_se_difference\": %.15g,", binomial_se_difference),
+  sprintf("  \"binomial_accessibility_robust_se\": %.15g,", binomial_se[[2]]),
+  sprintf("  \"residual_moran_statistic\": %.15g,", residual_moran),
+  sprintf("  \"residual_moran_difference\": %.15g,", residual_moran_difference),
   sprintf("  \"passed\": %s,", ifelse(passed, "true", "false")),
   sprintf("  \"r_version\": \"%s\"", R.version.string),
   "}"

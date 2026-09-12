@@ -4,14 +4,17 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import re
+from numbers import Real
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
-from .contracts import DataContractError, validate_metrics
-from .modelling import CountModelResult, fit_count_models
-from .spatial import MoranResult, morans_i
+from .contracts import DataContractError, read_boundaries, read_centroids, validate_metrics
+from .modelling import PREDICTORS, CountModelResult, fit_count_models, model_frame
+from .spatial import MoranResult, morans_i, queen_edges
 
 CORE_FILES = (
     "area-metrics.csv",
@@ -116,7 +119,9 @@ def verify_source_manifest(
 
 
 def _write_json(path: Path, payload: dict[str, object]) -> None:
-    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(payload, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8"
+    )
 
 
 def compute_results(
@@ -136,12 +141,20 @@ def compute_results(
         seed=2026,
     )
     poisson, negative_binomial, binomial = fit_count_models(metrics)
+    frame = model_frame(metrics)
+    design = np.column_stack([np.ones(len(frame)), frame.loc[:, PREDICTORS]])
+    expected_count = (
+        np.exp(design @ poisson.coefficients["estimate"].to_numpy())
+        * frame["fixed_workplace"].to_numpy()
+    )
+    pearson_residual = (frame["local_fixed"].to_numpy() - expected_count) / np.sqrt(expected_count)
+    residual_spatial = morans_i(frame["area_code"], pearson_residual, edges, permutations=0)
     fixed_total = int(metrics["fixed_workplace"].sum())
     local_total = int(metrics["local_fixed"].sum())
     employed_total = int(metrics["employed_total"].sum())
     home_total = int(metrics["home_or_no_fixed"].sum())
     results: dict[str, object] = {
-        "analysis_contract": "liverpool-commuting-access-v1",
+        "analysis_contract": "liverpool-commuting-access-v2",
         "geography": "2021 Middle layer Super Output Areas",
         "areas": len(metrics),
         "employed_total": employed_total,
@@ -169,6 +182,12 @@ def compute_results(
             "predicted_rate_max": poisson.predicted_rate_max,
             "uncertainty": "HC0 robust standard errors; descriptive associations only",
         },
+        "residual_moran": {
+            "variable": "Poisson Pearson residuals",
+            "weights": "row-standardized Queen contiguity",
+            "statistic": residual_spatial.statistic,
+            "interpretation": "descriptive residual dependence; no fitted-residual permutation p-value",
+        },
         "negative_binomial_nb2": {
             "observations": negative_binomial.observations,
             "aic": negative_binomial.aic,
@@ -184,7 +203,8 @@ def compute_results(
             "log_likelihood": binomial.log_likelihood,
             "predicted_rate_min": binomial.predicted_rate_min,
             "predicted_rate_max": binomial.predicted_rate_max,
-            "uncertainty": "bounded-response sensitivity; descriptive associations only",
+            "uncertainty": "area-level HC0 sandwich for grouped successes and failures; descriptive associations only",
+            "observational_unit": "MSOA",
         },
         "interpretation_boundary": (
             "Census 2021 workplace flows were collected during pandemic disruption; "
@@ -234,6 +254,13 @@ def write_results(evidence_dir: str | Path) -> list[Path]:
 
 def verify_evidence(evidence_dir: str | Path, *, tolerance: float = 1e-9) -> dict[str, object]:
     """Check hashes and independently reconstruct every retained numerical result."""
+    if (
+        isinstance(tolerance, bool)
+        or not isinstance(tolerance, Real)
+        or not math.isfinite(tolerance)
+        or tolerance < 0
+    ):
+        raise DataContractError("tolerance must be a finite non-negative number")
     root = Path(evidence_dir)
     manifest = json.loads((root / "results-manifest.json").read_text(encoding="utf-8"))
     if manifest.get("contract") != "liverpool-retained-evidence-v1":
@@ -251,45 +278,10 @@ def verify_evidence(evidence_dir: str | Path, *, tolerance: float = 1e-9) -> dic
 
     metrics = pd.read_csv(root / "area-metrics.csv")
     edges = pd.read_csv(root / "spatial-edges.csv")
+    _verify_geography(root, metrics, edges)
     reconstructed, models, _ = compute_results(metrics, edges)
     retained = json.loads((root / "results.json").read_text(encoding="utf-8"))
-    for key in (
-        "areas",
-        "employed_total",
-        "fixed_workplace_total",
-        "local_fixed_total",
-        "home_or_no_fixed_total",
-    ):
-        if retained.get(key) != reconstructed[key]:
-            raise DataContractError(f"retained result mismatch: {key}")
-    for key in ("local_retention_share", "home_or_no_fixed_share"):
-        if abs(float(retained[key]) - float(reconstructed[key])) > tolerance:
-            raise DataContractError(f"retained result mismatch: {key}")
-    for section, keys in {
-        "moran": ("statistic", "pseudo_p_value_two_sided"),
-        "poisson": (
-            "aic",
-            "log_likelihood",
-            "pearson_dispersion",
-            "predicted_rate_min",
-            "predicted_rate_max",
-        ),
-        "negative_binomial_nb2": (
-            "aic",
-            "log_likelihood",
-            "alpha",
-            "predicted_rate_min",
-            "predicted_rate_max",
-        ),
-        "binomial_sensitivity": (
-            "log_likelihood",
-            "predicted_rate_min",
-            "predicted_rate_max",
-        ),
-    }.items():
-        for key in keys:
-            if abs(float(retained[section][key]) - float(reconstructed[section][key])) > tolerance:
-                raise DataContractError(f"retained result mismatch: {section}.{key}")
+    numeric_claims = _compare_results(retained, reconstructed, tolerance=tolerance)
 
     reconstructed_coefficients = pd.concat(
         [model.coefficients.assign(family=model.family) for model in models],
@@ -303,15 +295,116 @@ def verify_evidence(evidence_dir: str | Path, *, tolerance: float = 1e-9) -> dic
     numeric_columns = [
         column for column in reconstructed_coefficients.columns if column not in {"term", "family"}
     ]
+    if set(retained_coefficients) != set(reconstructed_coefficients):
+        raise DataContractError("retained coefficient columns do not align")
+    for column in numeric_columns:
+        values = retained_coefficients[column]
+        if not pd.api.types.is_numeric_dtype(values) or pd.api.types.is_bool_dtype(values):
+            raise DataContractError("retained coefficients must be numeric")
+    if not np.isfinite(retained_coefficients[numeric_columns].to_numpy(dtype=float)).all():
+        raise DataContractError("retained coefficients must be finite")
     difference = retained_coefficients[numeric_columns].to_numpy(
         dtype=float
     ) - reconstructed_coefficients[numeric_columns].to_numpy(dtype=float)
     if abs(difference).max() > tolerance:
         raise DataContractError("retained model coefficients do not reconstruct")
+    if "r-validation.json" in expected_files:
+        _verify_r_validation(root, reconstructed, models[2])
     return {
         "contract": manifest["contract"],
         "files_verified": len(expected_files),
         "areas": len(metrics),
-        "aggregates_verified": 22,
+        "aggregates_verified": numeric_claims,
         "coefficient_values_verified": int(reconstructed_coefficients[numeric_columns].size),
+        "spatial_edges_reconstructed": len(edges),
+        "accessibility_values_reconstructed": 3 * len(metrics),
     }
+
+
+def _verify_r_validation(
+    root: Path, results: dict[str, object], binomial: CountModelResult
+) -> None:
+    payload = json.loads((root / "r-validation.json").read_text())
+    thresholds = {
+        "moran_difference": 1e-12,
+        "maximum_coefficient_difference": 1e-7,
+        "binomial_maximum_coefficient_difference": 1e-7,
+        "binomial_maximum_robust_se_difference": 1e-7,
+        "residual_moran_difference": 1e-10,
+    }
+    expected_numbers = {
+        "areas": results["areas"],
+        "moran_statistic": results["moran"]["statistic"],
+        "residual_moran_statistic": results["residual_moran"]["statistic"],
+        "binomial_accessibility_robust_se": binomial.coefficients.set_index("term").loc[
+            "log_accessibility_5km", "robust_se"
+        ],
+    }
+    fields = {"contract", "passed", "r_version", *thresholds, *expected_numbers}
+    if not isinstance(payload, dict) or set(payload) != fields:
+        raise DataContractError("R validation fields do not align")
+    if payload["contract"] != "liverpool-r-validation-v2" or payload["passed"] is not True:
+        raise DataContractError("R validation did not pass the current contract")
+    if not isinstance(payload["r_version"], str) or not payload["r_version"].strip():
+        raise DataContractError("R validation must identify its runtime")
+    for field, threshold in thresholds.items():
+        value = payload[field]
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, Real)
+            or not math.isfinite(value)
+            or not 0 <= value <= threshold
+        ):
+            raise DataContractError(f"R validation difference is invalid: {field}")
+    for field, expected in expected_numbers.items():
+        _compare_results(payload[field], expected, tolerance=1e-10, path=f"R validation.{field}")
+
+
+def _compare_results(
+    actual: object, expected: object, *, tolerance: float, path: str = "results"
+) -> int:
+    """Compare the complete result schema, including metadata and finite scalar types."""
+    if isinstance(expected, dict):
+        if not isinstance(actual, dict) or set(actual) != set(expected):
+            raise DataContractError(f"retained result fields differ: {path}")
+        return sum(
+            _compare_results(actual[key], value, tolerance=tolerance, path=f"{path}.{key}")
+            for key, value in expected.items()
+        )
+    if isinstance(expected, bool) or isinstance(expected, str):
+        if type(actual) is not type(expected) or actual != expected:
+            raise DataContractError(f"retained result mismatch: {path}")
+        return 0
+    if isinstance(expected, Real):
+        if isinstance(actual, bool) or not isinstance(actual, Real) or not math.isfinite(actual):
+            raise DataContractError(f"retained result must be finite numeric: {path}")
+        if isinstance(expected, int) and not isinstance(actual, int):
+            raise DataContractError(f"retained result must be an integer: {path}")
+        if abs(actual - expected) > tolerance:
+            raise DataContractError(f"retained result mismatch: {path}")
+        return 1
+    raise DataContractError(f"unsupported retained result field: {path}")
+
+
+def _verify_geography(root: Path, metrics: pd.DataFrame, edges: pd.DataFrame) -> None:
+    """Rebuild the graph and gravity indices from retained geometry and destination mass."""
+    # Local import avoids the preparation module's source-manifest dependency cycle.
+    from .analysis import _distance_matrix
+
+    validate_metrics(metrics)
+    boundaries = read_boundaries(root / "liverpool-msoa-boundaries.geojson")
+    codes = set(boundaries["MSOA21CD"])
+    if codes != set(metrics["area_code"]):
+        raise DataContractError("boundary and metric area identities do not align")
+    reconstructed_edges = queen_edges(boundaries)
+    if not edges.reset_index(drop=True).equals(reconstructed_edges):
+        raise DataContractError("retained Queen graph does not reconstruct from polygons")
+    centroids = read_centroids(root / "liverpool-msoa-centroids.geojson", expected_codes=codes)
+    ordered_codes, distances = _distance_matrix(centroids)
+    aligned = metrics.set_index("area_code").loc[ordered_codes]
+    mass = aligned["inbound_fixed_workers"].to_numpy(dtype=float)
+    for decay_km in (3, 5, 10):
+        expected = np.exp(-distances / (decay_km * 1000.0)) @ mass
+        # Retained CSV values have twelve significant figures.
+        if not np.allclose(aligned[f"accessibility_{decay_km}km"], expected, atol=1e-6, rtol=0):
+            raise DataContractError(f"retained accessibility_{decay_km}km does not reconstruct")

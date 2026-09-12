@@ -23,6 +23,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     train_parser.add_argument("--epochs", type=int, default=30)
     train_parser.add_argument("--seed", type=int, default=534)
+    train_parser.add_argument("--corpus-name", required=True)
+    train_parser.add_argument("--corpus-version", required=True)
+    train_parser.add_argument("--corpus-licence", required=True)
 
     evaluate_parser = commands.add_parser("evaluate", help="evaluate one selected checkpoint")
     evaluate_parser.add_argument("data", type=Path, help="same data file used during training")
@@ -44,6 +47,11 @@ def main() -> int:
             args.data,
             args.output,
             TrainingConfig(architecture=args.architecture, epochs=args.epochs, seed=args.seed),
+            corpus_metadata={
+                "name": args.corpus_name,
+                "version": args.corpus_version,
+                "licence": args.corpus_licence,
+            },
         )
         print(f"Best validation span F1: {result['best_validation_span_f1']:.4f}")
         return 0

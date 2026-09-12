@@ -1,6 +1,11 @@
 from __future__ import annotations
 
+import contextlib
+import io
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
 from tree_lidar_benchmark.evaluator import (
     PROTOCOL_ID,
@@ -11,6 +16,33 @@ from tree_lidar_benchmark.evaluator import (
 
 
 class EvaluatorTests(unittest.TestCase):
+    def test_cli_scores_aligned_json_with_large_integer_ids(self) -> None:
+        from tree_lidar_benchmark.cli import main
+
+        payload = {
+            "predicted_tree_id": [2**53, 2**53 + 1],
+            "reference_tree_id": [1, 2],
+            "classification": [4, 5],
+            "source_row_index": [0, 1],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "aligned.json"
+            path.write_text(json.dumps(payload))
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                status = main(["evaluate", "--labels", str(path)])
+        self.assertEqual(status, 0)
+        self.assertEqual(json.loads(output.getvalue())["true_positives"], 2)
+
+    def test_large_integer_instance_ids_remain_distinct(self) -> None:
+        labels = [2**53, 2**53, 2**53 + 1, 2**53 + 1]
+        result = evaluate_aligned_labels(
+            labels, labels, [4, 4, 5, 5], source_row_index=[0, 1, 2, 3]
+        )
+        self.assertEqual(result.true_positives, 2)
+        self.assertEqual({match.reference_id for match in result.matches}, set(labels))
+        self.assertEqual({match.prediction_id for match in result.matches}, set(labels))
+
     def test_maximum_cardinality_recovers_two_pairs(self) -> None:
         pairs = maximum_cardinality_threshold_matching(
             [[0.90, 0.80], [0.85, 0.00]],

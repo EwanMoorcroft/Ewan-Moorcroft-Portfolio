@@ -75,7 +75,20 @@ The latest supplied completed gameweek is the as-of boundary. Every player prese
 gets one unlabeled row using only that season's observations through the boundary. The target
 gameweek is exactly one greater. The artifact must have been trained through the same boundary and
 must match the requested season, effective configuration, and semantic feature schema.
+Its v3 history identity also binds the start gameweek and every parsed input file through the
+boundary. Season-to-date features mean all supplied observations from this recorded start; a
+window beginning at GW9 cannot replace the GW1 history of an existing deployment. Equivalent
+integer and floating representations of real configuration fields produce one normalized hash.
 
 Predictions are sorted by predicted points descending and then player ID ascending. Canonical JSON
 serialization and content hashes make an exact rerun distinguishable from a changed artifact,
 snapshot set, configuration, schema, or output.
+
+## Retained gameweek sensitivity
+
+The [derived fold comparison](../results/retained-folds/README.md) pairs each baseline with ridge
+within the same retained gameweek. It reports signed differences, gameweek wins, sample standard
+deviations, and the range of means when each gameweek is omitted in turn. These are descriptive
+checks across ten dependent folds, not independent-sample confidence intervals. No new fits or
+player-level residuals are generated. Coverage-conditioned window selection and missing row-level
+records limit subgroup analysis and conclusions about later gameweeks.

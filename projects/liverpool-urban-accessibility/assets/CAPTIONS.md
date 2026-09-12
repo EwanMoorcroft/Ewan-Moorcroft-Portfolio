@@ -18,3 +18,13 @@ mass and a 5 km exponential decay. Colour represents the combined working-at-hom
 share. Each point is one MSOA. The plot is descriptive; destination-flow mass comes from the same OD
 release, excludes Scotland and Northern Ireland origins, and neither axis is an individual-level
 measure.
+
+## Grouped-binomial area uncertainty
+
+`binomial-area-uncertainty.png` shows the two standardized predictor coefficients from the grouped
+successes/failures binomial model, with area-level HC0 95% intervals. Both intervals include zero.
+These intervals use one observational unit per MSOA and do not adjust for remaining spatial
+dependence. They replace the earlier worker-frequency-weighted uncertainty calculation described
+in [`docs/correction.md`](../docs/correction.md).
+
+Fixture runs explicitly label every figure as fictional and do not use the Liverpool Census title.

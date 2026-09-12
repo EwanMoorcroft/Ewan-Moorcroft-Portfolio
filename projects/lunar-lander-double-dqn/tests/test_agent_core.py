@@ -100,6 +100,115 @@ def test_reward_shaping_can_be_disabled() -> None:
     assert learning_reward(3.25, state, False, config) == 3.25
 
 
+def test_crash_with_two_contacts_does_not_receive_touchdown_bonus():
+    state = np.zeros(8, dtype=np.float32)
+    state[6:] = 1
+    assert learning_reward(-100.0, state, True, compact_config()) == -100.0
+
+
+def test_truncated_terminal_does_not_receive_touchdown_bonus():
+    state = np.zeros(8, dtype=np.float32)
+    state[6:] = 1
+    assert learning_reward(100.0, state, True, compact_config(), truncated=True) == 100.0
+
+
+@pytest.mark.parametrize(
+    "reward,terminated,truncated,x,contacts,want",
+    [
+        (-100.0, True, False, 0.0, True, 0.0),
+        (100.0, True, False, 0.0, True, 1.0),
+        (100.0, False, True, 0.0, True, 0.0),
+        (100.0, True, False, 0.2, True, 0.0),
+        (100.0, True, False, 0.0, False, 0.0),
+        (1.0, False, False, 0.0, True, 0.0),
+    ],
+)
+def test_evaluation_distinguishes_success_from_crash_and_time_limit(
+    monkeypatch,
+    reward,
+    terminated,
+    truncated,
+    x,
+    contacts,
+    want,
+):
+    from lunar_dqn import training
+
+    class Environment:
+        def reset(self, *, seed):
+            return np.zeros(8, dtype=np.float32), {}
+
+        def step(self, action):
+            state = np.zeros(8, dtype=np.float32)
+            state[0] = x
+            state[6:] = contacts
+            return state, reward, terminated, truncated, {}
+
+        def close(self):
+            pass
+
+    class Agent:
+        config = compact_config()
+
+        def act(self, state, exploration):
+            return 0
+
+    monkeypatch.setattr(training, "make_environment", lambda *args: Environment())
+    result = training.evaluate(Agent(), compact_config(max_steps=1), episodes=1)
+    assert result["centred_landing_rate"] == want
+    assert result["rewards"] == [reward]
+    assert result["episode_outcomes"][0]["final_raw_reward"] == reward
+    assert result["episode_outcomes"][0]["centred_landing"] == bool(want)
+    assert result["episode_outcomes"][0]["seed"] == 10532
+
+
+def test_evaluation_rejects_training_seed_overlap_before_environment_creation(monkeypatch):
+    from lunar_dqn import training
+
+    agent = DoubleDQNAgent(8, 4, compact_config(episodes=10_000), device=torch.device("cpu"))
+    monkeypatch.setattr(training, "make_environment", lambda *args: pytest.fail("seed overlap"))
+    with pytest.raises(ValueError, match="overlap"):
+        training.evaluate(agent, compact_config(), episodes=1)
+
+
+def test_training_persists_update_losses_outcomes_and_checkpoint_identity(tmp_path, monkeypatch):
+    import csv
+    import hashlib
+    import json
+    from types import SimpleNamespace
+
+    from lunar_dqn import training
+
+    class Environment:
+        observation_space = SimpleNamespace(shape=(8,))
+        action_space = SimpleNamespace(n=4)
+
+        def reset(self, *, seed):
+            return np.zeros(8, dtype=np.float32), {}
+
+        def step(self, action):
+            state = np.zeros(8, dtype=np.float32)
+            state[6:] = 1
+            return state, -100.0, True, False, {}
+
+        def close(self):
+            pass
+
+    monkeypatch.setattr(training, "make_environment", lambda *args: Environment())
+    monkeypatch.setattr("lunar_dqn.agent.select_device", lambda: torch.device("cpu"))
+    _, records = training.train(compact_config(episodes=2, train_every=1), tmp_path)
+    assert records[-1].outcome == "crash"
+    updates = list(csv.DictReader((tmp_path / "update_losses.csv").open()))
+    assert len(updates) == 1
+    assert np.isfinite(float(updates[0]["loss"]))
+    assert int(updates[0]["episode"]) == 2
+    metadata = json.loads((tmp_path / "training_metadata.json").read_text())
+    checkpoint = tmp_path / "double_dqn_checkpoint.pt"
+    assert metadata["checkpoint_sha256"] == hashlib.sha256(checkpoint.read_bytes()).hexdigest()
+    assert metadata["first_training_seed"] == 533
+    assert metadata["last_training_seed"] == 534
+
+
 def test_time_limit_truncation_keeps_bootstrap_target() -> None:
     """A time limit ends the rollout without changing the underlying task terminal state."""
     assert bootstrap_terminal(terminated=False, truncated=True) is False

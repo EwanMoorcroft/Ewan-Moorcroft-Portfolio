@@ -24,4 +24,7 @@ reports/generated/
 *.pickle
 *.db
 *.sqlite
-
+*.duckdb
+*.duckdb.wal
+*.db-wal
+*.sqlite-wal

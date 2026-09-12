@@ -1,7 +1,5 @@
 # FPL Next-Gameweek Forecasting
 
-[Read the portfolio case study](https://ewanmoorcroft.github.io/projects/fpl-forecasting/)
-
 This project forecasts a Fantasy Premier League player's points in the following gameweek from completed gameweek snapshots. It is a compact tabular modelling exercise with the timing constraints that make sports data easy to mishandle. On the public 2024-25 evaluation window, ridge regression had the lowest point error of four candidates: **1.110 MAE**, **2.019 RMSE**, and **0.717 Spearman correlation** across ten gameweeks.
 
 [Open the walkthrough notebook](notebooks/fpl_forecasting_walkthrough.ipynb) or [view the visual overview](demo/index.html).
@@ -22,6 +20,8 @@ The window stops at GW15 because adjacent-player coverage falls to 0.8987 betwee
 | Ridge regression | **1.110** | **2.019** | **0.273** | **0.717** | **0.226** | **0.170** |
 
 The [walkthrough](notebooks/fpl_forecasting_walkthrough.ipynb), [comparison table](results/model-comparison.csv), [full metrics record](reports/retained/2024-25-gw01-15-evaluation.json), and [source manifest](reports/retained/2024-25-gw01-15-source-manifest.json) provide the supporting evidence. This is an evaluation on a defined part of one season, not a live deployment or a whole-season forecast. Ridge settings and split rules were set before these figures were produced.
+
+The [gameweek comparison](results/retained-folds/README.md) examines variation hidden by the aggregate: ridge improves MAE over the three-observation mean in 8 of 10 gameweeks, with an equal-gameweek mean reduction of 0.0199 points. Its RMSE and Spearman improve in all ten. These calculations reuse retained fold metrics; they do not rerun training or establish confidence intervals.
 
 ## From snapshots to forecasts
 
@@ -44,12 +44,12 @@ That timing matters: a player's next-gameweek points never enter the features us
 Create a deterministic example without downloading data:
 
 ```bash
-python -m pip install -e '.[test]'
-fpl-forecast synthetic --output-dir scratch/gameweeks --season 2025-26 --gameweeks 10 --players 24 --seed 42
-fpl-forecast evaluate --gameweek-dir scratch/gameweeks --config config/default.json --report-json reports/generated/metrics.json
+uv sync --locked --extra test
+uv run --locked fpl-forecast synthetic --output-dir scratch/gameweeks --season 2025-26 --gameweeks 10 --players 24 --seed 42
+uv run --locked fpl-forecast evaluate --gameweek-dir scratch/gameweeks --config config/default.json --report-json reports/generated/metrics.json
 ```
 
-Run the checks with `python -m pytest -q`, `ruff check .`, and `ruff format --check .`. The [methodology note](docs/methodology.md) explains the evaluation, while the [operations guide](docs/operations.md) covers model artifacts, DuckDB storage, and the local service.
+Run the checks with `uv run --locked pytest -q`, `uv run --locked ruff check .`, and `uv run --locked ruff format --check .`. The [methodology note](docs/methodology.md) explains the evaluation, while the [operations guide](docs/operations.md) has complete train, predict, store, and serve commands. Release 3 artifacts bind the exact snapshot history used for season-to-date features; older artifacts require regeneration from their original completed inputs.
 
 Docker is available for the same isolated workflow:
 

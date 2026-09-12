@@ -8,6 +8,7 @@ drifting away from the report used by the project.
 
 from __future__ import annotations
 
+import argparse
 import csv
 import html
 import json
@@ -229,10 +230,84 @@ def write_svg(report: dict[str, object], rows: list[dict[str, object]]) -> None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--folds", action="store_true", help="also build the Matplotlib fold chart (analysis extra)"
+    )
+    args = parser.parse_args()
     report = load_report()
     rows = model_rows(report)
     write_results(rows)
     write_svg(report, rows)
+    if args.folds:
+        write_fold_chart(report)
+
+
+def write_fold_chart(report: dict[str, object]) -> None:
+    """Plot paired retained gameweek differences, without confidence interval claims."""
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    from fpl_forecasting.retained import compare_retained_folds
+
+    _, rows = compare_retained_folds(report)
+    selected = [row for row in rows if row["baseline"] == "rolling_3_mean"]
+    with plt.rc_context({"font.family": "DejaVu Sans", "font.size": 11}):
+        fig, axes = plt.subplots(1, 2, figsize=(12, 5.4))
+        for axis, metric, title, better in zip(
+            axes,
+            ("mae", "ndcg_at_10"),
+            ("MAE difference (points)", "NDCG@10 difference"),
+            ("Lower is better for ridge", "Higher is better for ridge"),
+            strict=True,
+        ):
+            points = [row for row in selected if row["metric"] == metric]
+            weeks = [row["gameweek"] for row in points]
+            deltas = [row["ridge_minus_baseline"] for row in points]
+            axis.bar(
+                weeks,
+                deltas,
+                color=["#2f6f8e" if value < 0 else "#c39449" for value in deltas],
+                width=0.65,
+            )
+            axis.axhline(0, color="#17202a", linewidth=1)
+            for week, value in zip(weeks, deltas, strict=True):
+                axis.annotate(
+                    f"{value:+.3f}",
+                    (week, value),
+                    xytext=(0, -12 if value < 0 else 5),
+                    textcoords="offset points",
+                    ha="center",
+                    fontsize=8,
+                )
+            axis.set_xticks(weeks, [f"{week}" for week in weeks])
+            axis.set_xlabel("Target gameweek")
+            axis.set_title(f"{title}\n{better}", loc="left", fontsize=12)
+            axis.spines[["top", "right"]].set_visible(False)
+            axis.grid(axis="y", color="#d9e1e8", linewidth=0.6)
+            axis.set_axisbelow(True)
+            axis.margins(y=0.23)
+        fig.suptitle(
+            "Ridge minus three-observation mean, by gameweek", x=0.06, ha="left", fontsize=17
+        )
+        fig.subplots_adjust(left=0.075, right=0.98, top=0.78, bottom=0.25, wspace=0.25)
+        fig.text(
+            0.06,
+            0.09,
+            "Ten retained GW6-GW15 folds, 6,684 player-gameweek rows. Panels use different units and scales.",
+            fontsize=10,
+        )
+        fig.text(
+            0.06,
+            0.04,
+            "Source: retained evaluation aggregates. Shared training history; spread is not a confidence interval.",
+            fontsize=10,
+        )
+        ASSETS.mkdir(parents=True, exist_ok=True)
+        fig.savefig(ASSETS / "gameweek-differences.png", dpi=160, facecolor="white")
+        plt.close(fig)
 
 
 if __name__ == "__main__":

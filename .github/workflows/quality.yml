@@ -31,30 +31,50 @@ jobs:
           enable-cache: true
           cache-suffix: ${{ matrix.project }}
           python-version: "3.11"
+          version: "0.12.13"
       - run: uv sync --locked --extra test
-        if: matrix.project == 'liverpool-urban-accessibility'
-      - run: uv sync --extra test --extra train
+        if: matrix.project != 'chest-xray-classification' && matrix.project != 'fpl-forecasting'
+      - run: uv sync --locked --extra test --extra analysis
+        if: matrix.project == 'fpl-forecasting'
+      - run: uv sync --locked --extra test --extra train
         if: matrix.project == 'chest-xray-classification'
-      - run: uv sync --extra test
-        if: matrix.project != 'liverpool-urban-accessibility' && matrix.project != 'chest-xray-classification' && matrix.project != 'fpl-forecasting'
-      - name: Install pinned FPL requirements
-        if: matrix.project == 'fpl-forecasting'
-        run: |
-          uv venv
-          uv pip install --python .venv/bin/python -r requirements-dev.txt
-          uv pip install --python .venv/bin/python --no-deps -e .
-      - run: uv run pytest
-        if: matrix.project != 'fpl-forecasting'
       - run: uv run --no-sync pytest
-        if: matrix.project == 'fpl-forecasting'
-      - run: uv run ruff check .
-        if: matrix.project != 'fpl-forecasting'
       - run: uv run --no-sync ruff check .
-        if: matrix.project == 'fpl-forecasting'
-      - run: uv run ruff format --check .
-        if: matrix.project != 'fpl-forecasting'
       - run: uv run --no-sync ruff format --check .
-        if: matrix.project == 'fpl-forecasting'
+      - name: Build distribution and check installed entry points
+        run: |
+          uv build
+          uv pip install --python .venv/bin/python --no-deps --reinstall dist/*.whl
+          uv pip check --python .venv/bin/python
+          .venv/bin/python - <<'PY'
+          import subprocess
+          import tomllib
+          from pathlib import Path
+          metadata = tomllib.loads(Path("pyproject.toml").read_text())
+          for command in metadata["project"].get("scripts", {}):
+              subprocess.run([str(Path(".venv/bin", command).resolve()), "--help"], check=True, cwd="/tmp")
+          PY
+
+  notebook-walkthroughs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          python-version: "3.11"
+          version: "0.12.13"
+      - name: Execute saved walkthroughs
+        run: |
+          uv run --no-project --with nbformat==5.11.1 --with nbclient==0.11.0 --with ipykernel==7.3.0 python - <<'PY'
+          from pathlib import Path
+          import nbformat
+          from nbclient import NotebookClient
+          for path in sorted(Path("projects").glob("*/notebooks/*.ipynb")):
+              notebook = nbformat.read(path, as_version=4)
+              nbformat.validate(notebook)
+              NotebookClient(notebook, timeout=120, kernel_name="python3", resources={"metadata": {"path": str(path.parent.resolve())}}).execute()
+              print(f"Executed {path}")
+          PY
 
   liverpool-r-validation:
     runs-on: ubuntu-latest

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import math
 from collections.abc import Sequence
 from numbers import Integral
@@ -10,8 +9,9 @@ from pathlib import Path
 from typing import Any
 
 from .config import ProtocolConfig
-from .contracts import sha256_bytes, validate_season_id
+from .contracts import validate_season_id
 from .data import GameweekSnapshot
+from .data import snapshot_input_audit as snapshot_input_audit
 from .errors import ArtifactError, DataContractError
 from .features import (
     FEATURE_COLUMNS,
@@ -22,7 +22,7 @@ from .features import (
 from .models import ARTIFACT_FORMAT, FittedRidge
 
 PREDICTION_FORMAT = "fpl-ranked-predictions-v1"
-MANIFEST_FORMAT = "fpl-operational-forecast-manifest-v1"
+MANIFEST_FORMAT = "fpl-operational-forecast-manifest-v2"
 COMPLETION_STATUS = "completed"
 
 
@@ -57,6 +57,7 @@ def validate_deployment_model(
     season_id: str,
     config_sha256: str,
     as_of_gw: int,
+    snapshots: Sequence[GameweekSnapshot],
 ) -> None:
     """Bind a deployment model to season, config, schema, and forecast boundary."""
 
@@ -82,6 +83,12 @@ def validate_deployment_model(
             "Artifact is ahead of the forecast boundary: trained through target GW"
             f"{model.trained_through_target_gw}, forecast as-of is GW{as_of_gw}"
         )
+    if (
+        model.history_start_gw != min(item.gameweek for item in snapshots)
+        or model.history_end_gw != as_of_gw
+        or model.history_sha256 != snapshot_input_audit(snapshots)[1]
+    ):
+        raise ArtifactError("Artifact snapshot history does not match the supplied history")
 
 
 def ranked_prediction_payload(
@@ -129,29 +136,6 @@ def ranked_prediction_payload(
     }
 
 
-def snapshot_input_audit(
-    snapshots: Sequence[GameweekSnapshot],
-) -> tuple[list[dict[str, object]], str]:
-    """Hash exact snapshot bytes and their ordered aggregate identity."""
-
-    files: list[dict[str, object]] = []
-    aggregate = hashlib.sha256()
-    for snapshot in sorted(snapshots, key=lambda item: item.gameweek):
-        raw = snapshot.source.read_bytes()
-        digest = sha256_bytes(raw)
-        name = snapshot.source.name
-        aggregate.update(f"{snapshot.gameweek}\0{name}\0{len(raw)}\0{digest}\n".encode())
-        files.append(
-            {
-                "gameweek": snapshot.gameweek,
-                "file": name,
-                "bytes": len(raw),
-                "sha256": digest,
-            }
-        )
-    return files, aggregate.hexdigest()
-
-
 def operational_manifest(
     *,
     season_id: str,
@@ -195,6 +179,9 @@ def operational_manifest(
             "season_id": model.season_id,
             "training_rows": model.training_rows,
             "trained_through_target_gw": model.trained_through_target_gw,
+            "history_start_gw": model.history_start_gw,
+            "history_end_gw": model.history_end_gw,
+            "history_sha256": model.history_sha256,
         },
         "inputs": {
             "files": input_files,

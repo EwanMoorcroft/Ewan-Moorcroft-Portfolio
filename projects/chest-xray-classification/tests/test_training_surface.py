@@ -95,6 +95,17 @@ def test_classification_metrics_rejects_out_of_range_labels() -> None:
         )
 
 
+def test_classification_metrics_rejects_invalid_probability_mass():
+    with pytest.raises(ValueError, match="sum to one"):
+        classification_metrics(np.array([0, 1]), np.array([[0.8, 0.8], [0.2, 0.8]]), ("A", "B"))
+
+
+def test_float32_softmax_rounding_does_not_emit_probability_warning(recwarn):
+    probabilities = np.array([[0.6, 0.3, 0.1], [0.1, 0.6, 0.3], [0.3, 0.1, 0.6]], dtype=np.float32)
+    classification_metrics(np.arange(3), probabilities, ("A", "B", "C"))
+    assert not recwarn.list
+
+
 def test_evaluation_rejects_checkpoint_mismatch_before_torch_load() -> None:
     with tempfile.TemporaryDirectory() as directory:
         root = Path(directory)

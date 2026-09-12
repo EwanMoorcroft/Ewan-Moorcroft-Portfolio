@@ -24,7 +24,7 @@ from .features import (
     feature_matrix,
 )
 
-ARTIFACT_FORMAT = "fpl-ridge-json-v2"
+ARTIFACT_FORMAT = "fpl-ridge-json-v3"
 _ARTIFACT_FIELDS = {
     "artifact_format",
     "season_id",
@@ -39,6 +39,9 @@ _ARTIFACT_FIELDS = {
     "alpha",
     "training_rows",
     "trained_through_target_gw",
+    "history_start_gw",
+    "history_end_gw",
+    "history_sha256",
 }
 _SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 
@@ -103,6 +106,9 @@ class FittedRidge:
     feature_schema_version: str = FEATURE_SCHEMA_VERSION
     feature_schema_sha256: str = FEATURE_SCHEMA_SHA256
     protocol_config_sha256: str | None = None
+    history_start_gw: int | None = None
+    history_end_gw: int | None = None
+    history_sha256: str | None = None
 
     def predict(self, values: pd.DataFrame) -> np.ndarray:
         if (
@@ -141,6 +147,11 @@ class FittedRidge:
         except DataContractError as exc:
             raise ArtifactError(str(exc)) from exc
         protocol_hash = _artifact_sha256(self.protocol_config_sha256, "protocol_config_sha256")
+        history_start = _artifact_positive_integer(self.history_start_gw, "history_start_gw")
+        history_end = _artifact_positive_integer(self.history_end_gw, "history_end_gw")
+        history_hash = _artifact_sha256(self.history_sha256, "history_sha256")
+        if history_start >= history_end or history_end != self.trained_through_target_gw:
+            raise ArtifactError("Artifact history interval does not match training boundary")
         if (
             self.feature_schema_version != FEATURE_SCHEMA_VERSION
             or self.feature_schema_sha256 != FEATURE_SCHEMA_SHA256
@@ -160,6 +171,9 @@ class FittedRidge:
             "alpha": self.alpha,
             "training_rows": self.training_rows,
             "trained_through_target_gw": self.trained_through_target_gw,
+            "history_start_gw": history_start,
+            "history_end_gw": history_end,
+            "history_sha256": history_hash,
         }
 
     def save(self, path: str | Path) -> Path:
@@ -196,6 +210,11 @@ class FittedRidge:
         trained_through = _artifact_positive_integer(
             payload["trained_through_target_gw"], "trained_through_target_gw"
         )
+        history_start = _artifact_positive_integer(payload["history_start_gw"], "history_start_gw")
+        history_end = _artifact_positive_integer(payload["history_end_gw"], "history_end_gw")
+        history_hash = _artifact_sha256(payload["history_sha256"], "history_sha256")
+        if history_start >= history_end or history_end != trained_through:
+            raise ArtifactError("Artifact history interval does not match training boundary")
         try:
             season_id = validate_season_id(payload["season_id"])
         except DataContractError as exc:
@@ -238,6 +257,9 @@ class FittedRidge:
             feature_schema_version=FEATURE_SCHEMA_VERSION,
             feature_schema_sha256=schema_hash,
             protocol_config_sha256=protocol_hash,
+            history_start_gw=history_start,
+            history_end_gw=history_end,
+            history_sha256=history_hash,
         )
 
     @classmethod
@@ -290,6 +312,14 @@ def fit_ridge(
             raise ArtifactError(str(exc)) from exc
         validated_protocol_hash = _artifact_sha256(protocol_config_sha256, "protocol_config_sha256")
     x, y = feature_matrix(frame)
+    history = frame.attrs.get("snapshot_history") if season_id is not None else None
+    if season_id is not None:
+        if history is None or len(history) != 3:
+            raise ArtifactError("Deployment fitting requires captured snapshot history")
+        if history[0] != int(frame["as_of_gw"].min()) or history[1] != int(
+            frame["target_gw"].max()
+        ):
+            raise ArtifactError("Deployment training frame must cover its full snapshot history")
     matrix = x.to_numpy(dtype=float)
     means = matrix.mean(axis=0)
     scales = matrix.std(axis=0)
@@ -311,4 +341,7 @@ def fit_ridge(
         feature_schema_version=FEATURE_SCHEMA_VERSION,
         feature_schema_sha256=FEATURE_SCHEMA_SHA256,
         protocol_config_sha256=validated_protocol_hash,
+        history_start_gw=history[0] if history else None,
+        history_end_gw=history[1] if history else None,
+        history_sha256=history[2] if history else None,
     )

@@ -59,6 +59,13 @@ def classification_metrics(
         raise ValueError("labels contain class indices outside the configured label range")
     if not np.all(np.isfinite(probabilities)):
         raise ValueError("probabilities must contain only finite values")
+    row_sums = probabilities.sum(axis=1, keepdims=True)
+    if np.any(probabilities < 0) or np.any(probabilities > 1):
+        raise ValueError("probabilities must be in [0, 1]")
+    if not np.allclose(row_sums, 1.0, rtol=1e-6, atol=1e-7):
+        raise ValueError("probabilities must sum to one per image")
+    # Float32 softmax sums have float32 rounding even after conversion to float64.
+    probabilities = probabilities / row_sums
     predictions = probabilities.argmax(axis=1)
     indices = np.arange(len(label_names))
     precision, recall, f1, support = precision_recall_fscore_support(

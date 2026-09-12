@@ -173,6 +173,7 @@ def store_generated_batch(
         season_id=season_id,
         config_sha256=protocol.sha256(),
         as_of_gw=as_of_gw,
+        snapshots=snapshots,
     )
 
     expected_predictions = ranked_prediction_payload(

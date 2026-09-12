@@ -1,0 +1,202 @@
+{
+  "checkpoint_file_sha256": "5aff448ce94537a53ba2a70bc3a8314ce0a5b4beb45242fecc2f545fb55933ca",
+  "device_type": "mps",
+  "evidence_status": "fresh grouped-split test evaluation",
+  "label_order": [
+    "Normal",
+    "Lung Opacity",
+    "Viral Pneumonia"
+  ],
+  "loss_definition": "unweighted mean cross entropy from logits",
+  "metrics": {
+    "accuracy": 0.8065134099616859,
+    "balanced_accuracy": 0.8086357723018934,
+    "confusion_matrix": [
+      [
+        140,
+        38,
+        10
+      ],
+      [
+        17,
+        152,
+        0
+      ],
+      [
+        2,
+        34,
+        129
+      ]
+    ],
+    "expected_calibration_error_15_bins": 0.24727569095198831,
+    "image_count": 522,
+    "log_loss": 0.6555965369488604,
+    "macro_f1": 0.8097125109045282,
+    "macro_precision": 0.8290440423941171,
+    "macro_recall": 0.8086357723018934,
+    "matthews_correlation_coefficient": 0.7190200103784589,
+    "multiclass_brier_score": 0.40134192460025486,
+    "per_class": {
+      "Lung Opacity": {
+        "f1": 0.7735368956743003,
+        "precision": 0.6785714285714286,
+        "recall": 0.8994082840236687,
+        "support": 169
+      },
+      "Normal": {
+        "f1": 0.8069164265129684,
+        "precision": 0.8805031446540881,
+        "recall": 0.7446808510638298,
+        "support": 188
+      },
+      "Viral Pneumonia": {
+        "f1": 0.8486842105263158,
+        "precision": 0.9280575539568345,
+        "recall": 0.7818181818181819,
+        "support": 165
+      }
+    }
+  },
+  "prediction_analysis": {
+    "error_count": 101,
+    "id_policy": "sequential test-row ID plus source image SHA-256; no paths or patient identifiers",
+    "mean_confidence_correct": 0.5747573375701904,
+    "mean_confidence_incorrect": 0.4945470690727234,
+    "predictions_file": "checkpoint-reevaluation-locked-mps-2026-09-12-predictions.csv",
+    "predictions_file_sha256": "6dffd830f0b945c935104ebc38a09a84624ab7a91c44bd27b6ed2cc52ec805a0",
+    "reliability_bins": [
+      {
+        "accuracy": null,
+        "correct_count": 0,
+        "count": 0,
+        "lower_exclusive": 0.0,
+        "mean_confidence": null,
+        "upper_inclusive": 0.06666666666666667
+      },
+      {
+        "accuracy": null,
+        "correct_count": 0,
+        "count": 0,
+        "lower_exclusive": 0.06666666666666667,
+        "mean_confidence": null,
+        "upper_inclusive": 0.13333333333333333
+      },
+      {
+        "accuracy": null,
+        "correct_count": 0,
+        "count": 0,
+        "lower_exclusive": 0.13333333333333333,
+        "mean_confidence": null,
+        "upper_inclusive": 0.2
+      },
+      {
+        "accuracy": null,
+        "correct_count": 0,
+        "count": 0,
+        "lower_exclusive": 0.2,
+        "mean_confidence": null,
+        "upper_inclusive": 0.26666666666666666
+      },
+      {
+        "accuracy": null,
+        "correct_count": 0,
+        "count": 0,
+        "lower_exclusive": 0.26666666666666666,
+        "mean_confidence": null,
+        "upper_inclusive": 0.3333333333333333
+      },
+      {
+        "accuracy": 0.6521739130434783,
+        "correct_count": 15,
+        "count": 23,
+        "lower_exclusive": 0.3333333333333333,
+        "mean_confidence": 0.3761126399040222,
+        "upper_inclusive": 0.4
+      },
+      {
+        "accuracy": 0.5277777777777778,
+        "correct_count": 38,
+        "count": 72,
+        "lower_exclusive": 0.4,
+        "mean_confidence": 0.4374745190143585,
+        "upper_inclusive": 0.4666666666666667
+      },
+      {
+        "accuracy": 0.8222222222222222,
+        "correct_count": 111,
+        "count": 135,
+        "lower_exclusive": 0.4666666666666667,
+        "mean_confidence": 0.505593478679657,
+        "upper_inclusive": 0.5333333333333333
+      },
+      {
+        "accuracy": 0.7627118644067796,
+        "correct_count": 90,
+        "count": 118,
+        "lower_exclusive": 0.5333333333333333,
+        "mean_confidence": 0.5619592666625977,
+        "upper_inclusive": 0.6
+      },
+      {
+        "accuracy": 0.9240506329113924,
+        "correct_count": 73,
+        "count": 79,
+        "lower_exclusive": 0.6,
+        "mean_confidence": 0.6344783902168274,
+        "upper_inclusive": 0.6666666666666666
+      },
+      {
+        "accuracy": 0.9871794871794872,
+        "correct_count": 77,
+        "count": 78,
+        "lower_exclusive": 0.6666666666666666,
+        "mean_confidence": 0.6957654356956482,
+        "upper_inclusive": 0.7333333333333333
+      },
+      {
+        "accuracy": 1.0,
+        "correct_count": 17,
+        "count": 17,
+        "lower_exclusive": 0.7333333333333333,
+        "mean_confidence": 0.7537368535995483,
+        "upper_inclusive": 0.8
+      },
+      {
+        "accuracy": null,
+        "correct_count": 0,
+        "count": 0,
+        "lower_exclusive": 0.8,
+        "mean_confidence": null,
+        "upper_inclusive": 0.8666666666666667
+      },
+      {
+        "accuracy": null,
+        "correct_count": 0,
+        "count": 0,
+        "lower_exclusive": 0.8666666666666667,
+        "mean_confidence": null,
+        "upper_inclusive": 0.9333333333333333
+      },
+      {
+        "accuracy": null,
+        "correct_count": 0,
+        "count": 0,
+        "lower_exclusive": 0.9333333333333333,
+        "mean_confidence": null,
+        "upper_inclusive": 1.0
+      }
+    ]
+  },
+  "seed": 534,
+  "software_versions": {
+    "numpy": "2.4.6",
+    "pillow": "12.3.0",
+    "python": "3.11.16",
+    "scikit_learn": "1.9.1",
+    "torch": "2.14.0",
+    "torchvision": "0.29.0"
+  },
+  "split_file_sha256": "ada0cb2996419ebc33dc90d38c72e8b350487292bd364670923534187b239bcf",
+  "test_loss": 0.655596531670669,
+  "torch_version": "2.14.0"
+}

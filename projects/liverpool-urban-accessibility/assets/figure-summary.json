@@ -1,7 +1,10 @@
 {
+  "evidence_scope": "Liverpool Census 2021 area-level analysis",
   "figures": [
     "local-retention-map.png",
-    "accessibility-relationship.png"
+    "accessibility-relationship.png",
+    "binomial-area-uncertainty.png"
   ],
-  "source": "reports/retained area metrics and 2021 boundaries"
+  "map_title": "Liverpool Census 2021 local workplace-flow retention",
+  "source": "supplied area metrics, grouped-binomial coefficients and boundaries"
 }

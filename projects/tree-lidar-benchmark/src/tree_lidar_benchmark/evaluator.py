@@ -6,7 +6,7 @@ import math
 import statistics
 from collections.abc import Sequence
 from dataclasses import asdict, dataclass
-from numbers import Real
+from numbers import Integral, Real
 from typing import Any
 
 PROTOCOL_ID = "for_instance_pointwise_v2"
@@ -60,6 +60,9 @@ def _integer_labels(values: Sequence[object], name: str) -> list[int]:
     for index, value in enumerate(values):
         if isinstance(value, bool) or not isinstance(value, Real):
             raise TypeError(f"{name}[{index}] must be numeric")
+        if isinstance(value, Integral):
+            labels.append(int(value))
+            continue
         numeric = float(value)
         if not math.isfinite(numeric):
             raise ValueError(f"{name}[{index}] must be finite")

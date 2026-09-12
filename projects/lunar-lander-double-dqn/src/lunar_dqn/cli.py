@@ -32,7 +32,7 @@ def _agent_for_checkpoint(
         action_size = int(environment.action_space.n)
     finally:
         environment.close()
-    agent = DoubleDQNAgent(state_size, action_size, config, device=device)
+    agent = DoubleDQNAgent(state_size, action_size, saved_config, device=device)
     agent.restore(payload)
     return agent, config, checkpoint_sha256
 

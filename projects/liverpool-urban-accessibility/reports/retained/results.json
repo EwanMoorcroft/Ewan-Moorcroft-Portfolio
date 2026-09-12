@@ -1,12 +1,13 @@
 {
-  "analysis_contract": "liverpool-commuting-access-v1",
+  "analysis_contract": "liverpool-commuting-access-v2",
   "areas": 61,
   "binomial_sensitivity": {
-    "log_likelihood": -51385.65260650587,
+    "log_likelihood": -674.2719280589622,
+    "observational_unit": "MSOA",
     "observations": 61,
     "predicted_rate_max": 0.6971071207193423,
     "predicted_rate_min": 0.6411510415145066,
-    "uncertainty": "bounded-response sensitivity; descriptive associations only"
+    "uncertainty": "area-level HC0 sandwich for grouped successes and failures; descriptive associations only"
   },
   "employed_total": 205768,
   "fixed_workplace_total": 123689,
@@ -44,5 +45,11 @@
     "predicted_rate_max": 0.6975417258086171,
     "predicted_rate_min": 0.6425769651991263,
     "uncertainty": "HC0 robust standard errors; descriptive associations only"
+  },
+  "residual_moran": {
+    "interpretation": "descriptive residual dependence; no fitted-residual permutation p-value",
+    "statistic": 0.4484012959259902,
+    "variable": "Poisson Pearson residuals",
+    "weights": "row-standardized Queen contiguity"
   }
 }

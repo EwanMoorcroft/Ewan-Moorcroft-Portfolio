@@ -25,7 +25,11 @@ class RunSettings:
 
     @classmethod
     def load(cls, path: Path) -> RunSettings:
-        payload: dict[str, Any] = tomllib.loads(path.read_text(encoding="utf-8"))
+        return cls.from_bytes(path.read_bytes())
+
+    @classmethod
+    def from_bytes(cls, raw: bytes) -> RunSettings:
+        payload: dict[str, Any] = tomllib.loads(raw.decode("utf-8"))
         unknown = sorted(set(payload) - set(cls.__dataclass_fields__))
         if unknown:
             raise ValueError(f"Unknown settings: {', '.join(unknown)}")

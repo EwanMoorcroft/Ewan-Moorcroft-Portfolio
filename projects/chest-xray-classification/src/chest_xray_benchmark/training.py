@@ -14,7 +14,7 @@ from .image_data import LABEL_ORDER, build_image_dataset, build_transforms
 from .metrics import classification_metrics
 from .modeling import build_resnet18
 from .settings import RunSettings
-from .splitting import read_split_rows, write_json
+from .splitting import parse_split_rows, write_json
 
 
 def file_digest(path: Path) -> str:
@@ -23,6 +23,20 @@ def file_digest(path: Path) -> str:
         while chunk := stream.read(1024 * 1024):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def read_training_inputs(settings_path: Path, splits_path: Path):
+    """Capture configuration and partitions once and hash exactly those bytes."""
+    config_bytes = settings_path.read_bytes()
+    split_bytes = splits_path.read_bytes()
+    config_sha256 = hashlib.sha256(config_bytes).hexdigest()
+    split_sha256 = hashlib.sha256(split_bytes).hexdigest()
+    return (
+        RunSettings.from_bytes(config_bytes),
+        parse_split_rows(split_bytes),
+        config_sha256,
+        split_sha256,
+    )
 
 
 def seed_everything(seed: int) -> None:
@@ -93,9 +107,18 @@ def _fit_epoch(network, loader, loss_function, optimizer, device) -> float:
         loss = loss_function(logits, labels)
         loss.backward()
         optimizer.step()
-        total_loss += float(loss.detach()) * len(labels)
-        total_images += len(labels)
+        denominator = _loss_denominator(loss_function, labels)
+        total_loss += float(loss.detach()) * denominator
+        total_images += denominator
     return total_loss / max(total_images, 1)
+
+
+def _loss_denominator(loss_function, labels) -> float:
+    """Undo CrossEntropyLoss's mean using its actual target-weight denominator."""
+    valid_labels = labels[labels != loss_function.ignore_index]
+    if loss_function.weight is None:
+        return float(valid_labels.numel())
+    return float(loss_function.weight[valid_labels].sum())
 
 
 def predict_probabilities(network, loader, loss_function, device):
@@ -117,8 +140,9 @@ def predict_probabilities(network, loader, loss_function, device):
             probabilities = torch.softmax(logits, dim=1)
             labels_out.append(labels_cpu)
             probabilities_out.append(probabilities.cpu().numpy().copy())
-            total_loss += float(loss.detach()) * len(labels)
-            total_images += len(labels)
+            denominator = _loss_denominator(loss_function, labels)
+            total_loss += float(loss.detach()) * denominator
+            total_images += denominator
     return (
         np.concatenate(labels_out),
         np.concatenate(probabilities_out),
@@ -155,11 +179,14 @@ def train_model(
     import torchvision
     from torch import nn
 
-    settings = RunSettings.load(settings_path)
+    settings, split_rows, config_sha256, split_sha256 = read_training_inputs(
+        settings_path,
+        splits_path,
+    )
     seed_everything(settings.seed)
     device = select_device(settings.device)
-    train_rows = read_split_rows(splits_path, "train")
-    validation_rows = read_split_rows(splits_path, "validation")
+    train_rows = [row for row in split_rows if row["split"] == "train"]
+    validation_rows = [row for row in split_rows if row["split"] == "validation"]
     if not train_rows or not validation_rows:
         raise ValueError("Train and validation partitions must be non-empty")
 
@@ -232,8 +259,6 @@ def train_model(
             if stale_epochs >= settings.early_stopping_patience:
                 break
 
-    split_sha256 = file_digest(splits_path)
-    config_sha256 = file_digest(settings_path)
     checkpoint_sha256 = file_digest(checkpoint_path)
     metadata = {
         "evidence_status": "fresh training and validation",

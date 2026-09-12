@@ -30,6 +30,7 @@ from neural_chunking.data import (
 )
 from neural_chunking.metrics import span_metrics
 from neural_chunking.models import BiLSTMChunker, TransformerChunker
+from neural_chunking.output import publish_files, validate_output_paths
 
 LABEL_IGNORE_INDEX = -100
 CHECKPOINT_SCHEMA_VERSION = 2
@@ -464,9 +465,21 @@ def _validate_checkpoint_payload(payload: object, record: dict[str, Any]) -> dic
     return payload
 
 
-def train_pipeline(data_path: Path, output_dir: Path, config: TrainingConfig) -> dict[str, Any]:
+def train_pipeline(
+    data_path: Path,
+    output_dir: Path,
+    config: TrainingConfig,
+    corpus_metadata: dict[str, str] | None = None,
+) -> dict[str, Any]:
     """Train and select with validation data without evaluating the test split."""
     config.validate()
+    corpus = {"name": "UNKNOWN", "version": "UNKNOWN", "licence": "UNKNOWN"}
+    if corpus_metadata is not None:
+        if set(corpus_metadata) != set(corpus) or any(
+            not isinstance(value, str) or not value.strip() for value in corpus_metadata.values()
+        ):
+            raise ValueError("corpus metadata requires non-empty name, version and licence strings")
+        corpus = dict(corpus_metadata)
     set_seed(config.seed)
     data_sha256 = file_digest(data_path)
     sentences = read_sentences(data_path)
@@ -558,6 +571,7 @@ def train_pipeline(data_path: Path, output_dir: Path, config: TrainingConfig) ->
     result = {
         "schema_version": SELECTION_RECORD_SCHEMA_VERSION,
         "status": "fresh_train_validation_run",
+        "corpus": corpus,
         "test_partition_used": False,
         "config": asdict(config),
         "data_file_sha256": data_sha256,
@@ -588,6 +602,9 @@ def evaluate_pipeline(
 ) -> dict[str, Any]:
     """Evaluate one frozen, validation-selected checkpoint on the test split."""
     selection_path = selection_metadata_path or checkpoint_path.with_name(SELECTION_RECORD_FILENAME)
+    predictions_path = output_path.with_name(output_path.stem + "-predictions.jsonl")
+    protected = [data_path, checkpoint_path, selection_path]
+    validate_output_paths([predictions_path, output_path], protected)
     record, config, selection_record_sha256 = _load_selection_record(selection_path)
     if checkpoint_path.name != record["checkpoint"]["file"]:
         raise ValueError("checkpoint filename does not match selection metadata")
@@ -624,9 +641,44 @@ def evaluate_pipeline(
     model.load_state_dict(payload["model_state"], strict=True)
     criterion = nn.CrossEntropyLoss(ignore_index=LABEL_IGNORE_INDEX)
     test = _run_epoch(model, test_loader, criterion, device, None)
+    with io.StringIO() as stream:
+        for index, (sentence, expected, predicted) in enumerate(
+            zip(splits["test"], test[3], test[4], strict=True),
+            start=1,
+        ):
+            row = {
+                "sentence_id": f"test-{index:06d}",
+                "sentence_sha256": hashlib.sha256(
+                    json.dumps(sentence.tokens, ensure_ascii=False).encode("utf-8")
+                ).hexdigest(),
+                "expected_tags": label_vocabulary.decode(expected),
+                "predicted_tags": label_vocabulary.decode(predicted),
+            }
+            stream.write(json.dumps(row, ensure_ascii=False) + "\n")
+        prediction_bytes = stream.getvalue().encode("utf-8")
     result = {
         "schema_version": SELECTION_RECORD_SCHEMA_VERSION,
         "status": "fresh_test_evaluation",
+        "label_order": list(label_vocabulary.index_to_value),
+        "metric_conventions": {
+            "token_macro_f1": "unweighted mean over the full label_order, including labels absent from both gold and predictions",
+            "token_weighted_f1": "gold-support-weighted mean over the full label_order",
+            "zero_division": 0,
+            "padding": "masked out of predictions and metrics; loss ignore_index=-100",
+            "single_observed_label_mcc": 0.0,
+            "span_matching": "exact type/start/end within each sentence; half-open token indices; micro-aggregated counts",
+            "invalid_bio_continuation": "an I-tag without a matching active type starts a new span",
+            "empty_span_score": 0.0,
+            "loss": "mean unweighted cross entropy over non-padding tokens; logits are not retained, so loss cannot be reconstructed from argmax tags",
+        },
+        "corpus": record.get(
+            "corpus", {"name": "UNKNOWN", "version": "UNKNOWN", "licence": "UNKNOWN"}
+        ),
+        "predictions": {
+            "file": predictions_path.name,
+            "sha256": hashlib.sha256(prediction_bytes).hexdigest(),
+            "contents": "ordered gold/predicted BIO tags and sentence hashes; source tokens excluded",
+        },
         "test_partition_used": True,
         "config": asdict(config),
         "data_file_sha256": current_digest,
@@ -641,6 +693,6 @@ def evaluate_pipeline(
         },
         "test": {"loss": test[0], **evaluate_predictions(*test[1:], label_vocabulary)},
     }
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    report_bytes = (json.dumps(result, indent=2) + "\n").encode("utf-8")
+    publish_files({predictions_path: prediction_bytes, output_path: report_bytes}, protected)
     return result

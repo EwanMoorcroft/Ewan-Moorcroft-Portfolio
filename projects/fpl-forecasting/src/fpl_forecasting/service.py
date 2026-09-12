@@ -119,6 +119,7 @@ class ServiceRuntime:
             season_id=season,
             config_sha256=protocol.sha256(),
             as_of_gw=as_of_gw,
+            snapshots=snapshots,
         )
         artifact_sha256 = sha256_bytes(artifact_bytes)
         registration = ModelRegistration(
@@ -238,8 +239,6 @@ class RequestBodyLimitMiddleware:
                 break
             received += len(message.get("body", b""))
             if received > self.max_bytes:
-                while message.get("more_body", False):
-                    message = await receive()
                 await self._reject(send)
                 return
             buffered.append(message)
@@ -297,7 +296,7 @@ def create_app(
     metrics = MetricsRegistry()
     app = FastAPI(
         title="FPL next-gameweek forecast service",
-        version="2.0.0",
+        version="3.0.0",
         debug=False,
         docs_url=None,
         redoc_url=None,
@@ -330,7 +329,13 @@ def create_app(
 
     @app.middleware("http")
     async def observe_requests(request: Request, call_next: Any):
-        response = await call_next(request)
+        try:
+            response = await call_next(request)
+        except Exception:
+            # The outer server error handler returns the sanitized 500 response.
+            route = request.scope.get("route")
+            metrics.observe_http(getattr(route, "path", "unmatched"), 500)
+            raise
         route = request.scope.get("route")
         route_path = getattr(route, "path", None)
         endpoint = (
@@ -370,6 +375,9 @@ def create_app(
             "protocol_config_sha256": runtime.model.protocol_config_sha256,
             "training_rows": runtime.model.training_rows,
             "trained_through_target_gw": runtime.model.trained_through_target_gw,
+            "history_start_gw": runtime.model.history_start_gw,
+            "history_end_gw": runtime.model.history_end_gw,
+            "history_sha256": runtime.model.history_sha256,
         }
 
     @app.post("/predict")
@@ -398,6 +406,10 @@ def create_app(
         ],
         target_gw: Annotated[int, ApiPath(ge=1, le=60)],
         limit: Annotated[int, Query(ge=1, le=MAX_STORED_PREDICTIONS)] = 100,
+        after_rank: Annotated[int, Query(ge=0, le=2_147_483_647)] = 0,
+        run_id: Annotated[
+            str | None, Query(min_length=1, max_length=128, pattern=r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
+        ] = None,
     ) -> dict[str, object]:
         season = validate_season_id(season_id)
         batch = runtime.store.latest_predictions(
@@ -405,6 +417,8 @@ def create_app(
             season_id=season,
             target_gw=target_gw,
             limit=limit,
+            after_rank=after_rank,
+            run_id=run_id,
         )
         if batch is None:
             raise HTTPException(status_code=404, detail="Stored predictions not found")
@@ -419,6 +433,11 @@ def create_app(
             "created_at": batch.created_at.isoformat(),
             "total_predictions": batch.total_predictions,
             "returned_predictions": len(batch.predictions),
+            "next_after_rank": (
+                batch.predictions[-1].rank
+                if batch.predictions and batch.predictions[-1].rank < batch.total_predictions
+                else None
+            ),
             "predictions": [
                 {
                     "player_id": item.player_id,

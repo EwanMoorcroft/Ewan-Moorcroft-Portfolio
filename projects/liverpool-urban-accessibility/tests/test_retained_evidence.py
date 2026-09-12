@@ -36,8 +36,10 @@ def test_retained_evidence_reconstructs() -> None:
         "contract": "liverpool-retained-evidence-v1",
         "files_verified": 8,
         "areas": 61,
-        "aggregates_verified": 22,
+        "aggregates_verified": 28,
         "coefficient_values_verified": 50,
+        "spatial_edges_reconstructed": 151,
+        "accessibility_values_reconstructed": 183,
     }
     results = json.loads((EVIDENCE / "results.json").read_text(encoding="utf-8"))
     assert results["local_fixed_total"] == 84_567
@@ -48,16 +50,20 @@ def test_retained_evidence_reconstructs() -> None:
     assert results["negative_binomial_nb2"]["aic"] < results["poisson"]["aic"]
     assert 0 <= results["binomial_sensitivity"]["predicted_rate_min"]
     assert results["binomial_sensitivity"]["predicted_rate_max"] <= 1
+    assert results["residual_moran"]["statistic"] == pytest.approx(0.448401295927456, abs=1e-10)
 
 
 def test_r_validation_passes() -> None:
     """The retained R comparison must match all 61 areas within its tolerance."""
     result = json.loads((EVIDENCE / "r-validation.json").read_text(encoding="utf-8"))
-    assert result["contract"] == "liverpool-r-validation-v1"
+    assert result["contract"] == "liverpool-r-validation-v2"
     assert result["areas"] == 61
     assert result["passed"] is True
     assert result["moran_difference"] <= 1e-12
     assert result["maximum_coefficient_difference"] <= 1e-7
+    assert result["binomial_maximum_coefficient_difference"] <= 1e-7
+    assert result["binomial_maximum_robust_se_difference"] <= 1e-7
+    assert result["residual_moran_difference"] <= 1e-10
 
 
 def test_public_pngs_have_no_text_metadata() -> None:

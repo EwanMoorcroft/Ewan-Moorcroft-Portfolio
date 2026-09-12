@@ -28,6 +28,12 @@ The bounded binomial sensitivity produces valid area probabilities and reaches t
 direction for the accessibility association. Its role is to check that the count-model narrative is
 not an artifact of allowing an unbounded rate.
 
+After correcting binomial uncertainty to use one MSOA per observation, the accessibility estimate
+is 0.04815 with robust SE 0.02611 and 95% interval [-0.00303, 0.09933]. The interval includes zero.
+Poisson residual Moran's I is 0.4484, so substantial spatial structure also remains after modelling.
+These are descriptive checks, not spatially adjusted inference. See the
+[correction note](correction.md) for the preserved original and independent R calculation.
+
 The 5 km accessibility coefficient is positive under all three specifications. Because destination
 flow mass is built from the same OD release and includes each origin's own recorded flows, the
 coefficient is retained for methodological transparency but is not promoted as independent

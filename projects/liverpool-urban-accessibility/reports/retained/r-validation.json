@@ -1,9 +1,14 @@
 {
-  "contract": "liverpool-r-validation-v1",
+  "contract": "liverpool-r-validation-v2",
   "areas": 61,
   "moran_statistic": 0.490135550389972,
   "moran_difference": 1.27675647831893e-15,
   "maximum_coefficient_difference": 1.05146794049382e-12,
+  "binomial_maximum_coefficient_difference": 6.03939120935593e-12,
+  "binomial_maximum_robust_se_difference": 2.58227467186956e-13,
+  "binomial_accessibility_robust_se": 0.0261128556947582,
+  "residual_moran_statistic": 0.448401295927456,
+  "residual_moran_difference": 1.46604950401752e-12,
   "passed": true,
   "r_version": "R version 4.3.3 (2024-02-29)"
 }

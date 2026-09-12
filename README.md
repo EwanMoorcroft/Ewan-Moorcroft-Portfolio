@@ -33,7 +33,7 @@ storage, a read-only local service and a non-root Docker image.
 ### [Tree LiDAR benchmark](projects/tree-lidar-benchmark/)
 
 This benchmark compares six individual-tree segmentation methods under one scoring protocol for
-terrestrial LiDAR data. It handles point alignment, one-to-one tree matching, class-aware scoring
+UAV and airborne LiDAR data. It handles point alignment, one-to-one tree matching, class-aware scoring
 and two result routes per method across 49.7 million aligned points.
 ForestFormer3D achieved the highest development-selected micro F1 at 0.8436.
 

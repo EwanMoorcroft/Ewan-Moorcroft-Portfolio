@@ -6,12 +6,13 @@ import csv
 import hashlib
 import json
 import math
+import re
 from dataclasses import dataclass
 from numbers import Integral
 from pathlib import Path
 
 from .contracts import validate_season_id
-from .data import completed_snapshot_payload
+from .data import MAX_PLAYER_ID, completed_snapshot_payload
 from .errors import DataContractError
 
 SOURCE_REPOSITORY = "https://github.com/vaastav/Fantasy-Premier-League"
@@ -31,7 +32,7 @@ _SOURCE_TO_STAT = {
     "saves": "saves",
     "bonus": "bonus",
 }
-_REQUIRED_COLUMNS = frozenset({"element", "position", "round", *_SOURCE_TO_STAT})
+_REQUIRED_COLUMNS = frozenset({"element", "fixture", "position", "round", *_SOURCE_TO_STAT})
 
 
 @dataclass(frozen=True)
@@ -61,10 +62,13 @@ def _number(raw: str | None, *, field: str, gameweek: int, row: int) -> float:
 
 
 def _positive_integer(raw: str | None, *, field: str, gameweek: int, row: int) -> int:
-    value = _number(raw, field=field, gameweek=gameweek, row=row)
-    integer = int(value)
-    if value != integer or integer < 1:
+    if not isinstance(raw, str) or re.fullmatch(r"[0-9]{1,10}", raw) is None:
         raise DataContractError(f"GW{gameweek} row {row}: {field} must be a positive integer")
+    integer = int(raw)
+    if not 1 <= integer <= MAX_PLAYER_ID:
+        raise DataContractError(
+            f"GW{gameweek} row {row}: {field} must be between 1 and {MAX_PLAYER_ID}"
+        )
     return integer
 
 
@@ -78,6 +82,7 @@ def _read_source(path: Path, *, gameweek: int) -> tuple[list[dict[str, object]],
         raise DataContractError(f"{path.name}: missing columns: {', '.join(missing)}")
 
     players: dict[int, dict[str, float]] = {}
+    player_fixtures: set[tuple[int, int]] = set()
     rows = 0
     player_rows = 0
     excluded_non_player_rows = 0
@@ -102,6 +107,15 @@ def _read_source(path: Path, *, gameweek: int) -> tuple[list[dict[str, object]],
         player_id = _positive_integer(
             record["element"], field="element", gameweek=gameweek, row=row_number
         )
+        fixture_id = _positive_integer(
+            record["fixture"], field="fixture", gameweek=gameweek, row=row_number
+        )
+        key = (player_id, fixture_id)
+        if key in player_fixtures:
+            raise DataContractError(
+                f"GW{gameweek} row {row_number}: duplicate player/fixture {key}"
+            )
+        player_fixtures.add(key)
         totals = players.setdefault(player_id, {field: 0.0 for field in _SOURCE_TO_STAT})
         for source_field, target_field in _SOURCE_TO_STAT.items():
             totals[target_field] += _number(
@@ -123,7 +137,7 @@ def _read_source(path: Path, *, gameweek: int) -> tuple[list[dict[str, object]],
         "rows": rows,
         "player_rows": player_rows,
         "players": len(players),
-        "duplicate_fixture_rows": player_rows - len(players),
+        "additional_fixture_rows": player_rows - len(players),
         "excluded_non_player_rows": excluded_non_player_rows,
     }
     return elements, audit
@@ -191,7 +205,7 @@ def import_historical_gameweeks(
         source_files.append(audit)
 
     manifest: dict[str, object] = {
-        "manifest_format": "fpl-historical-import-v1",
+        "manifest_format": "fpl-historical-import-v2",
         "source_repository": SOURCE_REPOSITORY,
         "source_revision": revision,
         "season": season_id,
@@ -204,7 +218,8 @@ def import_historical_gameweeks(
             "player_id": "element",
             "player_positions": sorted(_PLAYER_POSITIONS),
             "excluded_positions": sorted(_KNOWN_NON_PLAYER_POSITIONS),
-            "duplicate_fixture_rows": "sum each retained numeric statistic by element and round",
+            "fixture_identity": "reject duplicate (element, fixture) within each round",
+            "additional_fixture_rows": "sum distinct fixtures by element and round",
             "missing_players": "remain missing; no zero rows are created",
         },
         "source_files": source_files,

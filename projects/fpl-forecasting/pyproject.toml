@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fpl-next-gameweek-forecasting"
-version = "2.0.0"
+version = "3.0.0"
 description = "Next-gameweek forecasting with chronological evaluation."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -21,6 +21,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+analysis = ["matplotlib>=3.9,<4"]
 test = [
   "httpx>=0.28,<1",
   "pytest>=8,<10",

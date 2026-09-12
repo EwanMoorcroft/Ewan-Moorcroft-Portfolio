@@ -1,7 +1,5 @@
 # Liverpool Urban Accessibility
 
-[Read the portfolio case study](https://ewanmoorcroft.github.io/projects/liverpool-urban-accessibility/)
-
 How much recorded workplace movement stayed within Liverpool in the 2021 Census, and did that
 pattern vary spatially? I reduced the 197.7 MB national origin-destination table to the city's 61
 Middle layer Super Output Areas (MSOAs), joined the flows to official boundaries and analysed the
@@ -19,11 +17,18 @@ including the origin MSOA. Full details are in the [figure captions](assets/CAPT
 | Fixed-workplace flows remaining within Liverpool | 84,567 of 123,689 (68.37%) |
 | Spatial clustering of local-retention share | Moran's I = 0.4901, p = 0.0001 |
 | Count-model fit on the same 61 areas | NB2 AIC 711.85; Poisson AIC 836.18 |
-| Independent Python and R comparison | Maximum coefficient difference `1.05e-12` |
+| Independent Python and R comparison | Binomial coefficient difference `6.04e-12`; robust-SE difference `2.58e-13` |
 
 The positive Moran statistic shows that nearby areas tended to have similar local-retention rates.
 The lower NB2 AIC is consistent with the overdispersion seen in the Poisson fit. These are
 area-level associations, not evidence about individual travel decisions or causes.
+
+The corrected binomial accessibility estimate has a 95% interval of [-0.0030, 0.0993], including
+zero. Poisson residual Moran's I = 0.4484 shows remaining spatial structure. The
+[correction note](docs/correction.md) explains the area-level uncertainty calculation and links the
+preserved original evidence.
+
+![Grouped-binomial estimates with corrected area-level uncertainty](assets/binomial-area-uncertainty.png)
 
 ![Workplace accessibility and local retention](assets/accessibility-relationship.png)
 
@@ -39,8 +44,9 @@ which matters when interpreting these workplace patterns.
 The national flow table is queried with DuckDB before any spatial work begins. I then validate the
 MSOA codes and geometries, calculate metric distances in British National Grid, build Queen
 contiguity weights and estimate Moran's I. Poisson, negative-binomial and binomial specifications
-provide different views of the area-level counts. The R script independently refits the Poisson
-model and reconstructs the spatial statistic from the same derived inputs.
+provide different views of the area-level counts. The R script independently refits Poisson and
+grouped-binomial models, reconstructs the binomial HC0 sandwich, and checks observed and residual
+spatial statistics from the same derived inputs.
 
 | What to inspect | File |
 |---|---|
@@ -66,7 +72,7 @@ uv run liverpool-access fixture --output-dir reports/generated/fixture
 ```
 
 The verifier checks the saved file hashes, reconstructs the published aggregates, refits the model
-specifications and repeats the fixed-seed spatial permutations. The fixture is fictional and runs
+specifications, reconstructs the Queen graph and gravity indices, and repeats the fixed-seed spatial permutations. The fixture is fictional and runs
 without downloading data.
 
 To repeat the R comparison:

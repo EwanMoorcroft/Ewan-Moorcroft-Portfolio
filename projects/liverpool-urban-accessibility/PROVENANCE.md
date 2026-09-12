@@ -42,3 +42,8 @@ outside Git.
 [`reports/retained/source-manifest.json`](reports/retained/source-manifest.json) records the exact
 retrieval time, byte sizes, URLs, source hashes and transformations. The separate results manifest
 hashes every canonical input and output used by the verifier, including the independent R result.
+
+The current analysis contract is `liverpool-commuting-access-v2`. The grouped-binomial uncertainty
+correction, independent area-level R sandwich and residual diagnostic are recorded in
+[`docs/correction.md`](docs/correction.md). The original pack and its hashes remain available under
+[`reports/superseded/`](reports/superseded/README.md); original source and geography files are unchanged.

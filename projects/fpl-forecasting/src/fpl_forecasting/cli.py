@@ -25,6 +25,7 @@ from .operational import (
     validate_deployment_model,
     validate_expected_as_of,
 )
+from .output import publish_files, validate_output_paths
 from .report import write_evaluation_html
 from .synthetic import write_synthetic_gameweeks
 
@@ -137,6 +138,8 @@ def _parser() -> argparse.ArgumentParser:
 def run(args: argparse.Namespace) -> dict[str, object]:
     """Run a parsed command and return its concise summary."""
 
+    _validate_command_outputs(args)
+
     if args.command == "synthetic":
         paths = write_synthetic_gameweeks(
             args.output_dir,
@@ -222,6 +225,7 @@ def run(args: argparse.Namespace) -> dict[str, object]:
             season_id=season_id,
             config_sha256=protocol.sha256(),
             as_of_gw=as_of_gw,
+            snapshots=snapshots,
         )
         prediction_payload = ranked_prediction_payload(
             frame,
@@ -260,10 +264,7 @@ def run(args: argparse.Namespace) -> dict[str, object]:
             prediction_rows=len(frame),
         )
         manifest_bytes = canonical_json_bytes(manifest_payload)
-        prediction_path.parent.mkdir(parents=True, exist_ok=True)
-        manifest_path.parent.mkdir(parents=True, exist_ok=True)
-        prediction_path.write_bytes(prediction_bytes)
-        manifest_path.write_bytes(manifest_bytes)
+        publish_files({prediction_path: prediction_bytes, manifest_path: manifest_bytes})
         return {
             "command": "predict",
             "season_id": season_id,
@@ -322,6 +323,32 @@ def run(args: argparse.Namespace) -> dict[str, object]:
             "trained_through_target_gw": model.trained_through_target_gw,
         }
     raise ForecastingError(f"Unsupported command: {args.command}")
+
+
+def _validate_command_outputs(args: argparse.Namespace) -> None:
+    fields = {
+        "build": ("output",),
+        "evaluate": ("report_json", "predictions_csv", "report_html"),
+        "train": ("artifact",),
+        "predict": ("predictions", "manifest"),
+        "store-batch": ("database",),
+        "import-vaastav": ("manifest",),
+    }.get(args.command, ())
+    outputs = [Path(value) for field in fields if (value := getattr(args, field, None))]
+    protected = [
+        Path(value)
+        for field in ("config", "artifact", "predictions", "manifest")
+        if field not in fields and (value := getattr(args, field, None))
+    ]
+    if directory := getattr(args, "gameweek_dir", None):
+        protected.extend(Path(directory).glob("gameweek-*.json"))
+    if args.command == "import-vaastav":
+        protected.extend(Path(args.source_dir).glob("*.csv"))
+        outputs.extend(
+            Path(args.output_dir) / f"gameweek-{gw:02d}.json"
+            for gw in range(args.gameweek_start, args.gameweek_end + 1)
+        )
+    validate_output_paths(outputs, protected)
 
 
 def main(argv: Sequence[str] | None = None) -> int:

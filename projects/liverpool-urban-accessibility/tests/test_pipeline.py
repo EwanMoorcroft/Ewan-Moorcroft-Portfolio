@@ -21,8 +21,11 @@ def test_fixture_runs_full_pipeline(tmp_path: Path, capsys) -> None:
     summary = json.loads(capsys.readouterr().out)
     assert summary["areas"] == 25
     assert summary["files_verified"] == 7
-    assert summary["aggregates_verified"] == 22
+    assert summary["aggregates_verified"] == 28
     assert (output / "figures" / "local-retention-map.png").is_file()
+    figures = json.loads((output / "figures" / "figure-summary.json").read_text())
+    assert figures["evidence_scope"] == "fictional deterministic integration fixture"
+    assert "Fictional" in figures["map_title"]
 
 
 def test_prepared_fixture_conserves_every_origin(tmp_path: Path, capsys) -> None:

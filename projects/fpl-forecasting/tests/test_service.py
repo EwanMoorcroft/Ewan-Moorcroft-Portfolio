@@ -33,6 +33,52 @@ SHA_A = "a" * 64
 SHA_B = "b" * 64
 
 
+def test_unhandled_failure_is_counted_as_500(synthetic_directory, tmp_path, monkeypatch):
+    app, _, _ = _deployment(synthetic_directory, tmp_path)
+
+    def fail_health():
+        raise RuntimeError("internal failure")
+
+    monkeypatch.setattr(app.state.runtime.store, "health", fail_health)
+    with TestClient(app, raise_server_exceptions=False) as client:
+        assert client.get("/health").status_code == 500
+        assert 'endpoint="/health",status="500"} 1' in client.get("/metrics").text
+
+
+def test_retrieval_paginates_one_immutable_run(synthetic_directory, tmp_path):
+    app, _, _ = _deployment(synthetic_directory, tmp_path, with_batch=True)
+    with TestClient(app) as client:
+        first = client.get("/predictions/2024-25/11?limit=1").json()
+        assert first["predictions"][0]["rank"] == 1
+        assert first["next_after_rank"] == 1
+        second = client.get(
+            "/predictions/2024-25/11",
+            params={"limit": 1, "after_rank": first["next_after_rank"], "run_id": first["run_id"]},
+        ).json()
+        assert second["run_id"] == first["run_id"]
+        assert second["predictions"][0]["rank"] == 2
+        assert second["next_after_rank"] is None
+        assert client.get("/predictions/2024-25/11?after_rank=1").status_code == 422
+        assert client.get("/predictions/2024-25/11?after_rank=-1").status_code == 422
+
+
+def test_service_rejects_history_truncation(synthetic_directory, tmp_path):
+    _deployment(synthetic_directory, tmp_path)
+    for path in sorted(synthetic_directory.glob("*.json"))[:8]:
+        path.unlink()
+    from fpl_forecasting.errors import ArtifactError
+
+    with pytest.raises(ArtifactError, match="history"):
+        create_app(
+            artifact_path=tmp_path / "private-config" / "ridge.json",
+            gameweek_dir=synthetic_directory,
+            database_path=tmp_path / "private-config" / "forecasts.duckdb",
+            season_id=SEASON_ID,
+            expected_as_of_gw=10,
+            completion_status="completed",
+        )
+
+
 def _deployment(
     synthetic_directory: Path,
     tmp_path: Path,

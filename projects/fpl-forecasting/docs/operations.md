@@ -11,6 +11,10 @@ caller declaration `completed`. Every snapshot must carry that season in the exa
 `fpl-completed-gameweek-v1` wrapper, and the latest wrapper and filename must match the expected
 boundary. The model must have been trained through that same target gameweek. The season, effective
 protocol configuration, and semantic feature schema must match the artifact.
+Artifact v3 additionally requires the same history start, end, filenames, byte lengths, and input
+hashes used for training. Predict, verified storage, and service startup enforce this contract.
+Operational manifest v2 records the history metadata. Existing v1/v2 ridge artifacts must be
+regenerated from their original completed inputs; they cannot be silently migrated.
 
 Predictions cover every player in the latest snapshot and target exactly the following gameweek.
 They are ordered by predicted points, then player ID. The prediction file and manifest use compact,
@@ -63,6 +67,10 @@ The only routes are:
   for the configured model, including its prediction and manifest file hashes;
 - `GET /metrics` for fixed-label HTTP response and returned-prediction counters.
 
+Stored retrieval returns `next_after_rank`. Fetch subsequent pages using both that value as
+`after_rank` and the first response's `run_id`; this pins every page to the same immutable batch.
+`next_after_rank: null` marks the final page. A cursor without its run ID is rejected.
+
 The strict prediction body is:
 
 ```json
@@ -72,6 +80,8 @@ The strict prediction body is:
 Player IDs must be unique positive 32-bit integers. Extra fields, an incorrect season or gameweek,
 an unknown player, and request bodies above 16,384 bytes are rejected. Selected predictions retain
 their rank in the full configured latest-snapshot population.
+Oversized streaming requests return 413 as soon as the limit is exceeded, without draining the
+remaining stream. Unhandled application failures return a sanitized 500 and increment the HTTP counter.
 
 The artifact is limited to 10 MB, a prediction file to 5 MB, and a manifest to 1 MB. These limits
 bound local parsing but are not substitutes for an authenticated gateway.
@@ -92,3 +102,19 @@ chronological evaluation for the intended season and inspect the input distribut
 ranking stability, and residuals. The model also omits fixtures, prices, injury news, predicted
 line-ups, and team or position constraints, so the service is a ranking component rather than a
 squad-selection system.
+
+## Local example
+
+Run from this project directory after `uv sync --locked --extra test`. The following uses synthetic
+data solely to exercise the workflow:
+
+```bash
+uv run --locked fpl-forecast synthetic --output-dir scratch/gameweeks --season 2025-26 --gameweeks 10 --players 24
+uv run --locked fpl-forecast train --gameweek-dir scratch/gameweeks --artifact models/ridge.json --season 2025-26
+uv run --locked fpl-forecast predict --gameweek-dir scratch/gameweeks --artifact models/ridge.json --season 2025-26 --expected-as-of-gw 10 --completion-status completed --predictions reports/generated/predictions.json --manifest reports/generated/manifest.json
+uv run --locked fpl-forecast store-batch --database scratch/forecasts.duckdb --gameweek-dir scratch/gameweeks --artifact models/ridge.json --predictions reports/generated/predictions.json --manifest reports/generated/manifest.json
+uv run --locked fpl-forecast-service --database scratch/forecasts.duckdb --gameweek-dir scratch/gameweeks --artifact models/ridge.json --season 2025-26 --expected-as-of-gw 10 --completion-status completed
+```
+
+The service stays on localhost by default. Use the same optional `--config` for train and predict,
+and `--config` for service startup when using a custom protocol.

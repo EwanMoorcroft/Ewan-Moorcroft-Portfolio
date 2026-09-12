@@ -63,12 +63,24 @@ coefficient p-values are not headline evidence because areas remain spatially de
 destination-flow mass comes from the same release.
 
 Because local fixed-workplace count is bounded by the fixed-workplace exposure, a binomial GLM also
-models the retained local proportion with frequency weights equal to that exposure. This is a
+models grouped successes and failures, retaining one score contribution per MSOA for HC0 uncertainty. This is a
 structural sensitivity check; its likelihood is not compared with the Poisson or NB2 AIC because the
-response likelihood differs.
+response likelihood differs. The [correction note](correction.md) records the replacement of the
+earlier worker-frequency-weighted uncertainty calculation.
+
+Moran's I is also calculated descriptively for the Poisson Pearson residuals. Its retained value,
+0.4484, indicates substantial residual spatial structure. No ordinary permutation p-value is
+attached to fitted residuals, and HC0 does not adjust for between-area spatial dependence.
 
 ## Cross-language validation
 
 The base-R script reads the retained metrics and edge table, recreates population standardization,
-refits the Poisson GLM with its offset, and calculates observed Moran's I from the row-standardized
-weight matrix. The retained check passed with a maximum coefficient difference of `1.05e-12`.
+refits the Poisson GLM with its offset, fits grouped-binomial counts, and constructs the binomial
+HC0 sandwich explicitly. It calculates observed and residual Moran statistics from the
+row-standardized weight matrix. The maximum binomial coefficient difference is `6.04e-12`; the
+maximum binomial robust-standard-error difference is `2.58e-13`.
+
+Offline verification also reconstructs Queen edges from polygons and the three gravity indices
+from retained centroids and destination mass. Accessibility comparisons allow an absolute `1e-6`
+rounding tolerance for the twelve-significant-figure CSV. The original national OD aggregation and
+flow-weighted commute distances require the original flows and are outside this compact rebuild.

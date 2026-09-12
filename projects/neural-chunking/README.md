@@ -68,13 +68,34 @@ works B-VP
 ```
 
 ```bash
-uv sync --extra test
-uv run neural-chunking train /path/to/chunks.txt --architecture bilstm --output runs/bilstm
+uv sync --locked --extra test
+uv run neural-chunking train /path/to/chunks.txt --architecture bilstm --output runs/bilstm \
+  --corpus-name "Your corpus" --corpus-version "Version identifier" --corpus-licence "Licence identifier"
 uv run neural-chunking evaluate /path/to/chunks.txt runs/bilstm/chunker_checkpoint.pt --output runs/bilstm/test-results.json
 ```
 
 Use `--architecture transformer` to train the Transformer. Its positional
 encoding supports sentences up to 512 tokens by default.
+
+New evaluations retain one JSONL row per test sentence with gold and predicted
+BIO tags, a sentence hash and an ordinal ID. This supports independent token and
+span metric reconstruction without redistributing corpus text. The result binds
+that file to its SHA-256 and carries the declared corpus name, version and licence;
+the declaration is supplied by the runner, not independently verified. Older
+selection records remain readable and explicitly report `UNKNOWN` metadata.
+Check the corpus terms before sharing even derived labels. No new corpus run is
+presented here; this is a supporting sequence-modelling project.
+
+Each new report records the full ordered label vocabulary and scoring rules.
+Macro F1 averages over that entire vocabulary, including labels absent from
+both test labels and predictions; undefined per-label scores are zero. The
+saved tags therefore reconstruct token and span metrics using the recorded
+conventions. Loss needs logits and cannot be reconstructed from argmax tags.
+Before evaluation, both output paths are checked against the corpus, checkpoint
+and selection record, including symlink and hardlink aliases. Both files are
+staged before publication, with the hash-bearing report published last and
+rollback on ordinary write failures. Concurrent readers must verify the
+prediction-file hash; the two paths are not one filesystem transaction.
 
 ## What the saved run cannot answer
 

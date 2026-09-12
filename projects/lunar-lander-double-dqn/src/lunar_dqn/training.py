@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import time
 from dataclasses import asdict, dataclass
@@ -27,6 +28,11 @@ class EpisodeRecord:
     steps: int
     epsilon: float
     elapsed_seconds: float
+    seed: int
+    outcome: str
+    final_raw_reward: float
+    terminated: bool
+    truncated: bool
 
 
 def make_environment(environment_id: str, seed: int):
@@ -43,11 +49,38 @@ def bootstrap_terminal(terminated: bool, truncated: bool) -> bool:
     return bool(terminated)
 
 
+def centred_landing(raw_reward, state, terminated, truncated, config) -> bool:
+    """Identify the v3 successful sleep terminal (+100), excluding crashes (-100)."""
+    return bool(
+        terminated
+        and not truncated
+        and raw_reward == 100.0
+        and bool(state[6])
+        and bool(state[7])
+        and abs(float(state[0])) < config.centre_threshold
+    )
+
+
+def episode_outcome(raw_reward, state, terminated, truncated, config) -> str:
+    """Record an auditable outcome, including a caller-imposed step limit."""
+    if truncated:
+        return "truncated"
+    if centred_landing(raw_reward, state, terminated, truncated, config):
+        return "centred_landing"
+    if terminated:
+        if raw_reward == -100.0:
+            return "crash"
+        return "other_success" if raw_reward == 100.0 else "other_terminal"
+    return "step_limit"
+
+
 def learning_reward(
     raw_reward: float,
     next_state: NDArray[np.floating],
     terminal: bool,
     config: DQNConfig,
+    *,
+    truncated: bool = False,
 ) -> float:
     """Apply training-only reward shaping while preserving raw scores for reporting."""
     if not config.use_reward_shaping:
@@ -68,7 +101,7 @@ def learning_reward(
     controlled = -0.40 < y_velocity < -0.03
     if low and centred and upright and controlled:
         value += config.controlled_descent_bonus
-    if terminal and left_contact and right_contact and centred:
+    if centred_landing(raw_reward, next_state, terminal, truncated, config):
         value += config.centred_touchdown_bonus
     return value
 
@@ -82,6 +115,7 @@ def train(config: DQNConfig, output_dir: Path) -> tuple[DoubleDQNAgent, list[Epi
     action_size = int(environment.action_space.n)
     agent = DoubleDQNAgent(state_size, action_size, config)
     records: list[EpisodeRecord] = []
+    update_losses: list[dict[str, Any]] = []
     global_step = 0
     started = time.perf_counter()
     try:
@@ -96,10 +130,19 @@ def train(config: DQNConfig, output_dir: Path) -> tuple[DoubleDQNAgent, list[Epi
                 next_state, raw, terminated, truncated, _ = environment.step(action)
                 episode_ended = bool(terminated or truncated)
                 terminal = bootstrap_terminal(terminated, truncated)
-                shaped = learning_reward(raw, next_state, terminal, config)
+                shaped = learning_reward(raw, next_state, terminal, config, truncated=truncated)
                 agent.replay.add(state, action, shaped, next_state, terminal)
                 if global_step % config.train_every == 0:
-                    agent.update()
+                    loss = agent.update()
+                    if loss is not None:
+                        update_losses.append(
+                            {
+                                "update": agent.updates,
+                                "global_step": global_step,
+                                "episode": episode + 1,
+                                "loss": loss,
+                            }
+                        )
                 state = next_state
                 raw_total += float(raw)
                 learning_total += shaped
@@ -115,6 +158,11 @@ def train(config: DQNConfig, output_dir: Path) -> tuple[DoubleDQNAgent, list[Epi
                     steps=steps,
                     epsilon=exploration,
                     elapsed_seconds=time.perf_counter() - started,
+                    seed=config.seed + episode + 1,
+                    outcome=episode_outcome(raw, state, terminated, truncated, config),
+                    final_raw_reward=float(raw),
+                    terminated=bool(terminated),
+                    truncated=bool(truncated),
                 )
             )
     finally:
@@ -126,6 +174,10 @@ def train(config: DQNConfig, output_dir: Path) -> tuple[DoubleDQNAgent, list[Epi
         writer = csv.DictWriter(stream, fieldnames=list(asdict(records[0])))
         writer.writeheader()
         writer.writerows(asdict(record) for record in records)
+    with (output_dir / "update_losses.csv").open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=["update", "global_step", "episode", "loss"])
+        writer.writeheader()
+        writer.writerows(update_losses)
     agent.save(
         output_dir / "double_dqn_checkpoint.pt",
         metadata={
@@ -137,6 +189,18 @@ def train(config: DQNConfig, output_dir: Path) -> tuple[DoubleDQNAgent, list[Epi
     )
     (output_dir / "config.json").write_text(
         json.dumps(config.as_dict(), indent=2) + "\n", encoding="utf-8"
+    )
+    write_evaluation(
+        {
+            "checkpoint_sha256": hashlib.sha256(
+                (output_dir / "double_dqn_checkpoint.pt").read_bytes()
+            ).hexdigest(),
+            "first_training_seed": config.seed + 1,
+            "last_training_seed": config.seed + config.episodes,
+            "updates": agent.updates,
+            "outcome_definition": "LunarLander-v3 terminal reward +100 means success; -100 means crash",
+        },
+        output_dir / "training_metadata.json",
     )
     return agent, records
 
@@ -150,9 +214,19 @@ def evaluate(
     episode_count = config.evaluation_episodes if episodes is None else episodes
     if episode_count < 1:
         raise ValueError("episodes must be positive")
-    environment = make_environment(config.environment_id, config.seed + 10_000)
+    config.validate()
+    first_seed = config.seed + 10_000
+    last_seed = first_seed + episode_count - 1
+    training_config = agent.config
+    if (
+        first_seed <= training_config.seed + training_config.episodes
+        and last_seed >= training_config.seed
+    ):
+        raise ValueError("evaluation seeds overlap the checkpoint's training seeds")
+    environment = make_environment(config.environment_id, first_seed)
     rewards: list[float] = []
     lengths: list[int] = []
+    outcomes = []
     centred_landings = 0
     try:
         for index in range(episode_count):
@@ -168,9 +242,22 @@ def evaluate(
                     break
             rewards.append(total)
             lengths.append(steps)
-            contacts = bool(state[6]) and bool(state[7])
-            if terminated and contacts and abs(float(state[0])) < config.centre_threshold:
+            if centred_landing(reward, state, terminated, truncated, config):
                 centred_landings += 1
+            outcomes.append(
+                {
+                    "episode": index + 1,
+                    "seed": first_seed + index,
+                    "outcome": episode_outcome(reward, state, terminated, truncated, config),
+                    "centred_landing": centred_landing(
+                        reward, state, terminated, truncated, config
+                    ),
+                    "final_raw_reward": float(reward),
+                    "terminated": bool(terminated),
+                    "truncated": bool(truncated),
+                    "final_state": [float(value) for value in state],
+                }
+            )
     finally:
         environment.close()
     return {
@@ -184,6 +271,11 @@ def evaluate(
         "centred_landing_rate": centred_landings / episode_count,
         "rewards": rewards,
         "lengths": lengths,
+        "episode_outcomes": outcomes,
+        "first_environment_seed": first_seed,
+        "last_environment_seed": last_seed,
+        "training_seed": training_config.seed,
+        "training_episodes": training_config.episodes,
     }
 
 

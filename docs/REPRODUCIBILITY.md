@@ -2,7 +2,7 @@
 
 ## Project environments
 
-Each project has its own `pyproject.toml` and can be installed independently. A geospatial analysis
+Each project has its own `pyproject.toml` and `uv.lock` and can be installed independently. A geospatial analysis
 should not need the same environment as a reinforcement-learning run or an image classifier. Python
 3.11 is the shared baseline.
 
@@ -10,18 +10,22 @@ With `uv` installed, a typical project setup is:
 
 ```bash
 cd projects/<project-name>
-uv sync --extra test
-uv run pytest
+uv sync --locked --extra test
+uv run --no-sync pytest
 ```
 
-Each project README covers any additional training or plotting packages. A standard virtual
-environment and `pip` can be used instead.
+Each project README covers any additional training or plotting packages. The FPL chart builder uses
+the optional `analysis` extra. A standard virtual
+environment and `pip` can be used instead, although installing directly from `pyproject.toml`
+resolves a new set of versions. The lockfiles specify the tested dependency resolution. CI also
+builds each wheel, checks its installed dependencies and runs its command-line entry points from
+outside the source folder. FPL and Liverpool have container workflow checks.
 
 ## Compute
 
 - Unit tests run on CPU and do not require the source datasets.
 - PyTorch projects select Apple Metal acceleration when available and fall back to CPU.
-- Neural training is never part of CI.
+- CI uses small synthetic checks, not full model training or source-dataset downloads.
 - Local defaults favour low worker counts and modest batch sizes for an 8 GB machine.
 - Short smoke runs check that the software works; they are not model results.
 
@@ -31,7 +35,7 @@ environment and `pip` can be used instead.
 |---|---|---|
 | Tree LiDAR | Result tables, route details, evaluator and figures | Raw point clouds and prediction arrays |
 | Liverpool urban accessibility | Derived area metrics, boundaries, centroids, spatial edges, models and figures | National Census workplace-flow table |
-| Chest X-ray | Dataset specification, duplicate analysis and preparation code | 3,475 source images and checkpoints |
+| Chest X-ray | Dataset specification, duplicate analysis, evaluation outputs and preparation code | 3,475 source images and checkpoints |
 | FPL | Forecasting code, aggregate model comparison and source details | Downloaded gameweek snapshots, row predictions and fitted models |
 | LunarLander | Figures and evaluation summary | Model checkpoint and new run outputs |
 | Neural chunking | Model code, figures and evaluation summary | Source corpus, checkpoints and new run outputs |

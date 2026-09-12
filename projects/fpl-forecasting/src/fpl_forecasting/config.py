@@ -52,6 +52,7 @@ class ProtocolConfig:
         for name, value in integer_fields.items():
             if isinstance(value, bool) or not isinstance(value, Integral):
                 raise DataContractError(f"{name} must be an integer")
+            object.__setattr__(self, name, int(value))
         if self.minimum_train_gameweeks < 2:
             raise DataContractError("minimum_train_gameweeks must be at least 2")
         if self.test_gameweeks_per_fold < 1:
@@ -75,6 +76,8 @@ class ProtocolConfig:
             raise DataContractError("ridge_alpha must be finite and non-negative")
         if self.random_seed < 0:
             raise DataContractError("random_seed must be non-negative")
+        object.__setattr__(self, "minimum_adjacent_player_coverage", coverage)
+        object.__setattr__(self, "ridge_alpha", 0.0 if alpha == 0 else alpha)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

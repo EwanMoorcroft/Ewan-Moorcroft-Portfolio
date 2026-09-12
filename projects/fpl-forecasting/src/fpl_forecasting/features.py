@@ -4,13 +4,19 @@ from __future__ import annotations
 
 import math
 from collections.abc import Iterable, Sequence
-from numbers import Real
+from numbers import Integral, Real
 
 import numpy as np
 import pandas as pd
 
 from .contracts import canonical_json_sha256
-from .data import GameweekSnapshot, PlayerWeek, validate_sequence
+from .data import (
+    MAX_PLAYER_ID,
+    GameweekSnapshot,
+    PlayerWeek,
+    snapshot_input_audit,
+    validate_sequence,
+)
 from .errors import DataContractError, LeakageError
 
 FEATURE_SCHEMA_VERSION = "fpl-feature-schema-v1"
@@ -161,6 +167,12 @@ def build_training_frame(
     frame = frame.loc[:, ordered_columns].sort_values(["target_gw", "player_id"], kind="stable")
     frame = frame.reset_index(drop=True)
     assert_leak_free_frame(frame)
+    if all(snapshot.source_sha256 is not None for snapshot in ordered):
+        frame.attrs["snapshot_history"] = (
+            ordered[0].gameweek,
+            ordered[-1].gameweek,
+            snapshot_input_audit(ordered)[1],
+        )
     return frame
 
 
@@ -216,12 +228,20 @@ def _strict_numeric(frame: pd.DataFrame, columns: Sequence[str], *, label: str) 
 
 
 def _assert_identifier_contract(frame: pd.DataFrame) -> pd.DataFrame:
+    if bool(
+        frame["player_id"]
+        .map(lambda value: isinstance(value, (bool, np.bool_)) or not isinstance(value, Integral))
+        .any()
+    ):
+        raise LeakageError("Player ids must be integers and cannot be boolean")
     identifiers = _strict_numeric(frame, IDENTIFIER_COLUMNS, label="Identifier")
     identifier_values = identifiers.to_numpy(dtype=float)
     if not np.equal(identifier_values, np.floor(identifier_values)).all():
         raise LeakageError("Player and gameweek boundary columns must be integers")
     if not (identifier_values > 0).all():
         raise LeakageError("Player and gameweek boundary columns must be positive")
+    if not bool((identifiers["player_id"] <= MAX_PLAYER_ID).all()):
+        raise LeakageError(f"Player ids must be at most {MAX_PLAYER_ID}")
 
     as_of = identifiers["as_of_gw"]
     target_gw = identifiers["target_gw"]

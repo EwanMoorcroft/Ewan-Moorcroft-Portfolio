@@ -29,7 +29,7 @@ so they are rejected. A caller must verify the source event and convert it expli
 
 Every element must contain:
 
-- a positive integer `id`;
+- an integer `id` from 1 to 2,147,483,647, with no string, float, or boolean coercion;
 - a `stats` object;
 - finite numeric `total_points`;
 - finite, non-negative numeric `minutes`.
@@ -78,10 +78,16 @@ Real downloaded data should remain under an ignored local path such as `data/raw
 
 ## Operational output identity
 
-The prediction command hashes the exact artifact bytes and each exact input file. The ordered input
+The reader captures the hash and size of the same bytes it parses. The prediction command uses
+that captured identity without reopening a potentially changed input path. The ordered input
 aggregate includes gameweek, file name, byte count, and file SHA-256. The accompanying manifest also
 binds the effective protocol configuration, semantic feature schema, and canonical prediction JSON.
 Outputs cannot overwrite an input snapshot, configuration, or artifact.
+Path, symlink, and hardlink aliases are checked for all CLI output destinations. Prediction and
+manifest bytes are staged before publication; ordinary write failures roll back the pair. Each
+replacement is atomic, but two arbitrary paths cannot change in one filesystem operation. A
+concurrent reader must verify the manifest hash and retry a mismatched pair after publication;
+the store rejects such a mismatch without writing a batch.
 
 The manifest intentionally omits wall-clock time and machine-local paths. Retrieval time and proof
 that an event was officially complete belong in the caller's acquisition log.
@@ -90,10 +96,16 @@ that an event was officially complete belong in the caller's acquisition log.
 
 The optional `import-vaastav` command converts an explicit gameweek interval from a locally
 extracted, commit-pinned Vaastav season snapshot into this JSON contract. It requires a full
-40-character source revision and records a SHA-256 for every input CSV.
+40-character source revision and records a SHA-256 for every input CSV. `element`, `fixture`, and
+`round` must contain decimal integers within the positive 32-bit bound. Duplicate `(element,
+fixture)` rows within a round are rejected, including exact duplicates. Distinct fixture IDs
+for the same player are valid and are counted as `additional_fixture_rows` in import manifest v2.
 
 Only `GK`, `DEF`, `MID`, and `FWD` rows are retained. Rows with the `AM` position are excluded because
 the forecast target is player points. When a double gameweek contains multiple fixture rows for one
 player, the retained numeric gameweek statistics are summed to match the event-level shape. Missing
 players remain missing; the adapter never adds zero records. The normal sequence, coverage, feature,
 and temporal-boundary checks run after conversion without exceptions or relaxed thresholds.
+
+The retained historical manifest uses the original v1 importer terminology. It remains unchanged;
+absence of retained source rows prevents retrospective verification under the stricter fixture check.

@@ -201,7 +201,7 @@ def test_store_batch_rejects_real_source_tampering_before_database_write(
     latest.write_bytes(canonical_json_bytes(payload))
 
     assert _store(database, synthetic_directory, artifact, predictions, manifest) == 2
-    assert "do not exactly match" in capsys.readouterr().err
+    assert "history does not match" in capsys.readouterr().err
     assert not database.exists()
 
 

@@ -26,6 +26,7 @@ test boundaries.
 | Test balanced accuracy | 0.8086 |
 | Test macro F1 | 0.8097 |
 | Test Matthews correlation coefficient | 0.7190 |
+| Corrected test cross entropy | 0.655597 |
 
 ![Model aggregate metrics and per-class F1](assets/model-results.svg)
 
@@ -33,6 +34,13 @@ The [results tables](results/) and
 [compact evidence record](evidence/retained-results.json) contain the split
 summary, confusion matrix, per-class performance and SHA-256 provenance. The
 checkpoint, images and full perceptual-review candidate list remain excluded.
+
+The selected checkpoint was re-evaluated on 12 September 2026 without training
+or model selection. Its confusion matrix and macro F1 are unchanged. The former
+test loss of 0.396726 contradicted its own probability log loss of 0.655597;
+the corrected locked-environment evaluation gives cross entropy 0.655597.
+[Correction and error analysis](results/CORRECTION.md) explains the evidence,
+preserves the superseded record and links all 522 per-image probability rows.
 
 ## Skills and implementation
 
@@ -78,18 +86,16 @@ Create an environment with Python 3.11 or newer, install the package, then
 place the downloaded images in `data/raw`:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install -e ".[train,test]"
+uv sync --locked --extra train --extra test
 
-cxr-benchmark verify \
+uv run cxr-benchmark verify \
   --data-root data/raw \
   --spec data/dataset-spec.json \
   --manifest-out data/derived/image-manifest.csv \
   --report-out data/derived/verification-report.json \
   --strict
 
-cxr-benchmark split \
+uv run cxr-benchmark split \
   --manifest data/derived/image-manifest.csv \
   --output data/derived/splits.csv \
   --summary-out data/derived/split-summary.json \
@@ -99,13 +105,13 @@ cxr-benchmark split \
 Train and evaluate the selected checkpoint:
 
 ```bash
-cxr-benchmark train \
+uv run cxr-benchmark train \
   --data-root data/raw \
   --splits data/derived/splits.csv \
   --config configs/default.toml \
   --output-dir outputs/resnet18
 
-cxr-benchmark evaluate \
+uv run cxr-benchmark evaluate \
   --data-root data/raw \
   --splits data/derived/splits.csv \
   --checkpoint outputs/resnet18/best-state-dict.pt \
@@ -117,6 +123,18 @@ The configuration uses ImageNet initialisation, dropout and light rotations.
 Horizontal flips are excluded because they may reverse laterality markers. The
 validation set selects the checkpoint by macro F1; the test set is evaluated
 only after selection.
+
+Weighted training and validation losses now aggregate the weighted numerator and
+target-weight denominator across the whole epoch. Historical loss curves are not
+retroactively recalculated. Input configuration and split hashes are captured
+from the same bytes parsed, and image datasets support spawn workers on macOS
+and Windows. Evaluation retains safe content IDs, probabilities and reliability
+bins; it rejects contradictory unweighted cross-entropy/log-loss results.
+Both the report and generated probability CSV are checked against the split,
+checkpoint, configuration-bearing run metadata and every split-listed image,
+including symlink and hardlink aliases. Outputs are staged and the report is
+published last, with rollback on ordinary write failures. Concurrent readers
+must verify the CSV hash because two files cannot be replaced simultaneously.
 
 ## Clinical limits
 

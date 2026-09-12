@@ -59,8 +59,8 @@ def composition_svg(dataset: dict) -> None:
     maximum = max(item["expected_count"] for item in classes.values())
     parts = [
         svg_text(45, 42, "Chest X-ray dataset composition", size=26),
-        svg_text(45, 72, "Expected counts from the repository data contract", size=16),
-        svg_text(45, 98, "Not a fresh scan of the excluded image files", size=14),
+        svg_text(45, 72, "Class distribution in the 3,475-image source collection", size=16),
+        svg_text(45, 98, "Mendeley Data, Chest X-Ray V1", size=14),
         f'<line x1="{left}" y1="{chart_top + chart_height}" x2="{left + chart_width}" '
         f'y2="{chart_top + chart_height}" stroke="#34495e" stroke-width="2"/>',
     ]
@@ -257,7 +257,14 @@ print(
 print(f"Selected epoch\t{results['model']['selected_epoch']}")
 print(f"Validation macro F1\t{results['model']['validation']['macro_f1']:.4f}")
 print("Test metrics")
-for name in ("accuracy", "balanced_accuracy", "macro_f1", "matthews_correlation_coefficient"):
+for name in (
+    "accuracy",
+    "balanced_accuracy",
+    "macro_f1",
+    "matthews_correlation_coefficient",
+    "loss",
+    "log_loss",
+):
     print(f"{name}\t{test[name]:.4f}")
 print("Per-class F1")
 for label, values in test["per_class"].items():
@@ -272,6 +279,8 @@ for label, values in test["per_class"].items():
         "balanced_accuracy",
         "macro_f1",
         "matthews_correlation_coefficient",
+        "loss",
+        "log_loss",
     ):
         metrics_output += f"{name}\t{test[name]:.4f}\n"
     metrics_output += "Per-class F1\n" + "".join(
@@ -298,7 +307,7 @@ for name in ("split_file_sha256", "config_file_sha256", "checkpoint_file_sha256"
             "overview",
             """# Chest X-ray classification walkthrough
 
-This project fine-tunes ResNet18 for three-class chest X-ray classification. The current result uses a deterministic split that keeps SHA-256-identical files together, selects one checkpoint by validation macro F1 and evaluates it once on the held-out test partition.
+This project fine-tunes ResNet18 for three-class chest X-ray classification. The current result uses a deterministic split that keeps SHA-256-identical files together and selects one checkpoint by validation macro F1. The same checkpoint was re-evaluated on 12 September 2026 to reconcile a contradictory test-loss record, without training or renewed model selection.
 
 > Exact-copy grouping prevents byte-identical leakage. It does not establish patient-level independence because patient identifiers are unavailable.""",
         ),
@@ -337,6 +346,8 @@ Five exact duplicate groups were found. SHA-256 identity is the only automatic g
             """## Grouped-split result
 
 The selected checkpoint reached validation macro F1 0.8244 at epoch 7. On 522 held-out images, test macro F1 was 0.8097 and accuracy was 0.8065.
+
+The corrected unweighted cross entropy is 0.655597 and agrees with probability log loss. The former 0.396726 loss is superseded; classification counts are unchanged. [Correction and error analysis](../results/CORRECTION.md) links the original record, the verified evaluation and all 522 prediction rows. Historical weighted training/validation losses were not recomputed.
 
 ![Grouped-split model results](../assets/model-results.svg)""",
         ),

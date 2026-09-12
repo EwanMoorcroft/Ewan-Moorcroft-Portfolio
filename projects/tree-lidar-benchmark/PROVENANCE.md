@@ -26,3 +26,10 @@ controlled estimates of training benefit.
 No raw point clouds, prediction arrays, environment configuration, job logs, or
 private paths are included. The project verifies retained evidence offline and
 does not recreate predictions.
+
+The route manifest has no historical upstream commit for either TreeX route and no checkpoint
+SHA-256 for the project-adapted SegmentAnyTree route. These missing identities limit full prediction
+reproduction. They are not replaced with present-day revisions or checkpoints.
+
+The small `examples/aligned-labels.json` file is fictional evaluator input. It is separate from the
+canonical result tables and demonstrates source-row alignment, boundary exclusion and matching.

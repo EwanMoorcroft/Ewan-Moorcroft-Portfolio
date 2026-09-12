@@ -46,5 +46,10 @@ This is a ranking aid, not a guarantee of points or squad value.
 
 Artifacts are JSON numeric parameters with a versioned format. A saved model artifact includes the
 season, effective-configuration SHA-256, semantic feature-schema version and SHA-256, training row
-count, and final target gameweek. Prediction rejects a mismatch before scoring. The project does not
+count, and final target gameweek. The `fpl-ridge-json-v3` contract also includes `history_start_gw`,
+`history_end_gw`, and `history_sha256` for the ordered complete snapshot input identity. Deployment
+requires the same start, end, names, and bytes, so truncated or revised history is rejected even
+when the final gameweek is unchanged. Regenerate older artifacts from their original completed
+inputs; changing the version label cannot supply missing historical provenance. Prediction rejects
+a mismatch before scoring. The project does not
 load pickle or joblib content. Generated artifacts are ignored by Git.

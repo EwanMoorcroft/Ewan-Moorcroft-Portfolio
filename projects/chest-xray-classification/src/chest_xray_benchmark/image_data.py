@@ -66,14 +66,30 @@ def build_transforms(image_size: int, rotation_degrees: float):
     return train_transform, evaluation_transform
 
 
+class ImageSplit:
+    """Map-style dataset with module-level identity for spawn multiprocessing."""
+
+    def __init__(self, rows, paths, transform):
+        self.rows = rows
+        self.paths = paths
+        self.transform = transform
+
+    def __len__(self) -> int:
+        return len(self.rows)
+
+    def __getitem__(self, index: int):
+        from PIL import Image
+
+        with Image.open(self.paths[index]) as source:
+            image = source.convert("RGB")
+        return self.transform(image), LABEL_ORDER.index(self.rows[index]["label"])
+
+
 def build_image_dataset(
     rows: list[dict[str, str]],
     data_root: Path,
     transform: Callable,
 ):
-    from PIL import Image
-    from torch.utils.data import Dataset
-
     label_to_index = {label: index for index, label in enumerate(LABEL_ORDER)}
     unknown = sorted({row["label"] for row in rows} - set(label_to_index))
     if unknown:
@@ -81,15 +97,4 @@ def build_image_dataset(
 
     verified_paths = verify_split_image_identity(rows, data_root)
 
-    class ImageSplit(Dataset):
-        def __len__(self) -> int:
-            return len(rows)
-
-        def __getitem__(self, index: int):
-            row = rows[index]
-            path = verified_paths[index]
-            with Image.open(path) as source:
-                image = source.convert("RGB")
-            return transform(image), label_to_index[row["label"]]
-
-    return ImageSplit()
+    return ImageSplit(rows, verified_paths, transform)
