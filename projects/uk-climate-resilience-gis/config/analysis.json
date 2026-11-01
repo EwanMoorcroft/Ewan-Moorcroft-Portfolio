@@ -1,0 +1,92 @@
+{
+  "title": "Greater Manchester Climate Resilience",
+  "subtitle": "Evidence for neighbourhood adaptation priorities",
+  "crs": "EPSG:27700",
+  "seed": 20260929,
+  "boroughs": [
+    "Bolton",
+    "Bury",
+    "Manchester",
+    "Oldham",
+    "Rochdale",
+    "Salford",
+    "Stockport",
+    "Tameside",
+    "Trafford",
+    "Wigan"
+  ],
+  "case_study_boroughs": [
+    "Manchester",
+    "Salford"
+  ],
+  "indicators": [
+    "flood_exposure",
+    "heat_anomaly",
+    "access_deficit",
+    "income_rate",
+    "age_sensitive_share"
+  ],
+  "scenarios": {
+    "balanced": [
+      0.2,
+      0.2,
+      0.2,
+      0.2,
+      0.2
+    ],
+    "hazard": [
+      0.3,
+      0.3,
+      0.1,
+      0.15,
+      0.15
+    ],
+    "equity": [
+      0.15,
+      0.15,
+      0.15,
+      0.3,
+      0.25
+    ]
+  },
+  "top_fraction": 0.2,
+  "sensitivity_samples": 2000,
+  "dirichlet_concentration": 50,
+  "robust_frequency_threshold": 0.8,
+  "walking_threshold_m": 1000,
+  "walking_sensitivity_m": [
+    500,
+    1000,
+    1500
+  ],
+  "walking_speed_kmh": 4,
+  "max_origin_snap_m": 150,
+  "max_entrance_snap_m": 100,
+  "network_buffer_m": 2000,
+  "minimum_public_park_ha": 10,
+  "landsat_years": [
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "landsat_months": [
+    6,
+    7,
+    8
+  ],
+  "landsat_max_scene_cloud_pct": 70,
+  "landsat_max_dates": 8,
+  "raster_resolution_m": 100,
+  "minimum_heat_observations": 3,
+  "minimum_lsoa_heat_coverage": 0.8,
+  "landsat_cloud_distance_km": 0.3,
+  "moran_permutations": 9999,
+  "official_greenspace_scenario": 5,
+  "landsat_candidates_per_year": 5,
+  "minimum_heat_summers": 2,
+  "minimum_scene_region_coverage": 0.6,
+  "minimum_reference_land_fraction": 0.25,
+  "minimum_heat_cell_valid_fraction": 0.8
+}

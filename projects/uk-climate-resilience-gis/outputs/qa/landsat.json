@@ -1,0 +1,45 @@
+{
+  "scenes": [
+    {
+      "id": "LC08_L2SP_203023_20210721_02_T1",
+      "date": "2021-07-21T11:04:19.388299Z",
+      "valid_region_fraction": 0.6537623451951716,
+      "regional_median_c": 33.575584411621094,
+      "common_reference_median_c": 33.537750244140625
+    },
+    {
+      "id": "LC08_L2SP_203023_20220809_02_T1",
+      "date": "2022-08-09T11:04:51.036994Z",
+      "valid_region_fraction": 0.6230443643204264,
+      "regional_median_c": 28.873544692993164,
+      "common_reference_median_c": 29.01697540283203
+    },
+    {
+      "id": "LC08_L2SP_203023_20230609_02_T1",
+      "date": "2023-06-09T11:03:46.292709Z",
+      "valid_region_fraction": 0.9517792757485499,
+      "regional_median_c": 28.550254821777344,
+      "common_reference_median_c": 28.226055145263672
+    },
+    {
+      "id": "LC08_L2SP_203023_20240729_02_T1",
+      "date": "2024-07-29T11:03:58.726470Z",
+      "valid_region_fraction": 0.9199169148769399,
+      "regional_median_c": 29.81978988647461,
+      "common_reference_median_c": 29.46361541748047
+    },
+    {
+      "id": "LC08_L2SP_203023_20250817_02_T1",
+      "date": "2025-08-17T11:04:24.400085Z",
+      "valid_region_fraction": 0.8147515284527356,
+      "regional_median_c": 30.583797454833984,
+      "common_reference_median_c": 29.80689239501953
+    }
+  ],
+  "resolution_m": 100,
+  "minimum_dates": 3,
+  "required_summers": 2,
+  "common_reference_cell_fraction": 0.3104405079166013,
+  "adequate_region_cell_fraction": 0.9373099231854523,
+  "interpretation": "Median clear-sky daytime land-surface anomaly; dates centred on the same common valid study-region land. Not air temperature or climate projection."
+}

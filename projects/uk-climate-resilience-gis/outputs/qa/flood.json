@@ -1,0 +1,121 @@
+{
+  "crs": "EPSG:27700",
+  "primary_indicator": "Fraction of LSOA polygon area intersecting the present-day defended 1% river / 0.5% sea AEP scenario",
+  "sensitivity_indicator": "Present-day defended 0.1% AEP extent",
+  "population_interpretation": "No address-level or population exposure count is inferred from polygon-area overlap",
+  "defence_assumption": "Defences operate as intended; asset failure and removal are not modelled",
+  "neighbourhoods": 1702,
+  "overlap_positive": 987,
+  "query_bbox_epsg4326": [
+    -2.730524814067582,
+    53.32732048939161,
+    -1.9096209325816929,
+    53.6857339236763
+  ],
+  "sources": {
+    "defended_1pct": {
+      "number_matched": 9851,
+      "features_returned": 9851,
+      "unique_features": 9851,
+      "duplicate_features": 0,
+      "pages": [
+        {
+          "path": "data/raw/ea/defended_1pct.geojson",
+          "bytes": 257207394,
+          "sha256": "f1c261c25e52a1f66bb0781b2a42afbee809eb1b3eac3149dd2398890f348e95",
+          "number_matched": 9851,
+          "number_returned": 9851,
+          "next_url": null,
+          "source_timestamp": "2026-09-29T16:16:07.285Z",
+          "response_bbox": [
+            -2.743435,
+            53.324636,
+            -1.89595,
+            53.69444
+          ],
+          "source_crs": "urn:ogc:def:crs:EPSG::4326",
+          "source_url": "https://environment.data.gov.uk/spatialdata/rivers-and-sea-defended-and-undefended-flood-risk-extents-present-day/ogc/features/v1/collections/Rivers_1in100_Sea_1in200_defended_extents/items",
+          "parameters": {
+            "f": "json",
+            "bbox": "-2.730524814067582,53.32732048939161,-1.9096209325816929,53.6857339236763",
+            "limit": 10000
+          }
+        }
+      ],
+      "source_coordinate_count": 11456622,
+      "invalid_source_geometries_repaired": 10,
+      "returned_features_tested": 9851,
+      "feature_bbox_intersects_query": 9787,
+      "feature_geometry_intersects_query": 9787,
+      "bbox_interpretation": "Returned polygons retain their full coordinates and include a small measured spill outside the query; exact neighbourhood intersections define the local output",
+      "positive_neighbourhoods": 987,
+      "local_union_area_km2": 42.70247331474717,
+      "max_polygon_area_fraction": 0.5823456931042212,
+      "features_not_intersecting_query": 64
+    },
+    "defended_01pct": {
+      "number_matched": 10589,
+      "features_returned": 10589,
+      "unique_features": 10589,
+      "duplicate_features": 0,
+      "pages": [
+        {
+          "path": "data/raw/ea/defended_01pct.geojson",
+          "bytes": 329500287,
+          "sha256": "78c7a7b15a70602f04ed2b9ce3356cbd62e550b016139f317c0829c321e0f0b2",
+          "number_matched": 10589,
+          "number_returned": 10000,
+          "next_url": "https://environment.data.gov.uk/geoservices/datasets/bb486190-bb9c-4eb0-a4b2-c9bd63ca86ec/ogc/features/v1/collections/Rivers_1in1000_Sea_1in1000_defended_extents/items?f=json&bbox=-2.73052481406758%2C53.3273204893916%2C-1.90962093258169%2C53.6857339236763&limit=10000&startIndex=10000",
+          "source_timestamp": "2026-09-29T16:16:31.694Z",
+          "response_bbox": [
+            -2.743444,
+            53.324746,
+            -1.895949,
+            53.69444
+          ],
+          "source_crs": "urn:ogc:def:crs:EPSG::4326",
+          "source_url": "https://environment.data.gov.uk/spatialdata/rivers-and-sea-defended-and-undefended-flood-risk-extents-present-day/ogc/features/v1/collections/Rivers_1in1000_Sea_1in1000_defended_extents/items",
+          "parameters": {
+            "f": "json",
+            "bbox": "-2.730524814067582,53.32732048939161,-1.9096209325816929,53.6857339236763",
+            "limit": 10000
+          }
+        },
+        {
+          "path": "data/raw/ea/defended_01pct.page002.geojson",
+          "bytes": 17280173,
+          "sha256": "e4b63652d76b6039c55304147cc6652b0fd395fc385e269bbe485bb04d3b034c",
+          "number_matched": 10589,
+          "number_returned": 589,
+          "next_url": null,
+          "source_timestamp": "2026-09-29T16:32:23.743Z",
+          "response_bbox": [
+            -2.741614,
+            53.324636,
+            -2.404465,
+            53.588206
+          ],
+          "source_crs": "urn:ogc:def:crs:EPSG::4326",
+          "source_url": "https://environment.data.gov.uk/geoservices/datasets/bb486190-bb9c-4eb0-a4b2-c9bd63ca86ec/ogc/features/v1/collections/Rivers_1in1000_Sea_1in1000_defended_extents/items?f=json&bbox=-2.73052481406758%2C53.3273204893916%2C-1.90962093258169%2C53.6857339236763&limit=10000&startIndex=10000",
+          "parameters": null
+        }
+      ],
+      "source_coordinate_count": 15510237,
+      "invalid_source_geometries_repaired": 11,
+      "returned_features_tested": 10589,
+      "feature_bbox_intersects_query": 10528,
+      "feature_geometry_intersects_query": 10528,
+      "bbox_interpretation": "Returned polygons retain their full coordinates and include a small measured spill outside the query; exact neighbourhood intersections define the local output",
+      "positive_neighbourhoods": 1064,
+      "local_union_area_km2": 81.37331960917118,
+      "max_polygon_area_fraction": 1.0000000000000049,
+      "features_not_intersecting_query": 61
+    }
+  },
+  "raw_data_byte_bound": 1250000000,
+  "maximum_pages_per_scenario": 8,
+  "exact_geometry": "Each source page is read sequentially; source intersections are unioned inside each neighbourhood; no simplification enters the metric",
+  "drawing_filter": "Use hazard=defended_1pct for the primary map; defended_01pct is the separate sensitivity extent",
+  "snapshot_limit": "Page timestamps and hashes are retained; sequential public responses are not a transactional snapshot",
+  "area_denominator": "Full ONS neighbourhood polygon area, including any inland water retained in the boundary; no residential-land or address weighting"
+}

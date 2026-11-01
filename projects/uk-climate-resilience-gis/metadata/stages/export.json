@@ -1,0 +1,20 @@
+{
+  "stage": "export",
+  "status": "passed",
+  "completed_utc": "2026-09-29T17:07:10.171748+00:00",
+  "elapsed_seconds": 38.22,
+  "result": {
+    "figures": [
+      "outputs/figures/scenario_ranks.svg",
+      "outputs/figures/scenario_ranks.png",
+      "outputs/figures/weight_sensitivity.svg",
+      "outputs/figures/weight_sensitivity.png",
+      "outputs/figures/indicator_correlations.svg",
+      "outputs/figures/indicator_correlations.png",
+      "outputs/figures/moran_scatter.svg",
+      "outputs/figures/moran_scatter.png"
+    ],
+    "interactive": "outputs/portfolio/interactive.html",
+    "neighbourhoods": 1702
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "command": "make test",
+  "checked_utc": "2026-09-30T14:50:57.659601+00:00",
+  "tests_run": 77,
+  "elapsed_seconds": 2.153,
+  "failures": 0,
+  "errors": 0,
+  "exit_code": 0,
+  "local_log": "outputs/logs/final-tests.log",
+  "log_sha256": "62532ac06759fa2f1e6bbb8a53c869a71e865800bac14eb6b53891980d7f3dfd",
+  "test_files": [
+    {
+      "file": "tests/test_acquire.py",
+      "sha256": "f7255aa987a0c510024b97c8372806c34969cf10b4ebda8c73cc1bd5f92109be"
+    },
+    {
+      "file": "tests/test_hazards.py",
+      "sha256": "bc766731eb2cbe92f28f42776370a6230363b0db838409330b0e03cbcc622f8b"
+    },
+    {
+      "file": "tests/test_model.py",
+      "sha256": "98a39f216ff0759fb7d6cfd86aedf445040a595012e120c65f80e5d7a38bb91e"
+    },
+    {
+      "file": "tests/test_network.py",
+      "sha256": "67e7d3742e7fa01317de681a6ce736f95387b69c69803695672b4f9b22efd9c1"
+    },
+    {
+      "file": "tests/test_preprocess.py",
+      "sha256": "b3ff22c565d910ee0d1ac635035691b3e9e82ba755399e4153ab94ed770dceab"
+    },
+    {
+      "file": "tests/test_presentation.py",
+      "sha256": "51efe883a17bf64567ea968cec0804d548125503fc23edb9c059d55317f063cf"
+    },
+    {
+      "file": "tests/test_qgis_algorithm.py",
+      "sha256": "7431ef63afb458ee65748e934035eb81cfade652cbd7052ac9cccdb50da48d9d"
+    },
+    {
+      "file": "tests/test_raster.py",
+      "sha256": "4bf0da7eb653168f9a65fedf16f7be669b3c0f838bf1eeaf15a4025590927c84"
+    },
+    {
+      "file": "tests/test_spatial.py",
+      "sha256": "f9c204b7936aae4c265ac7e23a19341c856d9e8522405caa3f9af31b89f42471"
+    }
+  ]
+}

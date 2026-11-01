@@ -1,0 +1,17 @@
+{
+  "features": 1702,
+  "valid_scores": 1528,
+  "algorithm": "resilience:weightedneighbourhoodscores",
+  "checks": [
+    {
+      "check": "QGIS Processing preserves all rows",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "QGIS Processing reproduces complete-cohort scores",
+      "passed": true,
+      "detail": null
+    }
+  ]
+}

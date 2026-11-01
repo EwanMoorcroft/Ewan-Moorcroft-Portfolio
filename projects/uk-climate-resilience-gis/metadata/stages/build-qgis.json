@@ -1,0 +1,9 @@
+{
+  "stage": "build-qgis",
+  "status": "passed",
+  "completed_utc": "2026-09-29T17:06:31.784487+00:00",
+  "elapsed_seconds": 14.36,
+  "result": {
+    "project": "qgis/project/gm_climate_resilience.qgz"
+  }
+}

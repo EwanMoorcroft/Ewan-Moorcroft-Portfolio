@@ -1,0 +1,10 @@
+{
+  "stage": "download",
+  "status": "passed",
+  "completed_utc": "2026-09-29T16:37:04.568903+00:00",
+  "elapsed_seconds": 60.16,
+  "result": {
+    "core_sources": 8,
+    "selected_landsat_dates": 5
+  }
+}

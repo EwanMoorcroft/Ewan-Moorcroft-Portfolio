@@ -1,8 +1,8 @@
 # Geography and data analysis background
 
-I completed a BSc in Geography at the University of Liverpool in June 2025. I am now studying for
-an MSc in Data Science and Artificial Intelligence there, with completion expected in September
-2026. Geography is still a large part of how I approach data: I look for the spatial unit, the scale,
+I completed a BSc in Geography at the University of Liverpool in June 2025. I have also
+completed an MSc in Data Science and Artificial Intelligence there and am awaiting formal award.
+Geography is still a large part of how I approach data: I look for the spatial unit, the scale,
 the way a measurement was collected, and what might have been lost when the real world became a
 table.
 
@@ -28,7 +28,8 @@ administrative boundaries, census data, transport flows, and OpenStreetMap-deriv
 Two Liverpool analyses answered different questions. One examined retail site-selection evidence.
 The other used commuting origin-destination flows, Moran's I and Poisson regression to study urban
 movement. I developed the spatial and statistical ideas further with official public sources in
-[Liverpool urban accessibility](../projects/liverpool-urban-accessibility/).
+[Liverpool urban accessibility](../projects/liverpool-urban-accessibility/) and the
+[Greater Manchester climate resilience case](../projects/uk-climate-resilience-gis/).
 
 ## Statistics, databases, and presentation
 

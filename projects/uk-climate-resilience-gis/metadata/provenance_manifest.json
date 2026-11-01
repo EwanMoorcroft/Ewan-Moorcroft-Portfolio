@@ -1,0 +1,2690 @@
+{
+  "sources": [
+    {
+      "file": "data/raw/defra/greenspace_access_2024_corrected2025.ods",
+      "source_url": "https://assets.publishing.service.gov.uk/media/6821cf4e53add7d476d818c1/Access_to_greenspace_England_2024.ods",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:13:34.993201+00:00",
+      "sha256": "2ab09f9a6f39cf7b8e7f5da6c4d994358f8440108979d3a605ca611062704760",
+      "bytes": 36908399,
+      "title": "Access to green space in England 2024 (corrected May 2025)",
+      "publisher": "Department for Environment, Food and Rural Affairs",
+      "metadata_url": "https://www.gov.uk/government/statistics/access-to-green-space-in-england/access-to-green-space-in-england",
+      "version": "2024 data; corrected 13 May 2025",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains Defra data \u00a9 Crown copyright 2025."
+    },
+    {
+      "file": "data/raw/ea/defended_01pct.geojson",
+      "source_url": "https://environment.data.gov.uk/spatialdata/rivers-and-sea-defended-and-undefended-flood-risk-extents-present-day/ogc/features/v1/collections/Rivers_1in1000_Sea_1in1000_defended_extents/items",
+      "parameters": {
+        "f": "json",
+        "bbox": "-2.73052481406758,53.3273204893916,-1.90962093258169,53.6857339236763",
+        "limit": 10000
+      },
+      "acquired_utc": "2026-09-29T16:16:37.881901+00:00",
+      "sha256": "78c7a7b15a70602f04ed2b9ce3356cbd62e550b016139f317c0829c321e0f0b2",
+      "bytes": 329500287,
+      "publisher": "Environment Agency",
+      "licence": "OGL v3",
+      "scenario": "Rivers_1in1000_Sea_1in1000_defended_extents",
+      "source_page": "https://www.data.gov.uk/dataset/1589b7ec-2300-4028-9199-aa7cac4b0f68/rivers-and-sea-defended-and-undefended-flood-risk-extents-present-day"
+    },
+    {
+      "file": "data/raw/ea/defended_01pct.page002.geojson",
+      "source_url": "https://environment.data.gov.uk/geoservices/datasets/bb486190-bb9c-4eb0-a4b2-c9bd63ca86ec/ogc/features/v1/collections/Rivers_1in1000_Sea_1in1000_defended_extents/items?f=json&bbox=-2.73052481406758%2C53.3273204893916%2C-1.90962093258169%2C53.6857339236763&limit=10000&startIndex=10000",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:32:24.670403+00:00",
+      "sha256": "e4b63652d76b6039c55304147cc6652b0fd395fc385e269bbe485bb04d3b034c",
+      "bytes": 17280173,
+      "publisher": "Environment Agency",
+      "licence": "OGL v3",
+      "scenario": "Rivers_1in1000_Sea_1in1000_defended_extents",
+      "source_page": "https://www.data.gov.uk/dataset/1589b7ec-2300-4028-9199-aa7cac4b0f68/rivers-and-sea-defended-and-undefended-flood-risk-extents-present-day"
+    },
+    {
+      "file": "data/raw/ea/defended_1pct.geojson",
+      "source_url": "https://environment.data.gov.uk/spatialdata/rivers-and-sea-defended-and-undefended-flood-risk-extents-present-day/ogc/features/v1/collections/Rivers_1in100_Sea_1in200_defended_extents/items",
+      "parameters": {
+        "f": "json",
+        "bbox": "-2.73052481406758,53.3273204893916,-1.90962093258169,53.6857339236763",
+        "limit": 10000
+      },
+      "acquired_utc": "2026-09-29T16:16:12.220384+00:00",
+      "sha256": "f1c261c25e52a1f66bb0781b2a42afbee809eb1b3eac3149dd2398890f348e95",
+      "bytes": 257207394,
+      "publisher": "Environment Agency",
+      "licence": "OGL v3",
+      "scenario": "Rivers_1in100_Sea_1in200_defended_extents",
+      "source_page": "https://www.data.gov.uk/dataset/1589b7ec-2300-4028-9199-aa7cac4b0f68/rivers-and-sea-defended-and-undefended-flood-risk-extents-present-day"
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20210721_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/203/023/LC08_L2SP_203023_20210721_20210729_02_T1/LC08_L2SP_203023_20210721_20210729_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:17:59.055313+00:00",
+      "sha256": "2cc59db7528c18a3d2d8248b05f9e543a37be720bdbce0d886299fcac9c5a17d",
+      "bytes": 666080,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20210721_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20210721_02_T1/lwir11.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/203/023/LC08_L2SP_203023_20210721_20210729_02_T1/LC08_L2SP_203023_20210721_20210729_02_T1_ST_B10.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:27:32.914065+00:00",
+      "sha256": "3c57686f90959f6d308f489f6fced5d4321a6554bf8b2175630aebcc90c19725",
+      "bytes": 4098179,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20210721_02_T1",
+      "band": "lwir11",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20210721_02_T1/nir08.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/203/023/LC08_L2SP_203023_20210721_20210729_02_T1/LC08_L2SP_203023_20210721_20210729_02_T1_SR_B5.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:27:34.297137+00:00",
+      "sha256": "447291ecc0d017e0d55b62f89376e881482a4ce5e1081ea8d454496580e9d46f",
+      "bytes": 4661334,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20210721_02_T1",
+      "band": "nir08",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20210721_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/203/023/LC08_L2SP_203023_20210721_20210729_02_T1/LC08_L2SP_203023_20210721_20210729_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:17:58.004165+00:00",
+      "sha256": "5098128788ad7dc02038c0bd3b2fc50544024ca880f82aee8e7246acc86daee2",
+      "bytes": 130962,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20210721_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20210721_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/203/023/LC08_L2SP_203023_20210721_20210729_02_T1/LC08_L2SP_203023_20210721_20210729_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:17:58.380562+00:00",
+      "sha256": "ca4874b1e4cf35c85b3833ee55e34b8075b338e72491b72ce0cdbb03fe9228f8",
+      "bytes": 8103,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20210721_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20210721_02_T1/red.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/203/023/LC08_L2SP_203023_20210721_20210729_02_T1/LC08_L2SP_203023_20210721_20210729_02_T1_SR_B4.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:27:33.575129+00:00",
+      "sha256": "52e6729e943096d590a4fe92f52a056ee176a5771ee79b61ac684207e7aabbfa",
+      "bytes": 4278451,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20210721_02_T1",
+      "band": "red",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20220622_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC08_L2SP_203023_20220622_20220705_02_T1/LC08_L2SP_203023_20220622_20220705_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:18:01.783305+00:00",
+      "sha256": "185b41fe60147ddda8a0232d90b17fd547069d3e7af7ff34d43861396688656e",
+      "bytes": 529146,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20220622_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20220622_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC08_L2SP_203023_20220622_20220705_02_T1/LC08_L2SP_203023_20220622_20220705_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:18:00.806072+00:00",
+      "sha256": "debe354eaba5dc4f44e3e5f18ea17dfe3c35529c7762228174a3dd067256c64f",
+      "bytes": 245850,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20220622_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20220622_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC08_L2SP_203023_20220622_20220705_02_T1/LC08_L2SP_203023_20220622_20220705_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:18:01.166318+00:00",
+      "sha256": "bd07f1235dee6beaab71633ee1541296e18afa91170e25da83d3a597922edabd",
+      "bytes": 8036,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20220622_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20220708_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC08_L2SP_203023_20220708_20220721_02_T1/LC08_L2SP_203023_20220708_20220721_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:18:04.663655+00:00",
+      "sha256": "f83474247dd619212c25ca4e34dcbc25a66d2769612cffa11876fb12d78ef555",
+      "bytes": 16931,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20220708_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20220708_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC08_L2SP_203023_20220708_20220721_02_T1/LC08_L2SP_203023_20220708_20220721_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:18:03.711150+00:00",
+      "sha256": "d6610597fe8e046bc972a555e870d9709480dd78fce1afbab5bfef1d2d2a70ba",
+      "bytes": 60392,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20220708_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20220708_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC08_L2SP_203023_20220708_20220721_02_T1/LC08_L2SP_203023_20220708_20220721_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:18:04.075594+00:00",
+      "sha256": "3abdab7aa57b8bf4549e0a55626295544187f72c5705c0b3ef4588830cac1a62",
+      "bytes": 7936,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20220708_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20220809_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC08_L2SP_203023_20220809_20220818_02_T1/LC08_L2SP_203023_20220809_20220818_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:18:59.442742+00:00",
+      "sha256": "a3ecd269a9fd40b1cf66c6dce5f5dd34b48eb02638d5e0bed01ef195544cefad",
+      "bytes": 650544,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20220809_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20220809_02_T1/lwir11.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC08_L2SP_203023_20220809_20220818_02_T1/LC08_L2SP_203023_20220809_20220818_02_T1_ST_B10.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:27:35.024291+00:00",
+      "sha256": "4fd7c9b5d4f14e266a3cc6518c4fb894957919ed3e6e3fdfe05d3397a56dcdf7",
+      "bytes": 4145483,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20220809_02_T1",
+      "band": "lwir11",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20220809_02_T1/nir08.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC08_L2SP_203023_20220809_20220818_02_T1/LC08_L2SP_203023_20220809_20220818_02_T1_SR_B5.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:27:36.537158+00:00",
+      "sha256": "d86e01cf141238be77e5b0a7b5243c4bce1a829e9465d461791e7eee35629d9c",
+      "bytes": 4598076,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20220809_02_T1",
+      "band": "nir08",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20220809_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC08_L2SP_203023_20220809_20220818_02_T1/LC08_L2SP_203023_20220809_20220818_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:18:06.336049+00:00",
+      "sha256": "21cb0c835e6f85a0bab0db4d0d85a61de3c1dd4cabbf0d56cc71b041e46a0481",
+      "bytes": 141230,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20220809_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20220809_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC08_L2SP_203023_20220809_20220818_02_T1/LC08_L2SP_203023_20220809_20220818_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:18:58.799525+00:00",
+      "sha256": "84d53091bd511ff3df29cdf45c739855025ae9bdae27e5b2b3b3690be5d3fe56",
+      "bytes": 8141,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20220809_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20220809_02_T1/red.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC08_L2SP_203023_20220809_20220818_02_T1/LC08_L2SP_203023_20220809_20220818_02_T1_SR_B4.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:27:35.809343+00:00",
+      "sha256": "f4d298574b7f9c149fdc8b23a1f8feae70e7c3b9b16933ca4db143fdf9252e7a",
+      "bytes": 4160614,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20220809_02_T1",
+      "band": "red",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20230609_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC08_L2SP_203023_20230609_20230614_02_T1/LC08_L2SP_203023_20230609_20230614_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:19:02.227009+00:00",
+      "sha256": "c32212fa431537d1d933a14e7e097776d2d70ce56fb529fba3866698733f7669",
+      "bytes": 838683,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20230609_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20230609_02_T1/lwir11.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC08_L2SP_203023_20230609_20230614_02_T1/LC08_L2SP_203023_20230609_20230614_02_T1_ST_B10.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:22:15.610412+00:00",
+      "sha256": "557e93ddb91a0c9145324c06b6c607cc2f33bc60fd89aa03d2e17e16f714e3c0",
+      "bytes": 4001027,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20230609_02_T1",
+      "band": "lwir11",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20230609_02_T1/nir08.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC08_L2SP_203023_20230609_20230614_02_T1/LC08_L2SP_203023_20230609_20230614_02_T1_SR_B5.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:22:17.243838+00:00",
+      "sha256": "25242f95e6336fa04debf12db7eac26fb3b7f522c19c09142044a7e98a050435",
+      "bytes": 4634058,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20230609_02_T1",
+      "band": "nir08",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20230609_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC08_L2SP_203023_20230609_20230614_02_T1/LC08_L2SP_203023_20230609_20230614_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:19:01.103126+00:00",
+      "sha256": "78d1547698655aa9b121e911c613d275faf9b68ded1202353fb5cbcd9cfadeac",
+      "bytes": 24763,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20230609_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20230609_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC08_L2SP_203023_20230609_20230614_02_T1/LC08_L2SP_203023_20230609_20230614_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:19:01.455694+00:00",
+      "sha256": "864c91a24d2677e9a91888a2d0d7bda6d8e20a3640f0069916ac12b60c64bef7",
+      "bytes": 8253,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20230609_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20230609_02_T1/red.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC08_L2SP_203023_20230609_20230614_02_T1/LC08_L2SP_203023_20230609_20230614_02_T1_SR_B4.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:22:16.397760+00:00",
+      "sha256": "77e8b18e17e2d1e647de1c436fa49b7ad1457db2b992b8b4009423be1b02548f",
+      "bytes": 4189712,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20230609_02_T1",
+      "band": "red",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20230625_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC08_L2SP_203023_20230625_20230630_02_T1/LC08_L2SP_203023_20230625_20230630_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:19:04.837214+00:00",
+      "sha256": "08ae490af3a5afa5158f369deebce058badc8815a58b10bf30b005d4e444384b",
+      "bytes": 162455,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20230625_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20230625_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC08_L2SP_203023_20230625_20230630_02_T1/LC08_L2SP_203023_20230625_20230630_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:19:04.012999+00:00",
+      "sha256": "afdd809e95209bad91f1eb94773434392d199b61a3b320973b22cc0020c16396",
+      "bytes": 348395,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20230625_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20230625_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC08_L2SP_203023_20230625_20230630_02_T1/LC08_L2SP_203023_20230625_20230630_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:19:04.376230+00:00",
+      "sha256": "0972de34fec9fbbd15d56f14be00abfe47ece10db08531305ca426341a1e80ec",
+      "bytes": 7994,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20230625_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240627_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240627_20240709_02_T1/LC08_L2SP_203023_20240627_20240709_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:19:59.826109+00:00",
+      "sha256": "f75695b5809bbfae290120eb7307883f1da191dee38ad166b662192714c10fd2",
+      "bytes": 211515,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240627_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240627_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240627_20240709_02_T1/LC08_L2SP_203023_20240627_20240709_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:19:06.906031+00:00",
+      "sha256": "51f936b3a1624470cc3a1eda05e1c9b510e6256cc184b2834951495c9d3124ab",
+      "bytes": 168971,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240627_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240627_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240627_20240709_02_T1/LC08_L2SP_203023_20240627_20240709_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:19:07.234862+00:00",
+      "sha256": "3be51155fb1e85348cc34dda4b38e982dbbcdef56ad544da57d353d32ffb968f",
+      "bytes": 8001,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240627_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240729_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240729_20240801_02_T1/LC08_L2SP_203023_20240729_20240801_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:09:15.563087+00:00",
+      "sha256": "bb6dfd8a3f7b1ccbd4eb0af05a6d821d7262605eafbc54eb366816804c1708ca",
+      "bytes": 859436,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240729_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240729_02_T1/lwir11.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240729_20240801_02_T1/LC08_L2SP_203023_20240729_20240801_02_T1_ST_B10.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:09:15.013436+00:00",
+      "sha256": "db7ce73a82a9c2d8d28b64040e2eec82288f8f263f8d4577f4d071184667f681",
+      "bytes": 4667859,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240729_02_T1",
+      "band": "lwir11",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240729_02_T1/nir08.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240729_20240801_02_T1/LC08_L2SP_203023_20240729_20240801_02_T1_SR_B5.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:09:16.859047+00:00",
+      "sha256": "7305af4062109ab29c1c20704a3a493a3f1a42b03ecfcfdce71e77876ee5d692",
+      "bytes": 5425134,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240729_02_T1",
+      "band": "nir08",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240729_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240729_20240801_02_T1/LC08_L2SP_203023_20240729_20240801_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:09:14.052601+00:00",
+      "sha256": "1a08c15dccaa843890ad904b67838ad32cf637dd09bb62d1a76ef6829d486d2a",
+      "bytes": 60954,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240729_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240729_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240729_20240801_02_T1/LC08_L2SP_203023_20240729_20240801_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:09:14.408201+00:00",
+      "sha256": "1e34ecb12d6cb58c277df259b0b68cb99f77c8ddc21712c0f0f2e96c9a2cbec2",
+      "bytes": 9591,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240729_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240729_02_T1/red.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240729_20240801_02_T1/LC08_L2SP_203023_20240729_20240801_02_T1_SR_B4.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:09:16.211353+00:00",
+      "sha256": "f0813a45349374d3a87b4e0d74833ee32995342e4d4adc86147e36ae952e4db6",
+      "bytes": 4857375,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240729_02_T1",
+      "band": "red",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240830_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240830_20240906_02_T1/LC08_L2SP_203023_20240830_20240906_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:09:18.830885+00:00",
+      "sha256": "3501fb319a462a8ebb66fecc2e42b8b07281c30f7c1a1c6a2d251ff09bd9a83f",
+      "bytes": 456400,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240830_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240830_02_T1/lwir11.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240830_20240906_02_T1/LC08_L2SP_203023_20240830_20240906_02_T1_ST_B10.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:09:18.340558+00:00",
+      "sha256": "32b9665f5116fc2786b80ae7ecd7ea80ac5f72f78f72f54fc98e95cb9af175ea",
+      "bytes": 4821853,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240830_02_T1",
+      "band": "lwir11",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240830_02_T1/nir08.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240830_20240906_02_T1/LC08_L2SP_203023_20240830_20240906_02_T1_SR_B5.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:10:15.146876+00:00",
+      "sha256": "13045c28fce226443f7e2de53786a287f95057328334c20dca8eba3e879d60e4",
+      "bytes": 5629922,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240830_02_T1",
+      "band": "nir08",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240830_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240830_20240906_02_T1/LC08_L2SP_203023_20240830_20240906_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:09:17.331024+00:00",
+      "sha256": "b9e71ce3710b3c1786a6c867708eb73bec9a535f3afed8c49bec5fece76f38fd",
+      "bytes": 311476,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240830_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240830_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240830_20240906_02_T1/LC08_L2SP_203023_20240830_20240906_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:09:17.664687+00:00",
+      "sha256": "2db7a78b5e32b4245cd43a67bef601553ebe4c2f4e3a887db54c697f4c5613e8",
+      "bytes": 9365,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240830_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20240830_02_T1/red.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC08_L2SP_203023_20240830_20240906_02_T1/LC08_L2SP_203023_20240830_20240906_02_T1_SR_B4.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:10:14.509959+00:00",
+      "sha256": "6791fa593c6ede4f8501ae3aa090723bd06eca8fc1e6f34de183924233029efa",
+      "bytes": 5358357,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20240830_02_T1",
+      "band": "red",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250614_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250614_20250626_02_T1/LC08_L2SP_203023_20250614_20250626_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:20:04.927574+00:00",
+      "sha256": "334ecca439b67dfa66b597506d20df7da4c3261a5e5ca63abc7cc61cf6169870",
+      "bytes": 57566,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250614_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250614_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250614_20250626_02_T1/LC08_L2SP_203023_20250614_20250626_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:20:03.938593+00:00",
+      "sha256": "38222fa49d7355bc20514614a3924558026c06803b9d283474f67c112488cee5",
+      "bytes": 169059,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250614_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250614_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250614_20250626_02_T1/LC08_L2SP_203023_20250614_20250626_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:20:04.418865+00:00",
+      "sha256": "f1ab387b4c657740c51d469758aee5592df5853d2155ede23e4e275507dbdd53",
+      "bytes": 10703,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250614_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250630_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250630_20250711_02_T1/LC08_L2SP_203023_20250630_20250711_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:10:17.438557+00:00",
+      "sha256": "c9f4aaa6e402c62dbbfcc7f09457ab2b9b5c858c7ec84700f137959891ae26e0",
+      "bytes": 440216,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250630_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250630_02_T1/lwir11.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250630_20250711_02_T1/LC08_L2SP_203023_20250630_20250711_02_T1_ST_B10.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:10:16.785237+00:00",
+      "sha256": "dd735a7951aab2e2be2f8b4e682c90c92012258cd1c8f6a253940f4a33e5b877",
+      "bytes": 4890096,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250630_02_T1",
+      "band": "lwir11",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250630_02_T1/nir08.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250630_20250711_02_T1/LC08_L2SP_203023_20250630_20250711_02_T1_SR_B5.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:10:18.864248+00:00",
+      "sha256": "14b4b05da9e14570bf395e6a6b9d8d03adcfd7fb59e0b37df4f9c2e42df9ce93",
+      "bytes": 5595205,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250630_02_T1",
+      "band": "nir08",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250630_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250630_20250711_02_T1/LC08_L2SP_203023_20250630_20250711_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:10:15.716749+00:00",
+      "sha256": "abe53fccf0a0746b3be6a054314aef1f2df512eb25b625c009faf4ab881a147e",
+      "bytes": 357292,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250630_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250630_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250630_20250711_02_T1/LC08_L2SP_203023_20250630_20250711_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:10:16.065344+00:00",
+      "sha256": "8b9e2f32fc7cd70426f51476ff3eb7777350ab2fb17fa33d5d5ccba97e6e0bf6",
+      "bytes": 9373,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250630_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250630_02_T1/red.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250630_20250711_02_T1/LC08_L2SP_203023_20250630_20250711_02_T1_SR_B4.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:10:18.134411+00:00",
+      "sha256": "896dea43b7026e15ccab19b44a1e94a8396fa8d1f84e647d6c8274a0438c82ba",
+      "bytes": 5349870,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250630_02_T1",
+      "band": "red",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250817_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250817_20250821_02_T1/LC08_L2SP_203023_20250817_20250821_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:11:16.132252+00:00",
+      "sha256": "b3da0c322fc620514ec88ab82bcd8222c332fa7f9026b3670d0d3b08cd8eae4f",
+      "bytes": 715923,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250817_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250817_02_T1/lwir11.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250817_20250821_02_T1/LC08_L2SP_203023_20250817_20250821_02_T1_ST_B10.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:11:15.512333+00:00",
+      "sha256": "68e9ba2f106cf76f0eea775b564ab8a31dcfa41a2bd4551234bbeef0e105f900",
+      "bytes": 4621984,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250817_02_T1",
+      "band": "lwir11",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250817_02_T1/nir08.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250817_20250821_02_T1/LC08_L2SP_203023_20250817_20250821_02_T1_SR_B5.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:11:17.797969+00:00",
+      "sha256": "adffa662ac593ce50488fd327a56c3119b235890b45c9ba9bb53bca0ccf4edf9",
+      "bytes": 5369160,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250817_02_T1",
+      "band": "nir08",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250817_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250817_20250821_02_T1/LC08_L2SP_203023_20250817_20250821_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:10:19.359217+00:00",
+      "sha256": "1457f6ae66054510995cf6c7245b4431ad71f1f15a96d9a29b4503dcbbf37a37",
+      "bytes": 95255,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250817_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250817_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250817_20250821_02_T1/LC08_L2SP_203023_20250817_20250821_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:10:19.718469+00:00",
+      "sha256": "c6a491e46cb23f88b455cfb91567836d8710fb404c8786a9bf0d13a8c32ca076",
+      "bytes": 9532,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250817_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC08_L2SP_203023_20250817_02_T1/red.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC08_L2SP_203023_20250817_20250821_02_T1/LC08_L2SP_203023_20250817_20250821_02_T1_SR_B4.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:11:16.913359+00:00",
+      "sha256": "0aa12d9176d5e2e29b4a0c3bf46427aa0a754ee38110a3d54756bad1717f1c3f",
+      "bytes": 4893985,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC08_L2SP_203023_20250817_02_T1",
+      "band": "red",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20220614_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC09_L2SP_203023_20220614_20220616_02_T1/LC09_L2SP_203023_20220614_20220616_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:20:10.112655+00:00",
+      "sha256": "1990d6df39bf8f298b287333186eae0150b31d629df5b54e03081a3ee87c0a7f",
+      "bytes": 120013,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20220614_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20220614_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC09_L2SP_203023_20220614_20220616_02_T1/LC09_L2SP_203023_20220614_20220616_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:20:09.392144+00:00",
+      "sha256": "a23132beba722547e92939b55642a22e0eb621ef410e5f0a500e4cf53d89ec54",
+      "bytes": 260577,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20220614_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20220614_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC09_L2SP_203023_20220614_20220616_02_T1/LC09_L2SP_203023_20220614_20220616_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:20:09.693811+00:00",
+      "sha256": "ed02ac8bb936a7e6f5af24eac43bba9dd46b51041a18c4af28518d27b33c642f",
+      "bytes": 7955,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20220614_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20220801_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC09_L2SP_203023_20220801_20220803_02_T1/LC09_L2SP_203023_20220801_20220803_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:20:12.963554+00:00",
+      "sha256": "3524971e145dbb73a46540a062f32614abbde0d76512675babf4c87cab46abeb",
+      "bytes": 440600,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20220801_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20220801_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC09_L2SP_203023_20220801_20220803_02_T1/LC09_L2SP_203023_20220801_20220803_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:20:11.925514+00:00",
+      "sha256": "1cc3547f25bb7529ebe3ea141217d1e8d6205691a7ac037c61a672bf0f5cd277",
+      "bytes": 254794,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20220801_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20220801_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2022/203/023/LC09_L2SP_203023_20220801_20220803_02_T1/LC09_L2SP_203023_20220801_20220803_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:20:12.320786+00:00",
+      "sha256": "e02940dab05103741dfe451790e71265f9e6d4035e43aba5acfd23eadaa3b1d0",
+      "bytes": 8086,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20220801_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20230601_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC09_L2SP_203023_20230601_20230603_02_T1/LC09_L2SP_203023_20230601_20230603_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:21:04.726513+00:00",
+      "sha256": "662a95dd3c14973e0dba06436132fe514586fbc358923b9bc3e2b0cdfd8cf304",
+      "bytes": 432877,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20230601_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20230601_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC09_L2SP_203023_20230601_20230603_02_T1/LC09_L2SP_203023_20230601_20230603_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:21:00.704796+00:00",
+      "sha256": "ce2433599a892ace4d3f775844c833177bc04093d0ee4270c53c0da301edbb21",
+      "bytes": 99275,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20230601_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20230601_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC09_L2SP_203023_20230601_20230603_02_T1/LC09_L2SP_203023_20230601_20230603_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:21:04.100647+00:00",
+      "sha256": "19fb8d19d193aecb28576003ef233e66e0a76b65553204758d5eaff10fce5e8c",
+      "bytes": 8091,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20230601_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20230719_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC09_L2SP_203023_20230719_20230801_02_T1/LC09_L2SP_203023_20230719_20230801_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:21:10.844778+00:00",
+      "sha256": "881c2b82223ce69fc8ebcf627f201c2212bb3e6312a686f82cecaa656f91db41",
+      "bytes": 277503,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20230719_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20230719_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC09_L2SP_203023_20230719_20230801_02_T1/LC09_L2SP_203023_20230719_20230801_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:21:06.913345+00:00",
+      "sha256": "572c2f74c2758e59089e335416d3ffb3ce693212e01f13880917ce179db1bf6f",
+      "bytes": 241279,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20230719_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20230719_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC09_L2SP_203023_20230719_20230801_02_T1/LC09_L2SP_203023_20230719_20230801_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:21:10.292774+00:00",
+      "sha256": "ba84cee0b1c878997c79e6b86ee7e82c9a99b7d0b30f0c0d633424dc1b7f3770",
+      "bytes": 8168,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20230719_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20230820_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC09_L2SP_203023_20230820_20230822_02_T1/LC09_L2SP_203023_20230820_20230822_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:21:13.744928+00:00",
+      "sha256": "78c4d2c3c80e0eda35b03634604cf58b77bd685294302604acda6e99f34c447f",
+      "bytes": 223260,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20230820_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20230820_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC09_L2SP_203023_20230820_20230822_02_T1/LC09_L2SP_203023_20230820_20230822_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:21:12.866542+00:00",
+      "sha256": "f2b55def1ff6cd561a713769705dde27f2e081c7bd26c30a80068297803f00f4",
+      "bytes": 286041,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20230820_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20230820_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2023/203/023/LC09_L2SP_203023_20230820_20230822_02_T1/LC09_L2SP_203023_20230820_20230822_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:21:13.238205+00:00",
+      "sha256": "983061b830c489c5b5b2b1834cd58b79cc421df9d902a72e4c14bc19de3f9c02",
+      "bytes": 8005,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20230820_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20240705_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC09_L2SP_203023_20240705_20240706_02_T1/LC09_L2SP_203023_20240705_20240706_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:22:04.589575+00:00",
+      "sha256": "5d70dd7074f81d79343b048e3bf168b535157d04b48323248cf5764010104626",
+      "bytes": 178458,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20240705_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20240705_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC09_L2SP_203023_20240705_20240706_02_T1/LC09_L2SP_203023_20240705_20240706_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:21:15.630923+00:00",
+      "sha256": "67a6df2fc2985c4172fb126a8ff717205f4259f162468b27935d7cde34340791",
+      "bytes": 298452,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20240705_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20240705_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC09_L2SP_203023_20240705_20240706_02_T1/LC09_L2SP_203023_20240705_20240706_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:22:01.036268+00:00",
+      "sha256": "dbe6183d3c980a96307f01549c42c65279f4e134ed8b645f1f09de7c084b7ac6",
+      "bytes": 7996,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20240705_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20240806_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC09_L2SP_203023_20240806_20240807_02_T1/LC09_L2SP_203023_20240806_20240807_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:22:11.199207+00:00",
+      "sha256": "97e0059c236f87e85288048f4788563d3ca7413ceaa1595c540f601ace5fc131",
+      "bytes": 129386,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20240806_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20240806_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC09_L2SP_203023_20240806_20240807_02_T1/LC09_L2SP_203023_20240806_20240807_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:22:06.300668+00:00",
+      "sha256": "384fcd36bcb3f8f431a38a80b22b73216fa6d5f67089cc2c192f3ff12b646034",
+      "bytes": 128029,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20240806_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20240806_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2024/203/023/LC09_L2SP_203023_20240806_20240807_02_T1/LC09_L2SP_203023_20240806_20240807_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:22:07.698004+00:00",
+      "sha256": "03ffa2c0ec4983db9df3b59ec20175a6c1cd29487f32ed4c006af16a7bbe08c8",
+      "bytes": 7946,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20240806_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20250708_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC09_L2SP_203023_20250708_20250710_02_T1/LC09_L2SP_203023_20250708_20250710_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:11:20.009944+00:00",
+      "sha256": "e0b8e23f5721557987284b7074504140c701c969e7aa3e8bbd363f786de5e2fe",
+      "bytes": 572703,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20250708_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20250708_02_T1/lwir11.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC09_L2SP_203023_20250708_20250710_02_T1/LC09_L2SP_203023_20250708_20250710_02_T1_ST_B10.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:11:19.401602+00:00",
+      "sha256": "a649d396a2df05b2d14fafa5ab7d3027bd5b9c5772fcff6d02b90b459ba50e2b",
+      "bytes": 4847196,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20250708_02_T1",
+      "band": "lwir11",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20250708_02_T1/nir08.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC09_L2SP_203023_20250708_20250710_02_T1/LC09_L2SP_203023_20250708_20250710_02_T1_SR_B5.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:11:21.605911+00:00",
+      "sha256": "eef5137c927218f2f4b7cb1390c3fba874c460bac3973b55e1306fe72a1b8161",
+      "bytes": 5519023,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20250708_02_T1",
+      "band": "nir08",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20250708_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC09_L2SP_203023_20250708_20250710_02_T1/LC09_L2SP_203023_20250708_20250710_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:11:18.321189+00:00",
+      "sha256": "532a24f276d3da2540caa6ec0f65eb0af4c21d60440e4c1327ace81d01c79500",
+      "bytes": 290874,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20250708_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20250708_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC09_L2SP_203023_20250708_20250710_02_T1/LC09_L2SP_203023_20250708_20250710_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:11:18.672384+00:00",
+      "sha256": "e01929c627dd701ca0a55175bbeef9d2be7435269a6fcd3495253946f66e7ceb",
+      "bytes": 9440,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20250708_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20250708_02_T1/red.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC09_L2SP_203023_20250708_20250710_02_T1/LC09_L2SP_203023_20250708_20250710_02_T1_SR_B4.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:11:20.740185+00:00",
+      "sha256": "44c7c865ec1a476c604e6594af9e933a663e07dfccad6d65608e633595472c97",
+      "bytes": 5193327,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20250708_02_T1",
+      "band": "red",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20250825_02_T1/cdist.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC09_L2SP_203023_20250825_20250826_02_T1/LC09_L2SP_203023_20250825_20250826_02_T1_ST_CDIST.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:12:18.227008+00:00",
+      "sha256": "0c879d668c43dbe54ad2b9040f3d111bb23aa33db9755ea85fd1375641d9ccae",
+      "bytes": 433118,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20250825_02_T1",
+      "band": "cdist",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20250825_02_T1/lwir11.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC09_L2SP_203023_20250825_20250826_02_T1/LC09_L2SP_203023_20250825_20250826_02_T1_ST_B10.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:12:17.617184+00:00",
+      "sha256": "6c8d6b86b952845e503b48fab8fc0a6dffa14d92787e3321c3adc12decc9615e",
+      "bytes": 4913738,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20250825_02_T1",
+      "band": "lwir11",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20250825_02_T1/nir08.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC09_L2SP_203023_20250825_20250826_02_T1/LC09_L2SP_203023_20250825_20250826_02_T1_SR_B5.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:12:20.005528+00:00",
+      "sha256": "2414c3d1165741350258fe15f00ccf2d68a1eb5804a96aa025c81ba412a748b3",
+      "bytes": 5280115,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20250825_02_T1",
+      "band": "nir08",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20250825_02_T1/qa_pixel.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC09_L2SP_203023_20250825_20250826_02_T1/LC09_L2SP_203023_20250825_20250826_02_T1_QA_PIXEL.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:12:16.211004+00:00",
+      "sha256": "69b6613bb9aba541d004da8b71aacd88dc35c944526237af76c0adc45242c90a",
+      "bytes": 188627,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20250825_02_T1",
+      "band": "qa_pixel",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20250825_02_T1/qa_radsat.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC09_L2SP_203023_20250825_20250826_02_T1/LC09_L2SP_203023_20250825_20250826_02_T1_QA_RADSAT.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:12:16.644625+00:00",
+      "sha256": "44eb401c598cd7f18b2df14b674d2f163a8b06b8774aa291bfab29937b7e8a65",
+      "bytes": 9297,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20250825_02_T1",
+      "band": "qa_radsat",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/LC09_L2SP_203023_20250825_02_T1/red.tif",
+      "source_url": "https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2025/203/023/LC09_L2SP_203023_20250825_20250826_02_T1/LC09_L2SP_203023_20250825_20250826_02_T1_SR_B4.TIF",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:12:19.122570+00:00",
+      "sha256": "b7e1881535d20d57c22960feef9742116b3bbabb09d3165704fb557464d5d85e",
+      "bytes": 5006528,
+      "publisher": "USGS",
+      "licence": "Public domain",
+      "scene": "LC09_L2SP_203023_20250825_02_T1",
+      "band": "red",
+      "operation": "Lossless pixel-aligned study-area window; original DN values",
+      "bounds_bng": [
+        351468.7493040281,
+        380344.32415274647,
+        406758.81148004497,
+        426201.7096523257
+      ]
+    },
+    {
+      "file": "data/raw/landsat/search_2021.json",
+      "source_url": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "parameters": {
+        "collections": "landsat-c2-l2",
+        "bbox": "-2.733339933791669,53.32520977793544,-1.9093089195671684,53.685807653298056",
+        "datetime": "2021-06-01T00:00:00Z/2021-08-31T23:59:59Z",
+        "limit": 1000
+      },
+      "acquired_utc": "2026-09-29T16:17:56.548245+00:00",
+      "sha256": "b388eac071f9ebfe0aead63ee8a888006645fe858a7f52bb12f92d8ad76e40f0",
+      "bytes": 952452,
+      "publisher": "USGS / Microsoft Planetary Computer",
+      "licence": "USGS public domain"
+    },
+    {
+      "file": "data/raw/landsat/search_2022.json",
+      "source_url": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "parameters": {
+        "collections": "landsat-c2-l2",
+        "bbox": "-2.733339933791669,53.32520977793544,-1.9093089195671684,53.685807653298056",
+        "datetime": "2022-06-01T00:00:00Z/2022-08-31T23:59:59Z",
+        "limit": 1000
+      },
+      "acquired_utc": "2026-09-29T16:17:56.892635+00:00",
+      "sha256": "06daba4a5556524c43a67b2441ba0612ea4997b7973de47984a06c4ab44098ce",
+      "bytes": 803817,
+      "publisher": "USGS / Microsoft Planetary Computer",
+      "licence": "USGS public domain"
+    },
+    {
+      "file": "data/raw/landsat/search_2023.json",
+      "source_url": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "parameters": {
+        "collections": "landsat-c2-l2",
+        "bbox": "-2.733339933791669,53.32520977793544,-1.9093089195671684,53.685807653298056",
+        "datetime": "2023-06-01T00:00:00Z/2023-08-31T23:59:59Z",
+        "limit": 1000
+      },
+      "acquired_utc": "2026-09-29T16:17:57.315437+00:00",
+      "sha256": "2872ff65e3c0cc995574eebdc1e4eb1e2795d77b4e0023a550660e20b1c0ef4f",
+      "bytes": 1329700,
+      "publisher": "USGS / Microsoft Planetary Computer",
+      "licence": "USGS public domain"
+    },
+    {
+      "file": "data/raw/landsat/search_2024.json",
+      "source_url": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "parameters": {
+        "collections": "landsat-c2-l2",
+        "bbox": "-2.7370815787918508,53.317806358972526,-1.8990299842413667,53.73222303466784",
+        "datetime": "2024-06-01T00:00:00Z/2024-08-31T23:59:59Z",
+        "limit": 1000
+      },
+      "acquired_utc": "2026-09-29T16:09:12.956929+00:00",
+      "sha256": "17019b3a9ab16137ccbe4e2604fe13e6e554a98b4f33c54d14bcd885fbd6d863",
+      "bytes": 1114636,
+      "publisher": "USGS / Microsoft Planetary Computer",
+      "licence": "USGS public domain"
+    },
+    {
+      "file": "data/raw/landsat/search_2025.json",
+      "source_url": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "parameters": {
+        "collections": "landsat-c2-l2",
+        "bbox": "-2.7370815787918508,53.317806358972526,-1.8990299842413667,53.73222303466784",
+        "datetime": "2025-06-01T00:00:00Z/2025-08-31T23:59:59Z",
+        "limit": 1000
+      },
+      "acquired_utc": "2026-09-29T16:09:13.449360+00:00",
+      "sha256": "29d4ac3b4f12924b2b94ed9d95516e07f735cab915c2335d45c6f17892ff3b94",
+      "bytes": 1021810,
+      "publisher": "USGS / Microsoft Planetary Computer",
+      "licence": "USGS public domain"
+    },
+    {
+      "file": "data/raw/mhclg/imd2025_file7.csv",
+      "source_url": "https://assets.publishing.service.gov.uk/media/691ded56d140bbbaa59a2a7d/File_7_IoD2025_All_Ranks_Scores_Deciles_Population_Denominators.csv",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:12:20.333447+00:00",
+      "sha256": "b1b716aa2e476449f987b9de3e08255b4794eabfd270626de5de18b2f5eff3ef",
+      "bytes": 9897666,
+      "title": "English Indices of Deprivation 2025, File 7 (corrected November 2025)",
+      "publisher": "Ministry of Housing, Communities and Local Government",
+      "metadata_url": "https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025",
+      "version": "2025 release; corrected LSOA-to-LAD allocation, November 2025",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains MHCLG data \u00a9 Crown copyright 2025."
+    },
+    {
+      "file": "data/raw/ons/census2021_ts007a_lsoa.csv",
+      "source_url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/15432ts007acensus2021agebyfiveyearagebands/ts007aageby5yearagebandslowerlayersuperoutputareas.csv",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:13:51.781498+00:00",
+      "sha256": "7e31017f419eb996749ad6d2d7e4e287200c48acec513d4ace542fd1241608c2",
+      "bytes": 34640729,
+      "title": "Census 2021 TS007a age by five-year age bands, LSOAs",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/15432ts007acensus2021agebyfiveyearagebands",
+      "version": "Census Day 21 March 2021; published 13 January 2023",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/census2021_ts007a_oa_northwest.csv",
+      "source_url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/15432ts007acensus2021agebyfiveyearagebands/ts007aageby5yearagebandsoutputareasnorthwest.csv",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:13:52.275442+00:00",
+      "sha256": "308f7af31396c5916a64a2ba1870dfe46443c9bb320661e39cb12658b92391c9",
+      "bytes": 20124545,
+      "title": "Census 2021 TS007a age by five-year age bands, North West Output Areas",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/15432ts007acensus2021agebyfiveyearagebands",
+      "version": "Census Day 21 March 2021; published 13 January 2023",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/oa_centroids_case.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:36:07.178107+00:00",
+      "sha256": "191cadc3e38607116cbc89085ffac1473ae47d851252f640247382b683a2684e",
+      "bytes": 1000677,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right.",
+      "derivation": "Concatenated verified raw API pages without geometry modification",
+      "input_files": [
+        "data/raw/ons/pages/oa_centroids_case_00000.geojson",
+        "data/raw/ons/pages/oa_centroids_case_00100.geojson",
+        "data/raw/ons/pages/oa_centroids_case_00200.geojson",
+        "data/raw/ons/pages/oa_centroids_case_00300.geojson",
+        "data/raw/ons/pages/oa_centroids_case_00400.geojson",
+        "data/raw/ons/pages/oa_centroids_case_00500.geojson",
+        "data/raw/ons/pages/oa_centroids_case_00600.geojson",
+        "data/raw/ons/pages/oa_centroids_case_00700.geojson",
+        "data/raw/ons/pages/oa_centroids_case_00800.geojson",
+        "data/raw/ons/pages/oa_centroids_case_00900.geojson",
+        "data/raw/ons/pages/oa_centroids_case_01000.geojson",
+        "data/raw/ons/pages/oa_centroids_case_01100.geojson",
+        "data/raw/ons/pages/oa_centroids_case_01200.geojson",
+        "data/raw/ons/pages/oa_centroids_case_01300.geojson",
+        "data/raw/ons/pages/oa_centroids_case_01400.geojson",
+        "data/raw/ons/pages/oa_centroids_case_01500.geojson",
+        "data/raw/ons/pages/oa_centroids_case_01600.geojson",
+        "data/raw/ons/pages/oa_centroids_case_01700.geojson",
+        "data/raw/ons/pages/oa_centroids_case_01800.geojson",
+        "data/raw/ons/pages/oa_centroids_case_01900.geojson",
+        "data/raw/ons/pages/oa_centroids_case_02000.geojson",
+        "data/raw/ons/pages/oa_centroids_case_02100.geojson",
+        "data/raw/ons/pages/oa_centroids_case_02200.geojson",
+        "data/raw/ons/pages/oa_centroids_case_02300.geojson",
+        "data/raw/ons/pages/oa_centroids_case_02400.geojson"
+      ]
+    },
+    {
+      "file": "data/raw/ons/oa_lookup_case.json",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_LSOA_MSOA_EW_DEC_2021_LU_v3/FeatureServer/0/query",
+      "parameters": {
+        "where": "LAD22NM IN ('Manchester','Salford')"
+      },
+      "acquired_utc": "2026-09-29T16:36:07.079446+00:00",
+      "sha256": "02099c7295f2729c02b9f1409fa0b30baacb166d2c00f09d45365ed0b881d050",
+      "bytes": 823207,
+      "title": "OA 2021 to LSOA to MSOA to LAD December 2021 Exact Fit Lookup, V3",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=b9ca90c10aaa4b8d9791e9859a38ca67",
+      "version": "December 2021, V3",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right.",
+      "input_files": [
+        "data/raw/ons/pages/oa_lookup_case_00000.json",
+        "data/raw/ons/pages/oa_lookup_case_01000.json",
+        "data/raw/ons/pages/oa_lookup_case_02000.json"
+      ],
+      "row_count": 2466
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_00000.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00025605','E00025607','E00025608','E00025611','E00025612','E00025613','E00025614','E00025615','E00025616','E00025617','E00025618','E00025619','E00025621','E00025622','E00025623','E00025625','E00025626','E00025627','E00025628','E00025629','E00025630','E00025631','E00025632','E00025633','E00025634','E00025635','E00025636','E00025638','E00025639','E00025640','E00025641','E00025642','E00025643','E00025644','E00025645','E00025646','E00025647','E00025648','E00025649','E00025650','E00025651','E00025652','E00025653','E00025654','E00025655','E00025656','E00025657','E00025658','E00025659','E00025660','E00025661','E00025662','E00025663','E00025664','E00025666','E00025667','E00025668','E00025669','E00025670','E00025671','E00025672','E00025673','E00025674','E00025675','E00025676','E00025677','E00025678','E00025680','E00025681','E00025682','E00025684','E00025685','E00025687','E00025688','E00025689','E00025690','E00025691','E00025692','E00025693','E00025694','E00025695','E00025696','E00025697','E00025698','E00025699','E00025700','E00025701','E00025702','E00025703','E00025704','E00025705','E00025706','E00025707','E00025708','E00025709','E00025710','E00025711','E00025712','E00025713','E00025714')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:18:57.281690+00:00",
+      "sha256": "102d863c7fcfa85750995b32b29796c85a8430f849fe9e213e45f6ae7758ce6b",
+      "bytes": 25971,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_00100.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00025715','E00025716','E00025717','E00025718','E00025719','E00025720','E00025721','E00025722','E00025723','E00025724','E00025725','E00025726','E00025727','E00025728','E00025729','E00025730','E00025731','E00025732','E00025733','E00025734','E00025735','E00025736','E00025737','E00025738','E00025739','E00025740','E00025741','E00025742','E00025743','E00025744','E00025745','E00025746','E00025747','E00025748','E00025749','E00025750','E00025751','E00025752','E00025753','E00025754','E00025756','E00025757','E00025758','E00025759','E00025760','E00025761','E00025762','E00025763','E00025764','E00025765','E00025766','E00025767','E00025768','E00025769','E00025771','E00025772','E00025773','E00025774','E00025775','E00025776','E00025777','E00025778','E00025779','E00025780','E00025781','E00025782','E00025786','E00025787','E00025788','E00025790','E00025791','E00025793','E00025794','E00025795','E00025796','E00025797','E00025798','E00025799','E00025800','E00025801','E00025802','E00025803','E00025804','E00025805','E00025806','E00025807','E00025808','E00025809','E00025810','E00025811','E00025812','E00025813','E00025814','E00025815','E00025816','E00025817','E00025818','E00025819','E00025820','E00025821')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:06.660600+00:00",
+      "sha256": "4d70256f66960c7e0af5c4a3553dad63322977268d16c5a51caf8aaaec68b203",
+      "bytes": 25973,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_00200.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00025822','E00025823','E00025825','E00025826','E00025827','E00025828','E00025829','E00025830','E00025832','E00025833','E00025834','E00025835','E00025836','E00025838','E00025840','E00025841','E00025842','E00025843','E00025844','E00025845','E00025846','E00025850','E00025851','E00025852','E00025853','E00025855','E00025856','E00025858','E00025859','E00025862','E00025863','E00025864','E00025865','E00025866','E00025867','E00025868','E00025869','E00025870','E00025871','E00025872','E00025873','E00025875','E00025876','E00025877','E00025878','E00025879','E00025880','E00025882','E00025883','E00025884','E00025885','E00025886','E00025887','E00025888','E00025889','E00025890','E00025891','E00025892','E00025893','E00025894','E00025895','E00025896','E00025897','E00025898','E00025899','E00025900','E00025901','E00025902','E00025903','E00025904','E00025905','E00025906','E00025907','E00025908','E00025909','E00025910','E00025911','E00025912','E00025913','E00025914','E00025915','E00025916','E00025917','E00025918','E00025919','E00025920','E00025921','E00025922','E00025923','E00025924','E00025926','E00025927','E00025928','E00025929','E00025930','E00025931','E00025932','E00025933','E00025934','E00025935')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:07.049096+00:00",
+      "sha256": "3373b27c268ec3c2c4e2436d146c54cad99f9ac03234db9c1e8b166fc028cd3b",
+      "bytes": 25981,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_00300.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00025936','E00025937','E00025938','E00025939','E00025940','E00025941','E00025942','E00025943','E00025944','E00025945','E00025948','E00025949','E00025951','E00025953','E00025954','E00025955','E00025957','E00025958','E00025959','E00025961','E00025962','E00025964','E00025968','E00025969','E00025970','E00025976','E00025988','E00025989','E00025994','E00025995','E00025996','E00025997','E00025998','E00026000','E00026001','E00026002','E00026003','E00026004','E00026005','E00026006','E00026007','E00026008','E00026009','E00026010','E00026011','E00026012','E00026014','E00026015','E00026017','E00026018','E00026019','E00026020','E00026022','E00026023','E00026024','E00026025','E00026026','E00026027','E00026028','E00026030','E00026031','E00026032','E00026033','E00026034','E00026035','E00026036','E00026038','E00026039','E00026040','E00026041','E00026042','E00026043','E00026045','E00026046','E00026047','E00026048','E00026049','E00026053','E00026054','E00026055','E00026056','E00026058','E00026059','E00026060','E00026065','E00026066','E00026067','E00026068','E00026070','E00026071','E00026072','E00026073','E00026075','E00026076','E00026077','E00026078','E00026079','E00026080','E00026081','E00026082')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:07.480902+00:00",
+      "sha256": "74bb4c7628bd5934a19b859da8646680d1ec40e975ed4d829727e27d06ac7f91",
+      "bytes": 25977,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_00400.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00026083','E00026084','E00026085','E00026086','E00026087','E00026088','E00026089','E00026090','E00026091','E00026092','E00026093','E00026094','E00026095','E00026096','E00026097','E00026098','E00026099','E00026100','E00026101','E00026102','E00026103','E00026104','E00026105','E00026106','E00026107','E00026108','E00026109','E00026110','E00026111','E00026112','E00026113','E00026114','E00026115','E00026116','E00026117','E00026118','E00026119','E00026120','E00026121','E00026122','E00026123','E00026124','E00026125','E00026126','E00026127','E00026128','E00026129','E00026130','E00026131','E00026132','E00026133','E00026134','E00026136','E00026137','E00026138','E00026139','E00026140','E00026141','E00026143','E00026144','E00026145','E00026146','E00026147','E00026148','E00026149','E00026150','E00026151','E00026152','E00026153','E00026154','E00026155','E00026156','E00026157','E00026158','E00026159','E00026160','E00026161','E00026162','E00026163','E00026164','E00026165','E00026166','E00026167','E00026168','E00026169','E00026170','E00026171','E00026172','E00026173','E00026174','E00026175','E00026176','E00026177','E00026178','E00026179','E00026180','E00026181','E00026182','E00026183','E00026184')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:08.038679+00:00",
+      "sha256": "d4c890e602fb4034dd3e63c9f5834a31681b5f235a14ad4c4eabd01cd522e872",
+      "bytes": 25983,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_00500.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00026185','E00026186','E00026187','E00026188','E00026189','E00026190','E00026191','E00026192','E00026193','E00026194','E00026195','E00026196','E00026197','E00026198','E00026199','E00026200','E00026201','E00026202','E00026203','E00026204','E00026205','E00026206','E00026207','E00026208','E00026209','E00026210','E00026211','E00026212','E00026213','E00026214','E00026215','E00026216','E00026217','E00026218','E00026219','E00026220','E00026221','E00026222','E00026223','E00026224','E00026225','E00026227','E00026228','E00026230','E00026231','E00026232','E00026233','E00026234','E00026235','E00026236','E00026237','E00026238','E00026239','E00026241','E00026242','E00026243','E00026244','E00026245','E00026246','E00026247','E00026248','E00026250','E00026251','E00026252','E00026254','E00026255','E00026257','E00026258','E00026259','E00026260','E00026261','E00026262','E00026263','E00026264','E00026265','E00026266','E00026267','E00026268','E00026269','E00026270','E00026272','E00026273','E00026274','E00026275','E00026277','E00026278','E00026279','E00026280','E00026281','E00026282','E00026283','E00026284','E00026285','E00026286','E00026287','E00026288','E00026289','E00026290','E00026291','E00026292')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:08.402274+00:00",
+      "sha256": "ef67327914e6617ac35fca1b951bfb7af594de7e641f47db9e565f4f729f0c49",
+      "bytes": 25967,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_00600.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00026293','E00026294','E00026295','E00026296','E00026297','E00026298','E00026299','E00026300','E00026301','E00026302','E00026304','E00026305','E00026306','E00026307','E00026308','E00026309','E00026310','E00026312','E00026313','E00026314','E00026315','E00026316','E00026317','E00026318','E00026319','E00026320','E00026321','E00026322','E00026323','E00026324','E00026325','E00026326','E00026327','E00026328','E00026329','E00026330','E00026331','E00026332','E00026333','E00026335','E00026336','E00026337','E00026338','E00026343','E00026344','E00026345','E00026346','E00026348','E00026349','E00026350','E00026351','E00026352','E00026353','E00026354','E00026355','E00026356','E00026357','E00026358','E00026359','E00026360','E00026361','E00026362','E00026363','E00026364','E00026365','E00026366','E00026367','E00026369','E00026371','E00026372','E00026373','E00026374','E00026375','E00026376','E00026379','E00026381','E00026383','E00026387','E00026392','E00026393','E00026395','E00026396','E00026397','E00026398','E00026400','E00026402','E00026403','E00026405','E00026406','E00026407','E00026408','E00026409','E00026410','E00026411','E00026412','E00026413','E00026414','E00026415','E00026416','E00026417')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:08.734530+00:00",
+      "sha256": "0eb1b8bd172994453575fffd4c9f4eba85a26395dd1c6dcf1ffc9ac8d6cbad9f",
+      "bytes": 25972,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_00700.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00026418','E00026419','E00026420','E00026421','E00026422','E00026423','E00026424','E00026425','E00026426','E00026427','E00026428','E00026429','E00026430','E00026431','E00026432','E00026433','E00026434','E00026435','E00026436','E00026437','E00026438','E00026439','E00026440','E00026441','E00026442','E00026443','E00026444','E00026445','E00026446','E00026447','E00026448','E00026449','E00026450','E00026451','E00026452','E00026453','E00026454','E00026455','E00026457','E00026458','E00026459','E00026460','E00026461','E00026462','E00026463','E00026464','E00026465','E00026466','E00026467','E00026468','E00026469','E00026470','E00026471','E00026472','E00026473','E00026474','E00026475','E00026476','E00026477','E00026478','E00026479','E00026480','E00026481','E00026482','E00026483','E00026484','E00026485','E00026487','E00026488','E00026489','E00026490','E00026491','E00026492','E00026493','E00026495','E00026496','E00026497','E00026498','E00026501','E00026502','E00026503','E00026504','E00026505','E00026506','E00026507','E00026508','E00026510','E00026511','E00026512','E00026514','E00026515','E00026516','E00026519','E00026521','E00026522','E00026523','E00026524','E00026525','E00026526','E00026527')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:09.093085+00:00",
+      "sha256": "dba455b0e19ac203f21a32d337d033db84c1a530e0eccea01fb48afba652e541",
+      "bytes": 25969,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_00800.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00026528','E00026529','E00026530','E00026531','E00026532','E00026533','E00026534','E00026537','E00026539','E00026540','E00026542','E00026543','E00026544','E00026545','E00026547','E00026548','E00026550','E00026552','E00026553','E00026554','E00026555','E00026556','E00026557','E00026558','E00026561','E00026563','E00026564','E00026565','E00026566','E00026567','E00026568','E00026569','E00026570','E00026571','E00026572','E00026573','E00026574','E00026575','E00026576','E00026577','E00026578','E00026579','E00026580','E00026581','E00026582','E00026583','E00026584','E00026585','E00026586','E00026587','E00026588','E00026589','E00026590','E00026591','E00026592','E00026593','E00026594','E00026595','E00026596','E00026597','E00026598','E00026599','E00026600','E00026601','E00026602','E00026603','E00026604','E00026605','E00026606','E00026608','E00026609','E00026610','E00026611','E00026613','E00026614','E00026615','E00026616','E00026617','E00026618','E00026619','E00026620','E00026621','E00026622','E00026623','E00026624','E00026625','E00026626','E00026627','E00026628','E00026629','E00026630','E00026631','E00026632','E00026634','E00026635','E00026636','E00026638','E00026639','E00026640','E00026641')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:09.472177+00:00",
+      "sha256": "920e88024e19abda5dfbf21418c5ad1059f6927e6073783304bc439e122804e5",
+      "bytes": 25978,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_00900.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00026642','E00026643','E00026644','E00026645','E00026646','E00026647','E00026648','E00026649','E00026650','E00026651','E00026652','E00026653','E00026654','E00026655','E00026656','E00026657','E00026658','E00026659','E00026660','E00026661','E00026662','E00026663','E00026664','E00026665','E00026666','E00026667','E00026668','E00026669','E00026670','E00026671','E00026672','E00026673','E00026674','E00026675','E00026676','E00026677','E00026678','E00026679','E00026680','E00026681','E00026682','E00026683','E00026684','E00026685','E00026686','E00026687','E00026688','E00026689','E00026690','E00026691','E00026692','E00026693','E00026694','E00026695','E00026696','E00026697','E00026698','E00026699','E00026700','E00026701','E00026702','E00026703','E00026704','E00026705','E00026706','E00026707','E00026708','E00026709','E00026710','E00026711','E00026712','E00026713','E00026714','E00026715','E00026716','E00026717','E00026718','E00026719','E00026720','E00026721','E00026722','E00026723','E00026724','E00026725','E00026726','E00026727','E00026728','E00026730','E00026731','E00026732','E00026733','E00026734','E00026735','E00026736','E00026737','E00026738','E00026739','E00026740','E00026741','E00026742')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:09.886302+00:00",
+      "sha256": "c818bca18c8aa8d4ecb3dbf2e1002c54c1f7c7ababaa857ec0b1d5fbcb249d9c",
+      "bytes": 25970,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_01000.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00026743','E00026744','E00026745','E00026746','E00026747','E00026748','E00026749','E00026750','E00026752','E00026753','E00026754','E00026755','E00026756','E00026758','E00026759','E00026760','E00026761','E00026764','E00026766','E00026767','E00026768','E00026769','E00026770','E00026771','E00026772','E00026773','E00026774','E00026775','E00026776','E00026777','E00026778','E00026779','E00026780','E00026781','E00026782','E00026783','E00026784','E00026785','E00026786','E00026787','E00026788','E00026789','E00026790','E00026791','E00026792','E00026793','E00026795','E00026796','E00026797','E00026798','E00026799','E00026800','E00026801','E00026802','E00026803','E00026804','E00026806','E00026807','E00026808','E00026809','E00026810','E00026811','E00026812','E00026813','E00026814','E00026815','E00026816','E00026817','E00026818','E00026819','E00026821','E00026822','E00026823','E00026824','E00026825','E00026826','E00026827','E00026828','E00026829','E00026830','E00026831','E00026832','E00026833','E00026834','E00026835','E00026837','E00026838','E00026840','E00026841','E00026842','E00026843','E00026844','E00026845','E00026846','E00026847','E00026848','E00026849','E00026850','E00026851','E00026852')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:10.550440+00:00",
+      "sha256": "f55a5e7497e631ce63c2c6ab7589ad6fb6dd0e97e9737cb37ab1952167cd84df",
+      "bytes": 25975,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_01100.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00026854','E00026855','E00026856','E00026857','E00026858','E00026859','E00026860','E00026861','E00026862','E00026863','E00026864','E00026865','E00026866','E00026867','E00026868','E00026869','E00026870','E00026871','E00026872','E00026873','E00026874','E00026875','E00026876','E00026877','E00026878','E00026879','E00026880','E00026881','E00026882','E00026883','E00026884','E00026885','E00026886','E00026887','E00026888','E00026889','E00026890','E00026891','E00026892','E00026893','E00026894','E00026895','E00026896','E00026897','E00026898','E00026899','E00026900','E00026901','E00026902','E00026903','E00026904','E00026905','E00026906','E00026907','E00026909','E00026910','E00026912','E00026913','E00026914','E00026915','E00026916','E00026917','E00026918','E00026919','E00026920','E00026921','E00026922','E00026923','E00026924','E00026925','E00026926','E00026927','E00026928','E00026929','E00026930','E00026931','E00026932','E00026934','E00026935','E00026936','E00026937','E00026938','E00026939','E00026940','E00026941','E00026942','E00026943','E00028328','E00028329','E00028330','E00028331','E00028332','E00028333','E00028334','E00028335','E00028336','E00028338','E00028339','E00028340','E00028342')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:10.945678+00:00",
+      "sha256": "2f1f37de309f59f2aad73c2d3af7c988a830b532e17480fe1fa6756a2e2a55f1",
+      "bytes": 25973,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_01200.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00028343','E00028344','E00028345','E00028346','E00028347','E00028349','E00028350','E00028351','E00028352','E00028353','E00028354','E00028355','E00028356','E00028357','E00028358','E00028359','E00028360','E00028361','E00028362','E00028363','E00028364','E00028365','E00028366','E00028367','E00028369','E00028370','E00028372','E00028374','E00028375','E00028378','E00028379','E00028385','E00028387','E00028388','E00028390','E00028392','E00028393','E00028394','E00028395','E00028396','E00028397','E00028398','E00028399','E00028400','E00028401','E00028402','E00028404','E00028405','E00028408','E00028410','E00028411','E00028412','E00028413','E00028415','E00028417','E00028418','E00028419','E00028420','E00028421','E00028422','E00028425','E00028426','E00028427','E00028429','E00028430','E00028431','E00028433','E00028434','E00028435','E00028436','E00028437','E00028438','E00028439','E00028440','E00028441','E00028442','E00028443','E00028444','E00028445','E00028446','E00028447','E00028448','E00028449','E00028450','E00028451','E00028452','E00028453','E00028454','E00028455','E00028456','E00028457','E00028458','E00028459','E00028460','E00028461','E00028462','E00028463','E00028464','E00028465','E00028466')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:11.439170+00:00",
+      "sha256": "242d355a5694765619d169dfe7751bf8d9bed12802349744278ee228ccb57c1e",
+      "bytes": 25976,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_01300.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00028467','E00028468','E00028469','E00028470','E00028471','E00028472','E00028473','E00028474','E00028475','E00028476','E00028477','E00028478','E00028479','E00028480','E00028481','E00028482','E00028483','E00028484','E00028485','E00028486','E00028487','E00028488','E00028489','E00028490','E00028491','E00028492','E00028493','E00028494','E00028495','E00028496','E00028497','E00028498','E00028499','E00028500','E00028501','E00028502','E00028503','E00028504','E00028505','E00028506','E00028507','E00028508','E00028509','E00028510','E00028511','E00028512','E00028513','E00028514','E00028515','E00028516','E00028517','E00028518','E00028519','E00028520','E00028521','E00028522','E00028523','E00028524','E00028525','E00028526','E00028527','E00028528','E00028529','E00028530','E00028531','E00028532','E00028534','E00028535','E00028536','E00028537','E00028539','E00028540','E00028541','E00028542','E00028543','E00028544','E00028545','E00028546','E00028547','E00028548','E00028549','E00028550','E00028551','E00028552','E00028553','E00028554','E00028555','E00028556','E00028557','E00028558','E00028559','E00028560','E00028561','E00028562','E00028563','E00028564','E00028565','E00028566','E00028567','E00028568')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:12.116507+00:00",
+      "sha256": "2e8d25adaf7c1a56768b9f8a493a37e352ba53f614eca48bf977154fecde57b4",
+      "bytes": 25971,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_01400.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00028569','E00028570','E00028571','E00028572','E00028573','E00028575','E00028576','E00028577','E00028578','E00028579','E00028580','E00028581','E00028582','E00028584','E00028585','E00028587','E00028588','E00028590','E00028591','E00028592','E00028594','E00028595','E00028596','E00028597','E00028598','E00028599','E00028600','E00028601','E00028602','E00028603','E00028604','E00028605','E00028606','E00028607','E00028608','E00028609','E00028610','E00028611','E00028612','E00028613','E00028616','E00028617','E00028620','E00028621','E00028622','E00028623','E00028624','E00028625','E00028626','E00028628','E00028629','E00028630','E00028631','E00028632','E00028633','E00028634','E00028638','E00028639','E00028640','E00028641','E00028642','E00028643','E00028644','E00028645','E00028646','E00028647','E00028648','E00028649','E00028650','E00028651','E00028652','E00028653','E00028654','E00028655','E00028656','E00028657','E00028658','E00028659','E00028660','E00028661','E00028662','E00028663','E00028664','E00028665','E00028666','E00028667','E00028668','E00028669','E00028670','E00028671','E00028672','E00028673','E00028674','E00028675','E00028677','E00028681','E00028684','E00028686','E00028688','E00028689')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:12.832268+00:00",
+      "sha256": "37b1ca438cc53dc74863ea3f4e14607d6e000e2ef8dd756db4e1eb55831c6612",
+      "bytes": 25969,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_01500.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00028690','E00028692','E00028693','E00028695','E00028696','E00028697','E00028698','E00028699','E00028701','E00028702','E00028703','E00028704','E00028705','E00028706','E00028707','E00028708','E00028709','E00028710','E00028711','E00028712','E00028713','E00028714','E00028715','E00028716','E00028717','E00028718','E00028719','E00028720','E00028721','E00028722','E00028723','E00028724','E00028725','E00028726','E00028727','E00028728','E00028729','E00028730','E00028731','E00028732','E00028733','E00028734','E00028735','E00028736','E00028737','E00028738','E00028739','E00028740','E00028741','E00028742','E00028743','E00028746','E00028747','E00028748','E00028749','E00028752','E00028753','E00028754','E00028755','E00028756','E00028757','E00028758','E00028759','E00028760','E00028761','E00028762','E00028763','E00028764','E00028765','E00028766','E00028769','E00028770','E00028772','E00028773','E00028776','E00028777','E00028778','E00028780','E00028781','E00028783','E00028784','E00028785','E00028786','E00028787','E00028788','E00028789','E00028790','E00028791','E00028792','E00028793','E00028794','E00028795','E00028796','E00028797','E00028798','E00028799','E00028800','E00028801','E00028802','E00028803')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:13.419780+00:00",
+      "sha256": "da2d013cf0b0c1e47f81af841a72f6dd55484d93207cb5697bcbba9d2a733f2b",
+      "bytes": 25978,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_01600.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00028804','E00028805','E00028806','E00028807','E00028808','E00028809','E00028810','E00028811','E00028812','E00028813','E00028814','E00028815','E00028816','E00028817','E00028818','E00028819','E00028820','E00028821','E00028822','E00028823','E00028824','E00028825','E00028826','E00028827','E00028828','E00028829','E00028830','E00028831','E00028832','E00028833','E00028834','E00028835','E00028836','E00028837','E00028838','E00028839','E00028840','E00028841','E00028842','E00028843','E00028844','E00028845','E00028846','E00028847','E00028848','E00028849','E00028850','E00028851','E00028852','E00028853','E00028854','E00028855','E00028856','E00028857','E00028858','E00028859','E00028860','E00028861','E00028862','E00028863','E00028864','E00028865','E00028866','E00028867','E00028868','E00028869','E00028870','E00028871','E00028872','E00028873','E00028874','E00028875','E00028876','E00028877','E00028878','E00028880','E00028881','E00028882','E00028883','E00028884','E00028885','E00028886','E00028888','E00028889','E00028890','E00028891','E00028892','E00028893','E00028894','E00028895','E00028896','E00028897','E00028898','E00028899','E00028900','E00028901','E00028902','E00028903','E00028904','E00028905')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:13.808739+00:00",
+      "sha256": "f761ad7cd125a06dd2c5e668c453946023ed860a950b77657042d7fc7accdf9e",
+      "bytes": 25970,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_01700.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00028906','E00028907','E00028908','E00028909','E00028910','E00028911','E00028912','E00028913','E00028914','E00028915','E00028916','E00028917','E00028918','E00028919','E00028920','E00028921','E00028922','E00028923','E00028924','E00028925','E00028926','E00028927','E00028928','E00028929','E00028930','E00028931','E00028932','E00028933','E00028934','E00028935','E00028936','E00028937','E00028938','E00028939','E00028940','E00028941','E00028942','E00028943','E00028944','E00028945','E00028946','E00028947','E00028948','E00028949','E00028950','E00028952','E00028953','E00028955','E00028956','E00028957','E00028958','E00028959','E00028960','E00028961','E00028962','E00028963','E00028964','E00028965','E00028966','E00028967','E00028968','E00028969','E00028970','E00028971','E00028972','E00028973','E00028974','E00028975','E00028976','E00028977','E00028978','E00028980','E00028981','E00028982','E00028983','E00028984','E00028985','E00028986','E00028987','E00028988','E00028992','E00028993','E00028994','E00028995','E00028996','E00028997','E00028998','E00028999','E00029000','E00029001','E00029002','E00029003','E00029004','E00029005','E00029006','E00029007','E00029008','E00029009','E00029010','E00029011')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:14.178883+00:00",
+      "sha256": "bb86915e3d8fc45ae6a6ca42c7171e465d4599e6795dde0a1a2eb6de52e48174",
+      "bytes": 25972,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_01800.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00029012','E00029013','E00029014','E00029015','E00029017','E00029018','E00029019','E00029020','E00029021','E00029022','E00029023','E00029024','E00029025','E00029026','E00029027','E00029028','E00029029','E00029030','E00029031','E00029032','E00029033','E00029034','E00029035','E00029036','E00029037','E00029038','E00029039','E00029040','E00029041','E00029042','E00029044','E00029045','E00029046','E00029047','E00029048','E00029049','E00029050','E00029051','E00029052','E00029053','E00029054','E00029055','E00029056','E00029057','E00029058','E00029059','E00029060','E00029061','E00029062','E00029063','E00029064','E00029065','E00029066','E00029067','E00029068','E00029069','E00029070','E00029071','E00029072','E00029073','E00029074','E00029075','E00029076','E00029077','E00029078','E00029079','E00029080','E00029081','E00029082','E00029083','E00168576','E00168579','E00168581','E00171967','E00171971','E00171973','E00171974','E00171976','E00172921','E00172923','E00172924','E00172926','E00172928','E00172929','E00172931','E00172934','E00172935','E00172937','E00172938','E00172942','E00172943','E00172945','E00172946','E00172948','E00172949','E00172954','E00172956','E00172957','E00172959','E00172962')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:14.610096+00:00",
+      "sha256": "ad77b82c8212aa16362b89b29800c38c466156e256ccd4522a16be3a3236619e",
+      "bytes": 25972,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_01900.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00172963','E00172965','E00172966','E00172968','E00172970','E00172971','E00172973','E00172974','E00172976','E00172977','E00172979','E00172980','E00172988','E00172990','E00172991','E00172994','E00172996','E00172998','E00172999','E00173001','E00173002','E00173004','E00173007','E00173008','E00173012','E00173013','E00173015','E00173016','E00173018','E00173019','E00173022','E00173026','E00173027','E00173029','E00175804','E00175805','E00175807','E00175808','E00175809','E00175810','E00175814','E00175815','E00175818','E00175822','E00175823','E00175826','E00175827','E00175828','E00175830','E00175831','E00175833','E00175834','E00175835','E00175836','E00175837','E00175838','E00175839','E00175840','E00175842','E00175844','E00175845','E00175846','E00175847','E00175849','E00175852','E00175853','E00175855','E00175856','E00175857','E00175858','E00175859','E00175860','E00175861','E00175862','E00175863','E00175864','E00175865','E00175866','E00175867','E00175868','E00175869','E00175870','E00175871','E00175872','E00175874','E00175876','E00175877','E00175878','E00175879','E00175880','E00175881','E00175882','E00175883','E00175884','E00175885','E00175886','E00175888','E00175889','E00175890','E00175891')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:15.038407+00:00",
+      "sha256": "300b7c9feaf66c3f83d52a3335a9e9b7c87a649c9068c3b7383d8bb9476ac482",
+      "bytes": 25968,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_02000.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00175892','E00175893','E00175894','E00175896','E00175897','E00175898','E00175899','E00175900','E00175901','E00175902','E00175903','E00175904','E00175905','E00175907','E00175908','E00175909','E00175910','E00175911','E00175912','E00175913','E00175914','E00175915','E00175917','E00175918','E00175919','E00175920','E00175921','E00175924','E00175925','E00175927','E00175930','E00175932','E00175933','E00175934','E00175935','E00175936','E00175939','E00175940','E00175941','E00175942','E00175943','E00175944','E00175946','E00175947','E00175948','E00175949','E00175950','E00175951','E00175952','E00175953','E00175954','E00175955','E00175956','E00175959','E00175960','E00175961','E00175963','E00175964','E00175965','E00175966','E00175967','E00175968','E00175969','E00175970','E00175971','E00175972','E00175973','E00175974','E00175975','E00175976','E00175977','E00175978','E00175979','E00175980','E00175981','E00175982','E00175983','E00175984','E00175985','E00175986','E00175987','E00175988','E00175989','E00175990','E00175991','E00175992','E00175993','E00175994','E00175995','E00175996','E00175998','E00175999','E00176001','E00176003','E00176004','E00176006','E00176007','E00176008','E00176009','E00176010')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:15.474672+00:00",
+      "sha256": "e5ca2fed79e3806a44585d51e2d22248bf2e9b858b1edd7a9a7df019939cd4bf",
+      "bytes": 25980,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_02100.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00176011','E00176012','E00176013','E00176014','E00176015','E00176016','E00176017','E00176019','E00176020','E00176021','E00176022','E00176023','E00176024','E00176025','E00176026','E00176027','E00176028','E00176029','E00176030','E00176032','E00176033','E00176034','E00176035','E00176036','E00176037','E00176039','E00176040','E00176042','E00176043','E00176044','E00176045','E00176047','E00176050','E00176052','E00176053','E00176054','E00176057','E00176059','E00176060','E00176062','E00176063','E00176064','E00176065','E00176066','E00176068','E00176069','E00176071','E00176072','E00176073','E00176075','E00176076','E00176077','E00176078','E00176080','E00176081','E00176083','E00176084','E00176085','E00176086','E00176087','E00176088','E00176089','E00176090','E00176092','E00176093','E00180776','E00180777','E00180778','E00180779','E00180780','E00180781','E00180782','E00180783','E00180784','E00180785','E00180786','E00180787','E00180788','E00180789','E00180790','E00180791','E00180792','E00180793','E00180794','E00180795','E00180796','E00180797','E00180798','E00180799','E00180800','E00180801','E00180802','E00180803','E00180804','E00180805','E00180806','E00180807','E00180808','E00180809','E00180810')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:15.851008+00:00",
+      "sha256": "1033bfa1b56449dd150de56d356ccf0e3b20853c0b32064a913f284a8fa7517b",
+      "bytes": 25986,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_02200.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00180811','E00180812','E00180813','E00180814','E00180815','E00180816','E00180817','E00180818','E00180819','E00180820','E00180821','E00180822','E00180823','E00180824','E00180825','E00180826','E00180827','E00180828','E00180829','E00180830','E00180831','E00180832','E00180833','E00180834','E00180835','E00180836','E00180837','E00180838','E00180839','E00180840','E00180841','E00180842','E00180843','E00180844','E00180845','E00180846','E00180847','E00180848','E00180849','E00180850','E00180851','E00180852','E00180853','E00180854','E00180855','E00180856','E00180857','E00180858','E00180859','E00180860','E00180861','E00180862','E00180863','E00180864','E00180865','E00180866','E00180867','E00180868','E00180869','E00180870','E00180871','E00180872','E00180873','E00180874','E00180875','E00180876','E00180877','E00180878','E00180879','E00180880','E00180881','E00180882','E00180883','E00180884','E00180885','E00180886','E00180887','E00180888','E00180889','E00180890','E00180891','E00180892','E00180893','E00180894','E00180895','E00180896','E00180897','E00180898','E00180899','E00180900','E00180901','E00180902','E00180903','E00180904','E00180905','E00180906','E00180907','E00180908','E00180909','E00180910')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:16.302768+00:00",
+      "sha256": "0242f38a59ef73a411ef31432432fc21b1b23b71dac40d0d202ed448a22fdbdc",
+      "bytes": 25969,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_02300.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00180911','E00180912','E00180913','E00180914','E00180915','E00180916','E00180917','E00180918','E00180919','E00180920','E00180921','E00180922','E00180923','E00180924','E00180925','E00180926','E00180927','E00180928','E00180929','E00180930','E00180931','E00180932','E00180933','E00180934','E00180935','E00180936','E00180937','E00180938','E00180939','E00180940','E00180941','E00180942','E00180943','E00180944','E00180945','E00180946','E00180947','E00180948','E00180949','E00180950','E00181563','E00181564','E00181565','E00181566','E00181567','E00181568','E00181569','E00181574','E00181575','E00181576','E00181577','E00181586','E00181587','E00181589','E00181590','E00181591','E00181592','E00181593','E00181594','E00181595','E00181596','E00181597','E00181598','E00181599','E00181600','E00181601','E00181602','E00181603','E00181604','E00181605','E00181607','E00181608','E00181609','E00181610','E00181611','E00181612','E00181613','E00181614','E00181615','E00181616','E00181617','E00181618','E00181620','E00181621','E00181622','E00181623','E00181624','E00181625','E00181626','E00181627','E00181628','E00181629','E00181631','E00181632','E00181633','E00181634','E00181636','E00181637','E00181638','E00181639')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:16.672437+00:00",
+      "sha256": "3790ff20a4a4c616539a3496dd7765d307bbde0b75d31869355316f56b864508",
+      "bytes": 25971,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_centroids_case_02400.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "parameters": {
+        "where": "OA21CD IN ('E00181640','E00181642','E00181643','E00181644','E00181645','E00181646','E00181647','E00181648','E00181650','E00181652','E00181653','E00181654','E00181655','E00181656','E00181657','E00181658','E00181659','E00181662','E00181663','E00181665','E00181666','E00181668','E00181669','E00181670','E00181671','E00181672','E00181673','E00181674','E00181675','E00181677','E00181678','E00181679','E00181680','E00181682','E00181683','E00181684','E00181685','E00181686','E00181687','E00181688','E00181689','E00181690','E00181691','E00181692','E00181693','E00181694','E00181695','E00181696','E00181697','E00181698','E00181699','E00181700','E00181701','E00181702','E00181704','E00181705','E00181706','E00181707','E00181708','E00181709','E00181710','E00181711','E00181712','E00181714','E00181715','E00181716')",
+        "outFields": "*",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:19:17.128542+00:00",
+      "sha256": "b9fab8001d330fdaa95184791f8a15f1c098e5f4bf6e87a83dd79e89f30b2e75",
+      "bytes": 17175,
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_lookup_case_00000.json",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_LSOA_MSOA_EW_DEC_2021_LU_v3/FeatureServer/0/query",
+      "parameters": {
+        "where": "LAD22NM IN ('Manchester','Salford')",
+        "returnGeometry": "false",
+        "outFields": "*",
+        "orderByFields": "OA21CD",
+        "f": "json",
+        "resultOffset": 0,
+        "resultRecordCount": 1000
+      },
+      "acquired_utc": "2026-09-29T16:17:12.640047+00:00",
+      "sha256": "ecbf43e3a9da441090c3f72e8db16806ebdb022332ab24e806ecfb9039678e44",
+      "bytes": 255732,
+      "title": "OA 2021 to LSOA to MSOA to LAD December 2021 Exact Fit Lookup, V3",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=b9ca90c10aaa4b8d9791e9859a38ca67",
+      "version": "December 2021, V3",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_lookup_case_01000.json",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_LSOA_MSOA_EW_DEC_2021_LU_v3/FeatureServer/0/query",
+      "parameters": {
+        "where": "LAD22NM IN ('Manchester','Salford')",
+        "returnGeometry": "false",
+        "outFields": "*",
+        "orderByFields": "OA21CD",
+        "f": "json",
+        "resultOffset": 1000,
+        "resultRecordCount": 1000
+      },
+      "acquired_utc": "2026-09-29T16:17:13.031217+00:00",
+      "sha256": "a6a37a2cbe0e57bca3cbf18a364ab3f32ca3ff1313a39570f183070061b5415a",
+      "bytes": 249009,
+      "title": "OA 2021 to LSOA to MSOA to LAD December 2021 Exact Fit Lookup, V3",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=b9ca90c10aaa4b8d9791e9859a38ca67",
+      "version": "December 2021, V3",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_lookup_case_02000.json",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_LSOA_MSOA_EW_DEC_2021_LU_v3/FeatureServer/0/query",
+      "parameters": {
+        "where": "LAD22NM IN ('Manchester','Salford')",
+        "returnGeometry": "false",
+        "outFields": "*",
+        "orderByFields": "OA21CD",
+        "f": "json",
+        "resultOffset": 2000,
+        "resultRecordCount": 1000
+      },
+      "acquired_utc": "2026-09-29T16:17:14.727018+00:00",
+      "sha256": "b182783b966824d83fac0c7a7894db018e919d6b7d7d0e4692fc1b90dfd6b92e",
+      "bytes": 118933,
+      "title": "OA 2021 to LSOA to MSOA to LAD December 2021 Exact Fit Lookup, V3",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=b9ca90c10aaa4b8d9791e9859a38ca67",
+      "version": "December 2021, V3",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/pages/oa_lookup_case_count.json",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_LSOA_MSOA_EW_DEC_2021_LU_v3/FeatureServer/0/query",
+      "parameters": {
+        "where": "LAD22NM IN ('Manchester','Salford')",
+        "returnCountOnly": "true",
+        "f": "json"
+      },
+      "acquired_utc": "2026-09-29T16:36:07.032076+00:00",
+      "sha256": "fa7b7dc5819f1b61a6b60658896041a723f39f6f9d6d744f3c692088d875a898",
+      "bytes": 14,
+      "title": "OA 2021 to LSOA to MSOA to LAD December 2021 Exact Fit Lookup, V3",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=b9ca90c10aaa4b8d9791e9859a38ca67",
+      "version": "December 2021, V3",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/ons/region_lsoas.geojson",
+      "source_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0/query",
+      "parameters": {
+        "where": "LSOA21NM LIKE 'Bolton %' OR LSOA21NM LIKE 'Bury %' OR LSOA21NM LIKE 'Manchester %' OR LSOA21NM LIKE 'Oldham %' OR LSOA21NM LIKE 'Rochdale %' OR LSOA21NM LIKE 'Salford %' OR LSOA21NM LIKE 'Stockport %' OR LSOA21NM LIKE 'Tameside %' OR LSOA21NM LIKE 'Trafford %' OR LSOA21NM LIKE 'Wigan %'",
+        "outFields": "LSOA21CD,LSOA21NM",
+        "outSR": 4326,
+        "returnGeometry": "true",
+        "f": "geojson",
+        "resultRecordCount": 2000
+      },
+      "acquired_utc": "2026-09-29T16:13:47.086901+00:00",
+      "sha256": "294cfd94e1215cec15ec6bd3e4ccc03a1065b652c441e917fe9d9cd23a882e06",
+      "bytes": 43106022,
+      "title": "Lower layer Super Output Areas (December 2021) Boundaries EW BFC (V10)",
+      "publisher": "Office for National Statistics",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=2bbaef5230694f3abae4f9145a3a9800",
+      "version": "2021 boundaries; V10, July 2024; full resolution, coastline clipped",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data \u00a9 Crown copyright and database right."
+    },
+    {
+      "file": "data/raw/os/greenspace_downloads.json",
+      "source_url": "https://api.os.uk/downloads/v1/products/OpenGreenspace/downloads",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:13:48.425781+00:00",
+      "sha256": "6df8c9307fe5f7ef26f890fa477e3f31fe310ed5b54c7130a5b60ba0b2d29cf3",
+      "bytes": 26569,
+      "title": "OS Open Greenspace",
+      "publisher": "Ordnance Survey",
+      "metadata_url": "https://docs.os.uk/os-downloads/products/land-and-terrain-portfolio/os-open-greenspace/os-open-greenspace-overview",
+      "version": "2026-04",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains OS data \u00a9 Crown copyright and database right 2026."
+    },
+    {
+      "file": "data/raw/os/greenspace_product.json",
+      "source_url": "https://api.os.uk/downloads/v1/products/OpenGreenspace",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:13:48.248090+00:00",
+      "sha256": "3ad85a031e676546b9987c48cf3d60126e888f5969cfc8d2ba47aa255c930137",
+      "bytes": 1470,
+      "title": "OS Open Greenspace",
+      "publisher": "Ordnance Survey",
+      "metadata_url": "https://docs.os.uk/os-downloads/products/land-and-terrain-portfolio/os-open-greenspace/os-open-greenspace-overview",
+      "version": "2026-04",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains OS data \u00a9 Crown copyright and database right 2026."
+    },
+    {
+      "file": "data/raw/os/opgrsp_essh_sd.zip",
+      "source_url": "https://api.os.uk/downloads/v1/products/OpenGreenspace/downloads?area=SD&format=ESRI%C2%AE+Shapefile&redirect",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:13:49.186361+00:00",
+      "sha256": "02c6aae786a9f8d49b1af65b84aa4fcfa49d74c89828e70f0eb2c724ed5e97ac",
+      "bytes": 1969827,
+      "title": "OS Open Greenspace",
+      "publisher": "Ordnance Survey",
+      "metadata_url": "https://docs.os.uk/os-downloads/products/land-and-terrain-portfolio/os-open-greenspace/os-open-greenspace-overview",
+      "version": "2026-04",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains OS data \u00a9 Crown copyright and database right 2026.",
+      "tile": "SD",
+      "upstream_md5": "9cf30302ca15c65c563e160ea02fa259"
+    },
+    {
+      "file": "data/raw/os/opgrsp_essh_se.zip",
+      "source_url": "https://api.os.uk/downloads/v1/products/OpenGreenspace/downloads?area=SE&format=ESRI%C2%AE+Shapefile&redirect",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:13:49.746909+00:00",
+      "sha256": "78be014755a83253fe40eb8584cb3bf761e63b7e32652538682432e47d3511d3",
+      "bytes": 2203584,
+      "title": "OS Open Greenspace",
+      "publisher": "Ordnance Survey",
+      "metadata_url": "https://docs.os.uk/os-downloads/products/land-and-terrain-portfolio/os-open-greenspace/os-open-greenspace-overview",
+      "version": "2026-04",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains OS data \u00a9 Crown copyright and database right 2026.",
+      "tile": "SE",
+      "upstream_md5": "a6174766c16d63663f30412bf33b5a3d"
+    },
+    {
+      "file": "data/raw/os/opgrsp_essh_sj.zip",
+      "source_url": "https://api.os.uk/downloads/v1/products/OpenGreenspace/downloads?area=SJ&format=ESRI%C2%AE+Shapefile&redirect",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:13:50.387276+00:00",
+      "sha256": "f9c14bc62a2ece84a45f5bf9b60b392f7a55548cb38aaa912a036abb842de15b",
+      "bytes": 3146120,
+      "title": "OS Open Greenspace",
+      "publisher": "Ordnance Survey",
+      "metadata_url": "https://docs.os.uk/os-downloads/products/land-and-terrain-portfolio/os-open-greenspace/os-open-greenspace-overview",
+      "version": "2026-04",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains OS data \u00a9 Crown copyright and database right 2026.",
+      "tile": "SJ",
+      "upstream_md5": "5ce0a2376f0bc095bd5535a5765e02c6"
+    },
+    {
+      "file": "data/raw/os/opgrsp_essh_sk.zip",
+      "source_url": "https://api.os.uk/downloads/v1/products/OpenGreenspace/downloads?area=SK&format=ESRI%C2%AE+Shapefile&redirect",
+      "parameters": null,
+      "acquired_utc": "2026-09-29T16:13:51.017978+00:00",
+      "sha256": "07860642a8af325aeafdceea5d832115a80c38b8504e191b7186ad9d2debc115",
+      "bytes": 2855648,
+      "title": "OS Open Greenspace",
+      "publisher": "Ordnance Survey",
+      "metadata_url": "https://docs.os.uk/os-downloads/products/land-and-terrain-portfolio/os-open-greenspace/os-open-greenspace-overview",
+      "version": "2026-04",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains OS data \u00a9 Crown copyright and database right 2026.",
+      "tile": "SK",
+      "upstream_md5": "028fc7570ac65e5a0774c3f09783c79c"
+    },
+    {
+      "file": "data/raw/osm/walking_network.json.gz",
+      "source_url": "https://overpass-api.de/api/interpreter",
+      "parameters": {
+        "query": "[out:json][timeout:240];way[\"highway\"][\"highway\"!~\"motorway|trunk|construction|proposed|raceway\"](53.321525667022264,-2.5208779946781608,53.56275507591843,-2.116353334244833);(._;>;);out body;"
+      },
+      "acquired_utc": "2026-09-29T16:14:51.281983+00:00",
+      "sha256": "cf8e7e7389b9fe320dcb27506c169fcc4e49edf99fd6fc95f6fe6cd35f28583a",
+      "bytes": 14583538,
+      "publisher": "OpenStreetMap contributors",
+      "licence": "ODbL 1.0",
+      "snapshot": "2026-09-29T16:11:18Z"
+    }
+  ],
+  "verified_utc": "2026-09-30T14:50:18.262669+00:00",
+  "source_files": 141
+}

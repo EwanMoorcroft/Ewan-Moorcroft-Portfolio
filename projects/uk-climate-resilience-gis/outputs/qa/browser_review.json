@@ -1,0 +1,22 @@
+{
+  "checked_utc": "2026-09-29T17:11:16.777583+00:00",
+  "artifact": "outputs/portfolio/interactive.html",
+  "sha256": "e6b8024caec689c08f9d21b019732e2fa84da3776942678d41b833b47b3b7f72",
+  "surface": "Local desktop browser, localhost-only preview",
+  "verified": [
+    "1,702 neighbourhoods and correct cohort/persistent-priority headlines",
+    "Search E01006261 returns Wigan 036C; score 80.5 and rank 1 match delivered evidence",
+    "E01004773 Bolton 003D shows unassessed composite, missing heat and 15.4% heat coverage",
+    "Heat metric exposes degree-Celsius scale and retains missing data",
+    "Salford filter returns 161 areas and case measure uses the public-park resident denominator",
+    "No-match search exposes a zero-area message; clearing filters restores 1,702 areas",
+    "Keyboard Enter opens neighbourhood details; Space activates zoom and fit",
+    "Narrow viewport stacks controls and detail panel",
+    "No captured browser warnings or errors"
+  ],
+  "limits": [
+    "Pointer activation was not certified in the recorded browser checks",
+    "Drag, touch and other-browser compatibility not certified"
+  ],
+  "status": "passed_for_listed_checks"
+}

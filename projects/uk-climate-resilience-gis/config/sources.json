@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "verified_on": "2026-09-29",
+  "sources": {
+    "lsoa_boundaries": {
+      "title": "Lower layer Super Output Areas (December 2021) Boundaries EW BFC (V10)",
+      "publisher": "Office for National Statistics",
+      "url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0/query",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=2bbaef5230694f3abae4f9145a3a9800",
+      "version": "2021 boundaries; V10, July 2024; full resolution, coastline clipped",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data © Crown copyright and database right.",
+      "code_field": "LSOA21CD"
+    },
+    "imd2025": {
+      "title": "English Indices of Deprivation 2025, File 7 (corrected November 2025)",
+      "publisher": "Ministry of Housing, Communities and Local Government",
+      "url": "https://assets.publishing.service.gov.uk/media/691ded56d140bbbaa59a2a7d/File_7_IoD2025_All_Ranks_Scores_Deciles_Population_Denominators.csv",
+      "metadata_url": "https://www.gov.uk/government/statistics/english-indices-of-deprivation-2025",
+      "version": "2025 release; corrected LSOA-to-LAD allocation, November 2025",
+      "geography": "LSOA 2021; LAD 2024",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains MHCLG data © Crown copyright 2025.",
+      "fields": {
+        "lsoa_code": "LSOA code (2021)",
+        "lsoa_name": "LSOA name (2021)",
+        "lad_code": "Local Authority District code (2024)",
+        "lad_name": "Local Authority District name (2024)",
+        "income_rate": "Income Score (rate)",
+        "imd_score": "Index of Multiple Deprivation (IMD) Score",
+        "imd_rank": "Index of Multiple Deprivation (IMD) Rank (where 1 is most deprived)",
+        "imd_decile": "Index of Multiple Deprivation (IMD) Decile (where 1 is most deprived 10% of LSOAs)",
+        "population_mid2022": "Total population: mid 2022"
+      }
+    },
+    "greenspace_access": {
+      "title": "Access to green space in England 2024 (corrected May 2025)",
+      "publisher": "Department for Environment, Food and Rural Affairs",
+      "url": "https://assets.publishing.service.gov.uk/media/6821cf4e53add7d476d818c1/Access_to_greenspace_England_2024.ods",
+      "metadata_url": "https://www.gov.uk/government/statistics/access-to-green-space-in-england/access-to-green-space-in-england",
+      "version": "2024 data; corrected 13 May 2025",
+      "geography": "Census 2021 Output Area records with LSOA 2021 and MSOA 2021 lookup codes; aggregate household counts to obtain LSOA rates",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains Defra data © Crown copyright 2025.",
+      "measure": "Percentage of households with access, using walkable street/path network distances; official statistics in development.",
+      "scenarios": {"1": "Green space of at least 2 ha within 1000 m, including woodland, nature reserves and open-access land", "3": "At least 0.5 ha within 200 m", "4": "At least 2 ha within 300 m", "5": "At least 10 ha within 1000 m", "7": "Scenario 5 and either Scenario 3 or 4"},
+      "oa_columns": ["OA21", "LSOA21", "MSOA21", "Household count", "Household with access count", "Percentage with access", "Rural urban"],
+      "note": "Use the corrected May 2025 workbook: the Scenario 5 national result was corrected from 53% to 33%. The compressed workbook is about 35 MB but its XML exceeds 1 GB; stream selected sheets. Compare custom routing cautiously because the official analysis uses household origins and a broader greenspace inventory."
+    },
+    "os_greenspace": {
+      "title": "OS Open Greenspace",
+      "publisher": "Ordnance Survey",
+      "url": "https://api.os.uk/downloads/v1/products/OpenGreenspace",
+      "downloads_url": "https://api.os.uk/downloads/v1/products/OpenGreenspace/downloads",
+      "metadata_url": "https://docs.os.uk/os-downloads/products/land-and-terrain-portfolio/os-open-greenspace/os-open-greenspace-overview",
+      "version": "2026-04",
+      "tiles": ["SD", "SE", "SJ", "SK"],
+      "format": "ESRI® Shapefile",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains Ordnance Survey data © Crown copyright and database right 2026.",
+      "note": "Hairy 100 km tiles overlap. Deduplicate site and access-point identifiers before analysis. A mapped site is not a guarantee of unrestricted public access."
+    },
+    "census_lsoa_age": {
+      "title": "Census 2021 TS007a age by five-year age bands, LSOAs",
+      "publisher": "Office for National Statistics",
+      "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/15432ts007acensus2021agebyfiveyearagebands/ts007aageby5yearagebandslowerlayersuperoutputareas.csv",
+      "metadata_url": "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/15432ts007acensus2021agebyfiveyearagebands",
+      "version": "Census Day 21 March 2021; published 13 January 2023",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data © Crown copyright and database right.",
+      "code_field": "Lower Layer Super Output Areas Code",
+      "age_code_field": "Age (B) (18 categories) Code",
+      "count_field": "Count",
+      "note": "18 disjoint categories. 1 = ages 0–4; 14–18 = ages 65+. Sum the 18 categories for the same-table denominator. Census disclosure control can produce differences across separate tables."
+    },
+    "census_oa_age": {
+      "title": "Census 2021 TS007a age by five-year age bands, North West Output Areas",
+      "publisher": "Office for National Statistics",
+      "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/15432ts007acensus2021agebyfiveyearagebands/ts007aageby5yearagebandsoutputareasnorthwest.csv",
+      "metadata_url": "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/15432ts007acensus2021agebyfiveyearagebands",
+      "version": "Census Day 21 March 2021; published 13 January 2023",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data © Crown copyright and database right.",
+      "code_field": "Output Areas Code",
+      "age_code_field": "Age (B) (18 categories) Code",
+      "count_field": "Count",
+      "note": "Sum all 18 disjoint age categories for routing population weights. These OA totals can differ slightly from separately published LSOA totals because of Census disclosure control."
+    },
+    "oa_lookup": {
+      "title": "OA 2021 to LSOA to MSOA to LAD December 2021 Exact Fit Lookup, V3",
+      "publisher": "Office for National Statistics",
+      "url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_LSOA_MSOA_EW_DEC_2021_LU_v3/FeatureServer/0/query",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=b9ca90c10aaa4b8d9791e9859a38ca67",
+      "version": "December 2021, V3",
+      "lad_name_field": "LAD22NM",
+      "note": "The published title says December 2021; the live V3 schema has LAD22CD and LAD22NM. No affected Greater Manchester borough boundary changes are introduced by this lookup.",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data © Crown copyright and database right."
+    },
+    "oa_centroids": {
+      "title": "Output Areas December 2021 EW Population Weighted Centroids, V4",
+      "publisher": "Office for National Statistics",
+      "url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_December_2021_EW_PWC_V4/FeatureServer/0/query",
+      "metadata_url": "https://www.arcgis.com/home/item.html?id=d05a5fdaf2e44615acc0b9d5b08592d6",
+      "version": "Census 2021 centroids, V4",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "Contains National Statistics data and OS data © Crown copyright and database right."
+    },
+    "flood_defended_extents": {
+      "title": "Rivers and Sea defended and undefended flood risk extents - present day",
+      "publisher": "Environment Agency",
+      "url": "https://environment.data.gov.uk/spatialdata/rivers-and-sea-defended-and-undefended-flood-risk-extents-present-day/ogc/features/v1/collections",
+      "metadata_url": "https://www.data.gov.uk/dataset/1589b7ec-2300-4028-9199-aa7cac4b0f68/rivers-and-sea-defended-and-undefended-flood-risk-extents-present-day",
+      "dataset_id": "bb486190-bb9c-4eb0-a4b2-c9bd63ca86ec",
+      "version": "Published 25 March 2025; dataset revised 20 May 2026; portal updated 14 August 2026",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "© Environment Agency copyright and/or database right 2025. All rights reserved.",
+      "role": "Primary regional flood land-area overlap and scenario sensitivity",
+      "collections": {
+        "primary": "Rivers_1in100_Sea_1in200_defended_extents",
+        "sensitivity": "Rivers_1in1000_Sea_1in1000_defended_extents"
+      },
+      "note": "Uses defended present-day scenarios with defences working as designed. The primary river AEP is 1% and sea AEP is 0.5%; sensitivity is 0.1% for both. Land overlap does not estimate people or properties exposed."
+    },
+    "landsat": {
+      "title": "Landsat 8-9 OLI/TIRS Collection 2 Level-2",
+      "publisher": "U.S. Geological Survey; distributed by Microsoft Planetary Computer",
+      "url": "https://planetarycomputer.microsoft.com/api/stac/v1/search",
+      "metadata_url": "https://www.usgs.gov/landsat-missions/landsat-collection-2-surface-temperature",
+      "dataset_doi": "https://doi.org/10.5066/P9OGBGM6",
+      "version": "Collection 2 Level-2; selected scene identifiers and processing versions retained in cached STAC records",
+      "licence": "USGS public domain",
+      "attribution": "Landsat Collection 2 Level-2 image courtesy of the U.S. Geological Survey.",
+      "collection": "landsat-c2-l2",
+      "temporal_coverage": "June-August candidate observations, 2021-2025; accepted dates in metadata/landsat_selection.json",
+      "resolution": "100 m native thermal observations, distributed on a 30 m grid; 100 m analysis grid",
+      "role": "Surface-temperature proxy and contextual vegetation index",
+      "note": "Clear-sky daytime land-surface temperature is not air temperature or personal heat exposure. Regional QA determines accepted scenes; do not infer a complete five-summer time series from the search interval."
+    },
+    "osm_network": {
+      "title": "OpenStreetMap pedestrian network extract, Manchester and Salford with buffer",
+      "publisher": "OpenStreetMap contributors",
+      "url": "https://overpass-api.de/api/interpreter",
+      "metadata_url": "https://www.openstreetmap.org/copyright",
+      "version": "OSM base snapshot 2026-09-29T16:11:18Z",
+      "licence": "Open Database Licence (ODbL) 1.0",
+      "attribution": "© OpenStreetMap contributors; data available under ODbL 1.0.",
+      "role": "Walking graph for the Manchester-Salford case study",
+      "note": "The exact Overpass query and snapshot timestamp are stored with the cached extract. Tags and mapped paths can be incomplete; routing does not establish real-world walkability, accessibility or opening hours."
+    },
+    "flood_rivers_sea": {
+      "title": "Risk of Flooding from Rivers and Sea, present day",
+      "publisher": "Environment Agency",
+      "url": "https://environment.data.gov.uk/backend/catalog/api/geospatial/datasets/96ab4342-82c1-4095-87f1-0082e8d84ef1",
+      "metadata_url": "https://environment.data.gov.uk/dataset/96ab4342-82c1-4095-87f1-0082e8d84ef1",
+      "query_url": "https://environment.data.gov.uk/backend/catalog/api/geospatial/query",
+      "extent_layer_id": "2cee4310-cf26-42e6-965d-e94b8dcbe8d3",
+      "version": "NaFRA2; published January 2025, metadata revised 18 June 2026",
+      "role": "Investigated, not used in the analysis",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "© Environment Agency copyright and/or database right 2025. All rights reserved.",
+      "note": "Includes presence and condition of defences; present-day probability bands. Request a small AOI as GeoPackage, not national GeoJSON."
+    },
+    "flood_surface_water": {
+      "title": "Risk of Flooding from Surface Water, present day",
+      "publisher": "Environment Agency",
+      "url": "https://environment.data.gov.uk/backend/catalog/api/geospatial/datasets/b5aaa28d-6eb9-460e-8d6f-43caa71fbe0e",
+      "metadata_url": "https://environment.data.gov.uk/dataset/b5aaa28d-6eb9-460e-8d6f-43caa71fbe0e",
+      "query_url": "https://environment.data.gov.uk/backend/catalog/api/geospatial/query",
+      "extent_layer_id": "7a7d1570-dd33-4edc-9a19-fde1b9fcaadb",
+      "version": "NaFRA2; published January 2025, metadata revised 17 September 2025",
+      "role": "Investigated, not used in the analysis",
+      "licence": "Open Government Licence v3.0",
+      "attribution": "© Environment Agency copyright and/or database right 2025. All rights reserved.",
+      "note": "Use exact risk-category polygons. WMS is rendered cartography and cannot safely be treated as category observations. AOI POST is public; request application/x.gpkg+zip."
+    }
+  }
+}

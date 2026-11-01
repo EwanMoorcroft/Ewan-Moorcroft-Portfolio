@@ -2,11 +2,13 @@
 
 ## Project environments
 
-Each project has its own `pyproject.toml` and `uv.lock` and can be installed independently. A geospatial analysis
-should not need the same environment as a reinforcement-learning run or an image classifier. Python
-3.11 is the shared baseline.
+The six projects in the shared quality workflow each have a `pyproject.toml` and `uv.lock` and can
+be installed independently. Python 3.11 is their shared baseline. The [Greater Manchester climate
+resilience case](../projects/uk-climate-resilience-gis/) instead uses QGIS 4.2.2 and its Python 3.12
+runtime; its [reproduction guide](../projects/uk-climate-resilience-gis/docs/reproduction.md) documents
+that separate environment and the source-data workflow.
 
-With `uv` installed, a typical project setup is:
+For the six lockfile-based projects, a typical setup with `uv` is:
 
 ```bash
 cd projects/<project-name>
@@ -17,9 +19,11 @@ uv run --no-sync pytest
 Each project README covers any additional training or plotting packages. The FPL chart builder uses
 the optional `analysis` extra. A standard virtual
 environment and `pip` can be used instead, although installing directly from `pyproject.toml`
-resolves a new set of versions. The lockfiles specify the tested dependency resolution. CI also
-builds each wheel, checks its installed dependencies and runs its command-line entry points from
-outside the source folder. FPL and Liverpool have container workflow checks.
+resolves a new set of versions. The lockfiles specify the tested dependency resolution for those six projects. Their CI jobs
+build wheels, check installed dependencies and run command-line entry points from outside the
+source folder. FPL and Liverpool have container workflow checks. The Greater Manchester case is
+not in that CI matrix; its recorded local QGIS tests and real-data checks are described in its
+[validation record](../projects/uk-climate-resilience-gis/docs/validation.md).
 
 ## Compute
 
@@ -31,8 +35,9 @@ outside the source folder. FPL and Liverpool have container workflow checks.
 
 ## Data and outputs
 
-| Project | Included | Kept local |
+| Project | Included in Git | Outside ordinary Git |
 |---|---|---|
+| Greater Manchester climate resilience | Code, selected maps and figures, decision tables, provenance and local validation records | Raw and intermediate caches stay local; processed data and the complete QGIS handover are provided in a separate release download |
 | Tree LiDAR | Result tables, route details, evaluator and figures | Raw point clouds and prediction arrays |
 | Liverpool urban accessibility | Derived area metrics, boundaries, centroids, spatial edges, models and figures | National Census workplace-flow table |
 | Chest X-ray | Dataset specification, duplicate analysis, evaluation outputs and preparation code | 3,475 source images and checkpoints |

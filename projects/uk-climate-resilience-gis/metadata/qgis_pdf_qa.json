@@ -1,0 +1,219 @@
+{
+  "checked_at_utc": "2026-09-29T17:11:57.187816+00:00",
+  "status": "passed",
+  "project_sha256": "014231ae76c9b933f546ff9945371141074bc3f27980c4ec9123a5c95c2e05fb",
+  "input_sha256": "708bc426ec5e98e724b4c0701d504838cca448bb79fdff82517bb7d60e429e3c",
+  "pdfs": [
+    {
+      "file": "outputs/maps/01_overview.pdf",
+      "sha256": "dfb70220270cb0cb87bc7c967787d369d007c17de345f77963d94b54ade3c676",
+      "pages": 1,
+      "page_size": "1191 x 842 pts (A3)",
+      "text_characters": 1130,
+      "fonts": [
+        "Arial-BoldMT                         CID TrueType      Identity-H       yes no  yes     11  0",
+        "ArialMT                              CID TrueType      Identity-H       yes no  yes     12  0"
+      ],
+      "footer_and_missing_class_present": true,
+      "all_current_layout_labels_present": true,
+      "layout_labels_checked": 15,
+      "render_status": "passed",
+      "render_stderr": "",
+      "render": {
+        "pixels": [
+          1600,
+          1132
+        ],
+        "rgba_sha256": "03b680e526040c493780246a898ad40223561d3b4426d26bba6bb8527fc99f8f"
+      },
+      "png": {
+        "file": "outputs/maps/01_overview.png",
+        "sha256": "7381e1ca0a648f8da916ba448908695b5dafafe6a6f130dd6e2acdd3ac55422d",
+        "pixels": [
+          2976,
+          2104
+        ],
+        "rgba_sha256": "17af4a9677dbe1140a7e3b24f59a6e2e8e1017199b0ef457dff4ad68d01efb31"
+      },
+      "reference_render_pixel_identical": null,
+      "visually_reviewed": true
+    },
+    {
+      "file": "outputs/maps/02_flood.pdf",
+      "sha256": "3a63f033a72f5a5c087cf1faa3211cb5f1ec1700a99d89dc30f6ae8ecf84c926",
+      "pages": 1,
+      "page_size": "1191 x 842 pts (A3)",
+      "text_characters": 1092,
+      "fonts": [
+        "Arial-BoldMT                         CID TrueType      Identity-H       yes no  yes     11  0",
+        "ArialMT                              CID TrueType      Identity-H       yes no  yes     12  0"
+      ],
+      "footer_and_missing_class_present": true,
+      "all_current_layout_labels_present": true,
+      "layout_labels_checked": 15,
+      "render_status": "passed",
+      "render_stderr": "",
+      "render": {
+        "pixels": [
+          1600,
+          1132
+        ],
+        "rgba_sha256": "8ccb8fd4c70631896d47ec8b63fdfe5f9f63f38730ed5c90d455fdda0e502c3b"
+      },
+      "png": {
+        "file": "outputs/maps/02_flood.png",
+        "sha256": "cd585558394c4bf347aed04657fa7b03ea436a7de94b5eb68191adb8a0956c80",
+        "pixels": [
+          2976,
+          2104
+        ],
+        "rgba_sha256": "22713e89f12fb4d2db7f402aed7cc7d46d97dbdd13a2a1474921c4824774d2ef"
+      },
+      "reference_render_pixel_identical": null,
+      "visually_reviewed": true
+    },
+    {
+      "file": "outputs/maps/03_heat.pdf",
+      "sha256": "cab64e4af6341ec7889e4cd150cbd1b02282c58d6fcfa9fbe8d67dfac97c1fb1",
+      "pages": 1,
+      "page_size": "1191 x 842 pts (A3)",
+      "text_characters": 1103,
+      "fonts": [
+        "Arial-BoldMT                         CID TrueType      Identity-H       yes no  yes     11  0",
+        "ArialMT                              CID TrueType      Identity-H       yes no  yes     12  0"
+      ],
+      "footer_and_missing_class_present": true,
+      "all_current_layout_labels_present": true,
+      "layout_labels_checked": 15,
+      "render_status": "passed",
+      "render_stderr": "",
+      "render": {
+        "pixels": [
+          1600,
+          1132
+        ],
+        "rgba_sha256": "e2da3c0d2c953fb435480e0617e1f2889bd2de696c15d9cb0c61d6c1ce194b8f"
+      },
+      "png": {
+        "file": "outputs/maps/03_heat.png",
+        "sha256": "591bc02b076fd984f19920cbbfc81a7baa2699272088bd104d8b390f3e76cdcc",
+        "pixels": [
+          2976,
+          2104
+        ],
+        "rgba_sha256": "751c55fdafdf7961f534b2af67a91400252222ffc72e847ca422411134f22e60"
+      },
+      "reference_render_pixel_identical": null,
+      "visually_reviewed": true
+    },
+    {
+      "file": "outputs/maps/04_accessibility.pdf",
+      "sha256": "188edbd8c64a5f852c34b2767a0c8228d59e84741d1c18ca637e820ee21558be",
+      "pages": 1,
+      "page_size": "1191 x 842 pts (A3)",
+      "text_characters": 1208,
+      "fonts": [
+        "Arial-BoldMT                         CID TrueType      Identity-H       yes no  yes     11  0",
+        "ArialMT                              CID TrueType      Identity-H       yes no  yes     12  0"
+      ],
+      "footer_and_missing_class_present": true,
+      "all_current_layout_labels_present": true,
+      "layout_labels_checked": 16,
+      "render_status": "passed",
+      "render_stderr": "",
+      "render": {
+        "pixels": [
+          1600,
+          1132
+        ],
+        "rgba_sha256": "a0690da185c2b8123dc390d345b5fd7a14e60f59369ffe263336d231003e6963"
+      },
+      "png": {
+        "file": "outputs/maps/04_accessibility.png",
+        "sha256": "47aebac893df8dd120898b0241a9f7d38ad49be9de0fafaa4db135ee4ea59ca9",
+        "pixels": [
+          2976,
+          2104
+        ],
+        "rgba_sha256": "8e1c7cb8d0bac7497839a75bf734f26da476405b54e475ff5b16f17bf26650bb"
+      },
+      "reference_render_pixel_identical": null,
+      "visually_reviewed": true
+    },
+    {
+      "file": "outputs/maps/05_priorities.pdf",
+      "sha256": "b156be5cd0b33e5817c8be245954e619a0c8e09e9088343aa861d60c5fe51282",
+      "pages": 1,
+      "page_size": "1191 x 842 pts (A3)",
+      "text_characters": 1133,
+      "fonts": [
+        "Arial-BoldMT                         CID TrueType      Identity-H       yes no  yes     11  0",
+        "ArialMT                              CID TrueType      Identity-H       yes no  yes     12  0"
+      ],
+      "footer_and_missing_class_present": true,
+      "all_current_layout_labels_present": true,
+      "layout_labels_checked": 15,
+      "render_status": "passed",
+      "render_stderr": "",
+      "render": {
+        "pixels": [
+          1600,
+          1132
+        ],
+        "rgba_sha256": "5078a095163cf6afc4eee5ee99efe55b66e64249576155daa665b115ca0bb25c"
+      },
+      "png": {
+        "file": "outputs/maps/05_priorities.png",
+        "sha256": "16b300a77e9a99a6f0577ce298fbfa99e4d6c6b00ee98b85cbfc83c3a0accdd3",
+        "pixels": [
+          2976,
+          2104
+        ],
+        "rgba_sha256": "ab682b68a6fa4e654e44d704d6271b3b50a2cb8b90a2e492e559d48e7428f2fe"
+      },
+      "reference_render_pixel_identical": null,
+      "visually_reviewed": true
+    },
+    {
+      "file": "outputs/maps/06_robustness.pdf",
+      "sha256": "8175f65f6128d079b96ff80ecd810617edc622f3feff71e777c8001a2089e5d2",
+      "pages": 1,
+      "page_size": "1191 x 842 pts (A3)",
+      "text_characters": 1124,
+      "fonts": [
+        "Arial-BoldMT                         CID TrueType      Identity-H       yes no  yes     11  0",
+        "ArialMT                              CID TrueType      Identity-H       yes no  yes     12  0"
+      ],
+      "footer_and_missing_class_present": true,
+      "all_current_layout_labels_present": true,
+      "layout_labels_checked": 15,
+      "render_status": "passed",
+      "render_stderr": "",
+      "render": {
+        "pixels": [
+          1600,
+          1132
+        ],
+        "rgba_sha256": "6afb0ad2082448b15a4cf56a3bd33d43a5f9d053f5d5e6b0625466dd5d190778"
+      },
+      "png": {
+        "file": "outputs/maps/06_robustness.png",
+        "sha256": "09b0bc7dff035b7ba24e6223693f2f97173c1e66bee1e8d575a17a8a0d411ee1",
+        "pixels": [
+          2976,
+          2104
+        ],
+        "rgba_sha256": "86eeb28362454c11d4523c2f9cfc6fb9f99e15b45a54b626e0808c9dac617ecb"
+      },
+      "reference_render_pixel_identical": null,
+      "visually_reviewed": true
+    }
+  ],
+  "visual_review": {
+    "status": "passed",
+    "method": "All six PNG exports and all six independent PDF renders are pixel-identical to the previously visually reviewed report.",
+    "reviewed_at_utc": "2026-09-29T17:11:32.822579+00:00",
+    "pixel_identical_to_previous_report": true,
+    "scope": "Visual/export integrity; not independent scientific verification of the analysis."
+  }
+}

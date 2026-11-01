@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "detected_at_utc": "2026-09-29T16:05:40.412697+00:00",
+  "platform": {
+    "system": "Darwin",
+    "macos_version": "27.0",
+    "architecture": "arm64"
+  },
+  "runtime": {
+    "selection": "installed QGIS application bundle",
+    "application_bundle": "/Applications/QGIS-final-4_2_2.app",
+    "python": "3.12.11",
+    "qgis": "4.2.2-Belém do Pará",
+    "qgis_code_revision": "8b48a65f",
+    "qt": "6.11.1",
+    "pyqt": "6.11.0",
+    "gdal": "3.13.3",
+    "proj": "9.8.1",
+    "geos": "3.14.1-CAPI-1.20.5",
+    "epsg_registry": "v12.029 (2025-10-02)"
+  },
+  "python_modules": {
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "geopandas": "1.1.4",
+    "shapely": "2.1.2",
+    "scipy": "1.18.0",
+    "networkx": "3.6.1",
+    "rasterio": "1.5.1",
+    "fiona": "1.10.1",
+    "pyogrio": "0.13.0",
+    "requests": "2.34.2",
+    "yaml": "6.0.3",
+    "pyarrow": "25.0.1",
+    "matplotlib": "3.11.1",
+    "PIL": "12.3.0"
+  },
+  "pytest_available": false,
+  "test_runner": "unittest (Python standard library)",
+  "processing_algorithm_counts": {
+    "3d": 1,
+    "gdal": 59,
+    "grass": 307,
+    "model": 0,
+    "native": 350,
+    "pdal": 24,
+    "project": 0,
+    "qgis": 31,
+    "script": 0
+  },
+  "processing_execution_verified": [
+    "native:buffer through processing.run",
+    "native:buffer through qgis_process --json --skip-loading-plugins run"
+  ],
+  "launcher": {
+    "file": "scripts/run_python.sh",
+    "qgis_app_override": "QGIS_APP",
+    "nonmac_python_override": "QGIS_PYTHON",
+    "profile": "work/qgis-profile",
+    "cache": "work/cache",
+    "mode": "QT_QPA_PLATFORM=offscreen",
+    "macos_selection": "first usable QGIS*.app in /Applications, then ~/Applications; explicit QGIS_APP takes precedence",
+    "nonmac_status": "external PyQGIS environment preserved; not execution-tested on this host",
+    "project_source_path": "src",
+    "geopackage_journal_mode": "OGR_SQLITE_JOURNAL=DELETE; process-local fixed mode to avoid observed QGIS/GDAL filter-induced connection failures"
+  },
+  "verification": {
+    "synthetic_only": true,
+    "data_features": 4,
+    "data_crs": "EPSG:27700",
+    "geopandas_reprojection_and_overlay": "passed",
+    "geopackage_write_and_read": "passed",
+    "native_processing_python_and_cli": "passed",
+    "project_qgz": "passed",
+    "project_relative_source": "./data.gpkg|layername=districts",
+    "qgz_relocation_and_reopen": "passed; source resolved within relocated directory",
+    "project_and_layer_metadata": "persisted and reloaded",
+    "graduated_style": "persisted in project and exported as QML",
+    "layout": "A4 landscape; persisted and reloaded",
+    "png": "1403 x 992; exporter Success; visually inspected",
+    "pdf": "1 A4 landscape page; exporter Success; text extracted and PDF rendered with Poppler",
+    "launcher_shell_syntax": "passed",
+    "launcher_explicit_bundle_override_and_spaced_argument": "passed",
+    "launcher_missing_bundle_error": "passed",
+    "launcher_project_module_discovery": "passed; resilience package resolved from project src"
+  },
+  "observed_limits": [
+    "Default QGIS Open Sans font is missing; Qt logs a font fallback warning. Explicit Arial layout text renders correctly.",
+    "PNG export logs GDAL ERROR 6 about unsupported update access, while returning Success and creating a valid visually checked image; embedded PNG georeferencing is not claimed.",
+    "GRASS and PDAL providers are registered but their external tools were not executed.",
+    "pytest is absent; no packages were installed.",
+    "Only macOS arm64 execution was tested; QGIS 3 and nonmac platforms are unverified.",
+    "QGIS 4.2.2 can enable WAL when subset filters are changed on cloned GeoPackage layers, invalidating existing NOLOCK readers and changing the database journal header. Reproduced on isolated copies at about 321 open handles (limit 1048575). True provider forceReadOnly flags prevent the transition; the build also fixes OGR_SQLITE_JOURNAL=DELETE within its process. Both corrected probes preserved SHA256 and all feature counts.",
+    "QGIS 4.2.2 stores absolute fallback sources in layout Layer attributes despite relative project storage. The builder normalizes these saved XML attributes and checks copied-layout pixel identity at 72 dpi.",
+    "A repeated direct PDF overwrite returned exporter Success while retaining an earlier map metric. Export to a fresh temporary PDF and atomic replacement corrected it; all final PDF labels were checked against the saved layouts."
+  ],
+  "other_local_runtimes": {
+    "homebrew_python_3_14": "No inspected GIS packages installed.",
+    "homebrew_gdal": "3.10.3",
+    "conda_base": "Python 3.12.9; GDAL 3.10.3, PROJ 9.6.0, rasterio 1.4.3, NumPy 2.2.5 and pandas 3.0.1 import; PyQGIS and GeoPandas absent.",
+    "conda_envs363": "GIS modules present but NumPy import fails: libgfortran.5.dylib duplicate LC_RPATH loader error."
+  },
+  "filesystem": {
+    "available_bytes_at_detection": 16179200000
+  },
+  "scope": "Local runtime and small synthetic integration checks only. No climate datasets or project analysis outputs were evaluated.",
+  "runtime_issue_references": [
+    "https://github.com/qgis/QGIS/blob/master/src/core/providers/ogr/qgsogrproviderutils.cpp",
+    "https://gdal.org/en/stable/drivers/vector/gpkg.html"
+  ],
+  "final_project_verification": {
+    "build": "metadata/qgis_build.json",
+    "relocation": "metadata/qgis_relocation.json",
+    "pdf_and_visual_qa": "metadata/qgis_pdf_qa.json"
+  }
+}

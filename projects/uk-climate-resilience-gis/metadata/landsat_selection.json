@@ -1,0 +1,189 @@
+{
+  "rule": "June-August 2021-2025; WRS203/023; five lowest scene-cloud candidates per year; configured minimum clear study land; highest regional coverage up to eight dates, at most two per year",
+  "candidate_assessment": [
+    {
+      "id": "LC08_L2SP_203023_20210721_02_T1",
+      "date": "2021-07-21T11:04:19.388299Z",
+      "scene_cloud_percent": 8.14,
+      "region_clear_fraction": 0.6879142891401406
+    },
+    {
+      "id": "LC08_L2SP_203023_20220622_02_T1",
+      "date": "2022-06-22T11:04:34.763883Z",
+      "scene_cloud_percent": 10.34,
+      "region_clear_fraction": 0.39315977683577963
+    },
+    {
+      "id": "LC08_L2SP_203023_20220708_02_T1",
+      "date": "2022-07-08T11:04:35.892460Z",
+      "scene_cloud_percent": 45.31,
+      "region_clear_fraction": 4.5845999760190154e-05
+    },
+    {
+      "id": "LC08_L2SP_203023_20220809_02_T1",
+      "date": "2022-08-09T11:04:51.036994Z",
+      "scene_cloud_percent": 13.17,
+      "region_clear_fraction": 0.6393097708405335
+    },
+    {
+      "id": "LC08_L2SP_203023_20230609_02_T1",
+      "date": "2023-06-09T11:03:46.292709Z",
+      "scene_cloud_percent": 2.61,
+      "region_clear_fraction": 0.9780376501456493
+    },
+    {
+      "id": "LC08_L2SP_203023_20230625_02_T1",
+      "date": "2023-06-25T11:03:52.617195Z",
+      "scene_cloud_percent": 51.41,
+      "region_clear_fraction": 0.0528237609236911
+    },
+    {
+      "id": "LC08_L2SP_203023_20240627_02_T1",
+      "date": "2024-06-27T11:03:38.403380Z",
+      "scene_cloud_percent": 45.65,
+      "region_clear_fraction": 0.08499566226309961
+    },
+    {
+      "id": "LC08_L2SP_203023_20240729_02_T1",
+      "date": "2024-07-29T11:03:58.726470Z",
+      "scene_cloud_percent": 4.58,
+      "region_clear_fraction": 0.9478159671037318
+    },
+    {
+      "id": "LC08_L2SP_203023_20240830_02_T1",
+      "date": "2024-08-30T11:04:08.480420Z",
+      "scene_cloud_percent": 34.35,
+      "region_clear_fraction": 0.08804195261639594
+    },
+    {
+      "id": "LC08_L2SP_203023_20250614_02_T1",
+      "date": "2025-06-14T11:03:58.885036Z",
+      "scene_cloud_percent": 48.92,
+      "region_clear_fraction": 0.009436517396793602
+    },
+    {
+      "id": "LC08_L2SP_203023_20250630_02_T1",
+      "date": "2025-06-30T11:04:06.791088Z",
+      "scene_cloud_percent": 23.53,
+      "region_clear_fraction": 0.14920333758878254
+    },
+    {
+      "id": "LC08_L2SP_203023_20250817_02_T1",
+      "date": "2025-08-17T11:04:24.400085Z",
+      "scene_cloud_percent": 24.42,
+      "region_clear_fraction": 0.8526650632322135
+    },
+    {
+      "id": "LC09_L2SP_203023_20220614_02_T1",
+      "date": "2022-06-14T11:03:57.996172Z",
+      "scene_cloud_percent": 62.48,
+      "region_clear_fraction": 0.01843926110354848
+    },
+    {
+      "id": "LC09_L2SP_203023_20220801_02_T1",
+      "date": "2022-08-01T11:04:25.661667Z",
+      "scene_cloud_percent": 32.05,
+      "region_clear_fraction": 0.3769704963358466
+    },
+    {
+      "id": "LC09_L2SP_203023_20230601_02_T1",
+      "date": "2023-06-01T11:03:49.805956Z",
+      "scene_cloud_percent": 63.44,
+      "region_clear_fraction": 0.3837747480233321
+    },
+    {
+      "id": "LC09_L2SP_203023_20230719_02_T1",
+      "date": "2023-07-19T11:03:57.686983Z",
+      "scene_cloud_percent": 64.75,
+      "region_clear_fraction": 0.11814514138201003
+    },
+    {
+      "id": "LC09_L2SP_203023_20230820_02_T1",
+      "date": "2023-08-20T11:04:10.008796Z",
+      "scene_cloud_percent": 60.57,
+      "region_clear_fraction": 0.0620028353987544
+    },
+    {
+      "id": "LC09_L2SP_203023_20240705_02_T1",
+      "date": "2024-07-05T11:03:38.429420Z",
+      "scene_cloud_percent": 45.42,
+      "region_clear_fraction": 0.04967237743248295
+    },
+    {
+      "id": "LC09_L2SP_203023_20240806_02_T1",
+      "date": "2024-08-06T11:03:52.145862Z",
+      "scene_cloud_percent": 67.02,
+      "region_clear_fraction": 0.028637527419434473
+    },
+    {
+      "id": "LC09_L2SP_203023_20250708_02_T1",
+      "date": "2025-07-08T11:04:04.751902Z",
+      "scene_cloud_percent": 11.23,
+      "region_clear_fraction": 0.37539127797487637
+    },
+    {
+      "id": "LC09_L2SP_203023_20250825_02_T1",
+      "date": "2025-08-25T11:04:28.699273Z",
+      "scene_cloud_percent": 31.83,
+      "region_clear_fraction": 0.3180188885519012
+    }
+  ],
+  "scenes": [
+    {
+      "id": "LC08_L2SP_203023_20230609_02_T1",
+      "date": "2023-06-09T11:03:46.292709Z",
+      "scene_cloud_percent": 2.61,
+      "region_clear_fraction": 0.9780376501456493
+    },
+    {
+      "id": "LC08_L2SP_203023_20240729_02_T1",
+      "date": "2024-07-29T11:03:58.726470Z",
+      "scene_cloud_percent": 4.58,
+      "region_clear_fraction": 0.9478159671037318
+    },
+    {
+      "id": "LC08_L2SP_203023_20250817_02_T1",
+      "date": "2025-08-17T11:04:24.400085Z",
+      "scene_cloud_percent": 24.42,
+      "region_clear_fraction": 0.8526650632322135
+    },
+    {
+      "id": "LC08_L2SP_203023_20210721_02_T1",
+      "date": "2021-07-21T11:04:19.388299Z",
+      "scene_cloud_percent": 8.14,
+      "region_clear_fraction": 0.6879142891401406
+    },
+    {
+      "id": "LC08_L2SP_203023_20220809_02_T1",
+      "date": "2022-08-09T11:04:51.036994Z",
+      "scene_cloud_percent": 13.17,
+      "region_clear_fraction": 0.6393097708405335
+    }
+  ],
+  "config": {
+    "minimum_public_park_ha": 10,
+    "landsat_years": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "landsat_months": [
+      6,
+      7,
+      8
+    ],
+    "landsat_max_scene_cloud_pct": 70,
+    "landsat_max_dates": 8,
+    "raster_resolution_m": 100,
+    "minimum_heat_observations": 3,
+    "minimum_lsoa_heat_coverage": 0.8,
+    "landsat_cloud_distance_km": 0.3,
+    "landsat_candidates_per_year": 5,
+    "minimum_heat_summers": 2,
+    "minimum_scene_region_coverage": 0.6,
+    "minimum_reference_land_fraction": 0.25,
+    "minimum_heat_cell_valid_fraction": 0.8
+  }
+}

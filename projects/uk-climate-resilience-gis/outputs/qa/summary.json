@@ -1,0 +1,149 @@
+{
+  "study": "Greater Manchester",
+  "comparison_unit": "LSOA 2021",
+  "neighbourhoods": 1702,
+  "population_census2021": 2867735,
+  "eligible_neighbourhoods": 1528,
+  "eligible_population": 2577653,
+  "excluded_neighbourhoods": 174,
+  "excluded_population": 290082,
+  "baseline_priority_count": 306,
+  "persistent_priority_count": 153,
+  "residents_in_persistent_priority_areas": 257388,
+  "households_without_large_greenspace_access_share": 0.6229095013307506,
+  "case_modelled_residents_beyond_1km_share": 0.6299888791280458,
+  "case_access_metric_definition": "Beyond the configured walking threshold or no mapped route; successfully snapped OA origins, population weighted",
+  "case_origins_without_route": 54,
+  "case_residents_without_route": 18941,
+  "case_population": 821878,
+  "case_deficit_if_disconnected_accessible": 0.6069428796001353,
+  "scenario_rank_correlations": {
+    "balanced": {
+      "balanced": 1.0,
+      "hazard": 0.8788297468580222,
+      "equity": 0.9448274004287811
+    },
+    "hazard": {
+      "balanced": 0.8788297468580222,
+      "hazard": 1.0,
+      "equity": 0.8114994790859689
+    },
+    "equity": {
+      "balanced": 0.9448274004287811,
+      "hazard": 0.8114994790859689,
+      "equity": 1.0
+    }
+  },
+  "flood_sensitivity": {
+    "cohort_n": 1528,
+    "rank_spearman": 0.9635499709383196,
+    "top_group_jaccard": 0.7790697674418605,
+    "retained_baseline_priorities": 268,
+    "interpretation": "Alternative defended 0.1% annual probability footprint; policy scenarios and complete comparison cohort unchanged"
+  },
+  "moran_i": 0.5038757870126983,
+  "moran_p_two_sided": 0.0001,
+  "top10": [
+    {
+      "lsoa21cd": "E01006261",
+      "name": "Wigan 036C",
+      "borough": "Wigan",
+      "score_balanced": 80.514079895219,
+      "rank_balanced": 1.0,
+      "top20_frequency": 1.0,
+      "priority_class": "Persistent priority",
+      "follow_up": "Shade, cooling and overheating assessment; Large-greenspace access and provision assessment; Inclusive engagement and heat-preparedness assessment"
+    },
+    {
+      "lsoa21cd": "E01005400",
+      "name": "Oldham 009C",
+      "borough": "Oldham",
+      "score_balanced": 79.710903732809,
+      "rank_balanced": 2.0,
+      "top20_frequency": 1.0,
+      "priority_class": "Persistent priority",
+      "follow_up": "Large-greenspace access and provision assessment; Inclusive engagement and heat-preparedness assessment"
+    },
+    {
+      "lsoa21cd": "E01005090",
+      "name": "Manchester 050C",
+      "borough": "Manchester",
+      "score_balanced": 78.168500327439,
+      "rank_balanced": 3.0,
+      "top20_frequency": 1.0,
+      "priority_class": "Persistent priority",
+      "follow_up": "Shade, cooling and overheating assessment; Large-greenspace access and provision assessment; Inclusive engagement and heat-preparedness assessment"
+    },
+    {
+      "lsoa21cd": "E01005581",
+      "name": "Rochdale 008B",
+      "borough": "Rochdale",
+      "score_balanced": 75.901211525868,
+      "rank_balanced": 4.0,
+      "top20_frequency": 1.0,
+      "priority_class": "Persistent priority",
+      "follow_up": "River-flood resilience and local hydraulic assessment; Large-greenspace access and provision assessment; Inclusive engagement and heat-preparedness assessment"
+    },
+    {
+      "lsoa21cd": "E01006106",
+      "name": "Trafford 017C",
+      "borough": "Trafford",
+      "score_balanced": 74.902226588081,
+      "rank_balanced": 5.0,
+      "top20_frequency": 0.9955,
+      "priority_class": "Persistent priority",
+      "follow_up": "River-flood resilience and local hydraulic assessment; Large-greenspace access and provision assessment"
+    },
+    {
+      "lsoa21cd": "E01005588",
+      "name": "Rochdale 007F",
+      "borough": "Rochdale",
+      "score_balanced": 74.874918140144,
+      "rank_balanced": 6.0,
+      "top20_frequency": 1.0,
+      "priority_class": "Persistent priority",
+      "follow_up": "Large-greenspace access and provision assessment; Inclusive engagement and heat-preparedness assessment"
+    },
+    {
+      "lsoa21cd": "E01005069",
+      "name": "Manchester 047A",
+      "borough": "Manchester",
+      "score_balanced": 74.785297969876,
+      "rank_balanced": 7.0,
+      "top20_frequency": 0.9915,
+      "priority_class": "Persistent priority",
+      "follow_up": "River-flood resilience and local hydraulic assessment; Shade, cooling and overheating assessment; Large-greenspace access and provision assessment"
+    },
+    {
+      "lsoa21cd": "E01005631",
+      "name": "Salford 020A",
+      "borough": "Salford",
+      "score_balanced": 74.407334643091,
+      "rank_balanced": 8.0,
+      "top20_frequency": 0.9555,
+      "priority_class": "Persistent priority",
+      "follow_up": "Shade, cooling and overheating assessment; Large-greenspace access and provision assessment; Inclusive engagement and heat-preparedness assessment"
+    },
+    {
+      "lsoa21cd": "E01006102",
+      "name": "Trafford 018A",
+      "borough": "Trafford",
+      "score_balanced": 74.386116568435,
+      "rank_balanced": 9.0,
+      "top20_frequency": 0.989,
+      "priority_class": "Persistent priority",
+      "follow_up": "River-flood resilience and local hydraulic assessment; Large-greenspace access and provision assessment"
+    },
+    {
+      "lsoa21cd": "E01005778",
+      "name": "Stockport 022B",
+      "borough": "Stockport",
+      "score_balanced": 74.337197118533,
+      "rank_balanced": 10.0,
+      "top20_frequency": 0.985,
+      "priority_class": "Persistent priority",
+      "follow_up": "River-flood resilience and local hydraulic assessment; Large-greenspace access and provision assessment"
+    }
+  ],
+  "claim_boundary": "Priorities identify places for local investigation. Population figures describe residents of neighbourhoods, not people predicted to experience harm."
+}

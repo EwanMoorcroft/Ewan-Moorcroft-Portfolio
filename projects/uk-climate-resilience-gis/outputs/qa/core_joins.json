@@ -1,0 +1,21 @@
+{
+  "neighbourhoods": 1702,
+  "geometry_repairs": 0,
+  "population_census2021": 2867735,
+  "households_official_access": 1311290.0,
+  "all_core_join_match_rates": 1.0,
+  "official_access_OAs": 8966,
+  "access_scenario": 5,
+  "borough_counts": {
+    "Bolton": 177,
+    "Bury": 120,
+    "Manchester": 295,
+    "Oldham": 142,
+    "Rochdale": 135,
+    "Salford": 161,
+    "Stockport": 191,
+    "Tameside": 142,
+    "Trafford": 139,
+    "Wigan": 200
+  }
+}

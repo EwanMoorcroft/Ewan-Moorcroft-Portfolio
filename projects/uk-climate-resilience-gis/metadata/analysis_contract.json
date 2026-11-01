@@ -1,0 +1,8 @@
+{
+  "configuration_sha256": "a16462e0a9b3a3204aef139a0db9deadda41987a5a7d81ee1c42608ad46ebeaa",
+  "indicator_input_sha256": "b0b44efa990ca6ddde60af3d93992aac6e8f4a2faf5af678de8ef4b0b54890ce",
+  "heat_input_sha256": "4d1fea0a6197bd59fc6ccb379d661f98674c9074c524cc1e64a667aeb5a1f423",
+  "seed": 20260929,
+  "cohort_n": 1528,
+  "interpretation": "Numeric outputs reproduce from the cached inputs and this configuration; container file bytes may include writer metadata."
+}

@@ -1,0 +1,14 @@
+{
+  "entrances_total": 477,
+  "entrances_connected": 477,
+  "nodes": 673335,
+  "edges": 1481216,
+  "origins": 2466,
+  "known_origins": 2466,
+  "reachable_origins": 2412,
+  "population": 821878,
+  "known_population": 821878,
+  "threshold_m": 1000,
+  "min_park_ha": 10,
+  "interpretation": "Modelled resident access from population-weighted Output Area centroids to OS public-park entrances; differs from official household destinations and vintage"
+}

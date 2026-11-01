@@ -1,0 +1,291 @@
+{
+  "checked_at_utc": "2026-09-29T17:06:58.545030+00:00",
+  "status": "passed",
+  "project": "qgis/project/gm_climate_resilience.qgz",
+  "relative_datasource_uris": [
+    "../../data/processed/resilience.gpkg|layername=greenspaces|subset=\"eligible\" = 1",
+    "../../data/processed/resilience.gpkg|layername=greenspaces",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=flood_extent|subset=\"hazard\" = 'defended_1pct'",
+    "../../data/processed/resilience.gpkg|layername=flood_extent|subset=\"hazard\" = 'defended_01pct'",
+    "../../data/processed/resilience.gpkg|layername=entrances",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods|subset=\"borough\" IN ('Manchester','Salford')",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/heat_anomaly.tif",
+    "../../data/processed/heat_observations.tif",
+    "../../data/processed/ndvi.tif",
+    "../../data/processed/resilience.gpkg|layername=case_origins"
+  ],
+  "relative_layout_fallback_uris": [
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=flood_extent|subset=\"hazard\" = 'defended_1pct'",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=case_origins",
+    "../../data/processed/resilience.gpkg|layername=entrances",
+    "../../data/processed/resilience.gpkg|layername=greenspaces|subset=\"eligible\" = 1",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods|subset=\"borough\" IN ('Manchester','Salford')",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=boroughs",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods",
+    "../../data/processed/resilience.gpkg|layername=neighbourhoods"
+  ],
+  "copied_files": [
+    {
+      "path": "qgis/project/gm_climate_resilience.qgz",
+      "bytes": 141063,
+      "sha256": "014231ae76c9b933f546ff9945371141074bc3f27980c4ec9123a5c95c2e05fb"
+    },
+    {
+      "path": "data/processed/resilience.gpkg",
+      "bytes": 92532736,
+      "sha256": "708bc426ec5e98e724b4c0701d504838cca448bb79fdff82517bb7d60e429e3c"
+    },
+    {
+      "path": "data/processed/heat_anomaly.tif",
+      "bytes": 594110,
+      "sha256": "4d1fea0a6197bd59fc6ccb379d661f98674c9074c524cc1e64a667aeb5a1f423"
+    },
+    {
+      "path": "data/processed/heat_observations.tif",
+      "bytes": 94698,
+      "sha256": "ad99b42b00f41935f0999b1e3a10ec9b86f06af54f18a3c59cf212202f674574"
+    },
+    {
+      "path": "data/processed/ndvi.tif",
+      "bytes": 594620,
+      "sha256": "ec8eaeb8e9f2b27a7866e0fb4838f18f7042820f8ff01732fa0c3b3544a3a43d"
+    }
+  ],
+  "all_sources_relative": true,
+  "all_layout_fallback_sources_relative": true,
+  "all_sources_resolve_inside_copied_hierarchy": true,
+  "layers": [
+    {
+      "name": "Qualifying public parks ≥10 ha",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 110
+    },
+    {
+      "name": "All public parks • context inventory",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 785
+    },
+    {
+      "name": "Detailed case location",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 10
+    },
+    {
+      "name": "Borough boundaries and names",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 10
+    },
+    {
+      "name": "Borough labels and outlines",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 10
+    },
+    {
+      "name": "Defended flood footprint • main scenario",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 987
+    },
+    {
+      "name": "Defended flood footprint • 0.1% alternative",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 1064
+    },
+    {
+      "name": "Mapped park entrances",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 1369
+    },
+    {
+      "name": "Stable-priority outline",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 1702
+    },
+    {
+      "name": "Official household access deficit",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 1702
+    },
+    {
+      "name": "Neighbourhood evidence • full attribute table",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 1702
+    },
+    {
+      "name": "Most adverse relative dimension",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 1702
+    },
+    {
+      "name": "Case walking-access deficit",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 456
+    },
+    {
+      "name": "Daytime surface-heat anomaly",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 1702
+    },
+    {
+      "name": "Equal-weight priority score",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 1702
+    },
+    {
+      "name": "Priority selection frequency",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 1702
+    },
+    {
+      "name": "Flood exposure • neighbourhood share",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 1702
+    },
+    {
+      "name": "Surface-temperature anomaly • raster",
+      "source": "data/processed/heat_anomaly.tif",
+      "valid": true,
+      "feature_count": null
+    },
+    {
+      "name": "Valid heat observations • coverage",
+      "source": "data/processed/heat_observations.tif",
+      "valid": true,
+      "feature_count": null
+    },
+    {
+      "name": "Vegetation index • context only",
+      "source": "data/processed/ndvi.tif",
+      "valid": true,
+      "feature_count": null
+    },
+    {
+      "name": "Walking-access population origins",
+      "source": "data/processed/resilience.gpkg",
+      "valid": true,
+      "feature_count": 2466
+    }
+  ],
+  "layouts": [
+    "01_overview",
+    "02_flood",
+    "03_heat",
+    "04_accessibility",
+    "05_priorities",
+    "06_robustness"
+  ],
+  "layout_render_checks": [
+    {
+      "layout": "01_overview",
+      "dpi": 72,
+      "pixels": [
+        1190,
+        841
+      ],
+      "pixel_identical": true,
+      "rgba_sha256": "29ac4b1eca96d783ae93b145bb9c0719d746fa183758286c65ab2ef58a17592b"
+    },
+    {
+      "layout": "02_flood",
+      "dpi": 72,
+      "pixels": [
+        1190,
+        841
+      ],
+      "pixel_identical": true,
+      "rgba_sha256": "4be88f6e8ef28aec07e88e211df423bec76c17248a7473c95179e6c809df06d3"
+    },
+    {
+      "layout": "03_heat",
+      "dpi": 72,
+      "pixels": [
+        1190,
+        841
+      ],
+      "pixel_identical": true,
+      "rgba_sha256": "b2c286aec595140ed9a9206c1dd3609ac8f42446ce2cfcc64f89498f69e4287e"
+    },
+    {
+      "layout": "04_accessibility",
+      "dpi": 72,
+      "pixels": [
+        1190,
+        841
+      ],
+      "pixel_identical": true,
+      "rgba_sha256": "84d1224db215bd35b1a66e33779f28e7e4b3ef5b66eb8c22afb20f38320f6e7e"
+    },
+    {
+      "layout": "05_priorities",
+      "dpi": 72,
+      "pixels": [
+        1190,
+        841
+      ],
+      "pixel_identical": true,
+      "rgba_sha256": "80097c66619d0412299e61f8a266a470adb9584357a205973374a24a248b3e58"
+    },
+    {
+      "layout": "06_robustness",
+      "dpi": 72,
+      "pixels": [
+        1190,
+        841
+      ],
+      "pixel_identical": true,
+      "rgba_sha256": "783035c941d5e43797bf586c6b903076de1ad8e391b432bf4af93054b6c0c7af"
+    }
+  ],
+  "map_themes": [
+    "01_overview",
+    "02_flood",
+    "03_heat",
+    "04_accessibility",
+    "05_priorities",
+    "06_robustness"
+  ],
+  "temporary_copy_retained": false
+}

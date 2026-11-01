@@ -1,0 +1,1480 @@
+{
+  "status": "passed",
+  "checked_utc": "2026-09-30T14:50:21.002514+00:00",
+  "checks": [
+    {
+      "check": "neighbourhoods: nonempty required layer",
+      "passed": true,
+      "detail": 1702
+    },
+    {
+      "check": "neighbourhoods: BNG CRS",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "neighbourhoods: valid nonempty geometries",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "neighbourhoods: geometry types",
+      "passed": true,
+      "detail": [
+        "Polygon"
+      ]
+    },
+    {
+      "check": "boroughs: nonempty required layer",
+      "passed": true,
+      "detail": 10
+    },
+    {
+      "check": "boroughs: BNG CRS",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "boroughs: valid nonempty geometries",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "boroughs: geometry types",
+      "passed": true,
+      "detail": [
+        "Polygon"
+      ]
+    },
+    {
+      "check": "greenspaces: nonempty required layer",
+      "passed": true,
+      "detail": 785
+    },
+    {
+      "check": "greenspaces: BNG CRS",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "greenspaces: valid nonempty geometries",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "greenspaces: geometry types",
+      "passed": true,
+      "detail": [
+        "MultiPolygon"
+      ]
+    },
+    {
+      "check": "entrances: nonempty required layer",
+      "passed": true,
+      "detail": 1369
+    },
+    {
+      "check": "entrances: BNG CRS",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "entrances: valid nonempty geometries",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "entrances: geometry types",
+      "passed": true,
+      "detail": [
+        "Point"
+      ]
+    },
+    {
+      "check": "case_origins: nonempty required layer",
+      "passed": true,
+      "detail": 2466
+    },
+    {
+      "check": "case_origins: BNG CRS",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "case_origins: valid nonempty geometries",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "case_origins: geometry types",
+      "passed": true,
+      "detail": [
+        "Point"
+      ]
+    },
+    {
+      "check": "flood_extent: nonempty required layer",
+      "passed": true,
+      "detail": 2051
+    },
+    {
+      "check": "flood_extent: BNG CRS",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "flood_extent: valid nonempty geometries",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "flood_extent: geometry types",
+      "passed": true,
+      "detail": [
+        "MultiPolygon"
+      ]
+    },
+    {
+      "check": "Unique complete neighbourhood IDs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Study geography snapshot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Census regional reconciliation",
+      "passed": true,
+      "detail": 2867735
+    },
+    {
+      "check": "Flood geometries have unique scenario-area keys",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Both flood scenarios persist",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "defended_1pct: saved overlay areas match indicators",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "defended_01pct: saved overlay areas match indicators",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Plausible BNG extent",
+      "passed": true,
+      "detail": [
+        351662.35519313515,
+        381166.04689390096,
+        406087.2022709062,
+        421037.6900101472
+      ]
+    },
+    {
+      "check": "flood_exposure: complete unit interval",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "flood_01pct: complete unit interval",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "access_deficit: complete unit interval",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "income_rate: complete unit interval",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "age_sensitive_share: complete unit interval",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "heat_coverage: complete unit interval",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Eligibility exactly matches finite evidence",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Heat coverage rule applied",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Missing evidence is not ranked",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "score_balanced: seeded reproduction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "rank_balanced: seeded reproduction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "score_hazard: seeded reproduction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "rank_hazard: seeded reproduction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "score_equity: seeded reproduction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "rank_equity: seeded reproduction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "top20_frequency: seeded reproduction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "rank_p05: seeded reproduction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "rank_p95: seeded reproduction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Persistent-priority rule reproduces",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "balanced: weights sum to one",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "balanced: direct weighted sum",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "hazard: weights sum to one",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "hazard: direct weighted sum",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "equity: weights sum to one",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "equity: direct weighted sum",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "flood_exposure: adverse-high monotonicity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "heat_anomaly: adverse-high monotonicity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "access_deficit: adverse-high monotonicity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "income_rate: adverse-high monotonicity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "age_sensitive_share: adverse-high monotonicity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Unique case-study origins",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "OA population reconciliation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Reachability and distance agree",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "All case origins snapped within tolerance",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Network distance is at least straight-line distance",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Walking-threshold sensitivity is monotonic",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Case metric is absent outside its study extent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Case access 500m: OA weighted reconstruction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Case access 1000m: OA weighted reconstruction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Case access 1500m: OA weighted reconstruction",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Case headline equals configured threshold",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "heat_anomaly: raster CRS/resolution/nodata",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "heat_anomaly: finite observed values",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "heat_anomaly: common grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "surface_temperature: raster CRS/resolution/nodata",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "surface_temperature: finite observed values",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "surface_temperature: common grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "ndvi: raster CRS/resolution/nodata",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "ndvi: finite observed values",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "ndvi: common grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "heat_observations: raster CRS/resolution/nodata",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "heat_observations: finite observed values",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "heat_observations: common grid",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Every heat cell has minimum observations",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "NDVI is a bounded vegetation index",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Configuration matches analysed snapshot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Heat raster matches analysed snapshot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Indicator input matches analysed snapshot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "GeoPackage uses the analysed source indicators",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "CSV: delivered values match GeoPackage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "GeoParquet: delivered values match GeoPackage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/defra/greenspace_access_2024_corrected2025.ods",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ea/defended_01pct.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ea/defended_01pct.page002.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ea/defended_1pct.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20210721_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20210721_02_T1/lwir11.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20210721_02_T1/nir08.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20210721_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20210721_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20210721_02_T1/red.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20220622_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20220622_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20220622_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20220708_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20220708_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20220708_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20220809_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20220809_02_T1/lwir11.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20220809_02_T1/nir08.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20220809_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20220809_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20220809_02_T1/red.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20230609_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20230609_02_T1/lwir11.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20230609_02_T1/nir08.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20230609_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20230609_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20230609_02_T1/red.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20230625_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20230625_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20230625_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240627_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240627_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240627_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240729_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240729_02_T1/lwir11.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240729_02_T1/nir08.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240729_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240729_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240729_02_T1/red.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240830_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240830_02_T1/lwir11.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240830_02_T1/nir08.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240830_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240830_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20240830_02_T1/red.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250614_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250614_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250614_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250630_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250630_02_T1/lwir11.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250630_02_T1/nir08.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250630_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250630_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250630_02_T1/red.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250817_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250817_02_T1/lwir11.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250817_02_T1/nir08.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250817_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250817_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC08_L2SP_203023_20250817_02_T1/red.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20220614_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20220614_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20220614_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20220801_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20220801_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20220801_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20230601_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20230601_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20230601_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20230719_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20230719_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20230719_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20230820_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20230820_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20230820_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20240705_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20240705_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20240705_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20240806_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20240806_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20240806_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20250708_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20250708_02_T1/lwir11.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20250708_02_T1/nir08.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20250708_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20250708_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20250708_02_T1/red.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20250825_02_T1/cdist.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20250825_02_T1/lwir11.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20250825_02_T1/nir08.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20250825_02_T1/qa_pixel.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20250825_02_T1/qa_radsat.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/LC09_L2SP_203023_20250825_02_T1/red.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/search_2021.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/search_2022.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/search_2023.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/search_2024.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/landsat/search_2025.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/mhclg/imd2025_file7.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/census2021_ts007a_lsoa.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/census2021_ts007a_oa_northwest.csv",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/oa_centroids_case.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/oa_lookup_case.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_00000.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_00100.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_00200.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_00300.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_00400.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_00500.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_00600.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_00700.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_00800.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_00900.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_01000.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_01100.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_01200.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_01300.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_01400.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_01500.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_01600.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_01700.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_01800.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_01900.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_02000.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_02100.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_02200.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_02300.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_centroids_case_02400.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_lookup_case_00000.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_lookup_case_01000.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_lookup_case_02000.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/pages/oa_lookup_case_count.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/ons/region_lsoas.geojson",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/os/greenspace_downloads.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/os/greenspace_product.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/os/opgrsp_essh_sd.zip",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/os/opgrsp_essh_se.zip",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/os/opgrsp_essh_sj.zip",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/os/opgrsp_essh_sk.zip",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Source checksum: data/raw/osm/walking_network.json.gz",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Provenance is populated",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "QGIS project reopens",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "All QGIS layers resolve",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "QGIS vector providers return readable counts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Six QGIS layouts persist",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "QGIS Processing preserves all rows",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "QGIS Processing reproduces complete-cohort scores",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "QGIS paths do not embed this workspace",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Latest QGIS build passed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "QGIS relocation passed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Relocation evidence matches current file: qgis/project/gm_climate_resilience.qgz",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Relocation evidence matches current file: data/processed/resilience.gpkg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Relocation evidence matches current file: data/processed/heat_anomaly.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Relocation evidence matches current file: data/processed/heat_observations.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Relocation evidence matches current file: data/processed/ndvi.tif",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Relocation verifies all six rendered layouts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "01_overview: A3 landscape PNG",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "01_overview: PDF readable header",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "02_flood: A3 landscape PNG",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "02_flood: PDF readable header",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "03_heat: A3 landscape PNG",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "03_heat: PDF readable header",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "04_accessibility: A3 landscape PNG",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "04_accessibility: PDF readable header",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "05_priorities: A3 landscape PNG",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "05_priorities: PDF readable header",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "06_robustness: A3 landscape PNG",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "06_robustness: PDF readable header",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "scenario_ranks: figure pair",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "weight_sensitivity: figure pair",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "indicator_correlations: figure pair",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "moran_scatter: figure pair",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Offline interactive output exists",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "passed_checks": 267,
+  "total_checks": 267,
+  "eligible_neighbourhoods": 1528,
+  "excluded_neighbourhoods": 174,
+  "raster_info": {
+    "heat_anomaly": {
+      "shape": [
+        400,
+        545
+      ],
+      "valid_cells": 119582,
+      "min": -8.969383239746094,
+      "max": 14.196861267089844
+    },
+    "surface_temperature": {
+      "shape": [
+        400,
+        545
+      ],
+      "valid_cells": 119582,
+      "min": 19.568254470825195,
+      "max": 43.213836669921875
+    },
+    "ndvi": {
+      "shape": [
+        400,
+        545
+      ],
+      "valid_cells": 123815,
+      "min": 0.02561541274189949,
+      "max": 0.8991721868515015
+    },
+    "heat_observations": {
+      "shape": [
+        400,
+        545
+      ],
+      "valid_cells": 127580,
+      "min": 0.0,
+      "max": 5.0
+    }
+  },
+  "exports": [
+    {
+      "map": "01_overview",
+      "pixels": [
+        2976,
+        2104
+      ],
+      "pdf_bytes": 4477257
+    },
+    {
+      "map": "02_flood",
+      "pixels": [
+        2976,
+        2104
+      ],
+      "pdf_bytes": 38551490
+    },
+    {
+      "map": "03_heat",
+      "pixels": [
+        2976,
+        2104
+      ],
+      "pdf_bytes": 4474079
+    },
+    {
+      "map": "04_accessibility",
+      "pixels": [
+        2976,
+        2104
+      ],
+      "pdf_bytes": 2386698
+    },
+    {
+      "map": "05_priorities",
+      "pixels": [
+        2976,
+        2104
+      ],
+      "pdf_bytes": 4818356
+    },
+    {
+      "map": "06_robustness",
+      "pixels": [
+        2976,
+        2104
+      ],
+      "pdf_bytes": 4807501
+    }
+  ],
+  "limits": "Automated integrity checks do not establish causal validity, future climate risk, or intervention effectiveness. Visual inspection is recorded separately.",
+  "artifact_sha256": {
+    "data/processed/heat_2021.tif": "9ed9e3de4b53faad4e91ebd2b826b4e523706c002ee4e0d533054631bb672d0f",
+    "data/processed/heat_2022.tif": "01276fd0254bb37dbfb030c32b6036bac4f25d55a6d3f12e4a095adddf8b4a7b",
+    "data/processed/heat_2023.tif": "98ea926b9abd8f60e52d4a9a564351e2ebeccc9386df8c4da851183d5e935876",
+    "data/processed/heat_2024.tif": "8e868cd7943db479ec6efbce33cfb6cf1988c097616332c6f3b064b9e56c63d1",
+    "data/processed/heat_2025.tif": "e681db8c63a5f8e1a96e656707ba53b9e853c64bff99e4abf9e189c4f37a5817",
+    "data/processed/heat_anomaly.tif": "4d1fea0a6197bd59fc6ccb379d661f98674c9074c524cc1e64a667aeb5a1f423",
+    "data/processed/heat_anomaly.tif.aux.xml": "29ece8a4c20a8d34f917f26184b2a79615d8f71824da3ca7e75b9e8648bc9871",
+    "data/processed/heat_observations.tif": "ad99b42b00f41935f0999b1e3a10ec9b86f06af54f18a3c59cf212202f674574",
+    "data/processed/heat_observations.tif.aux.xml": "b169ed87892200dc1d5c7df62a239c6dfdb1a1551977d00d5669faa8141e80d4",
+    "data/processed/ndvi.tif": "ec8eaeb8e9f2b27a7866e0fb4838f18f7042820f8ff01732fa0c3b3544a3a43d",
+    "data/processed/ndvi.tif.aux.xml": "8affb3f95736d21bcd1356db554a0895034758038399d8b776fa7bcfdba2150c",
+    "data/processed/neighbourhoods.parquet": "a29933f51e9e3a9492f567c612e0a9f1138680f4b0f825e066a0e2d96081089f",
+    "data/processed/resilience.gpkg": "708bc426ec5e98e724b4c0701d504838cca448bb79fdff82517bb7d60e429e3c",
+    "data/processed/surface_temperature.tif": "ad5cbc34255f84242c9dbb707901597d0f2a9ca68ed88eae0e4845850b10002b",
+    "outputs/tables/borough_summary.csv": "2f2d12737d088266c77aebf7daa8121f06b2320ea173855435636712a3f147e2",
+    "outputs/tables/evidence_gaps.csv": "260e2e6bb6c2fbdf9ac5ff723110c934cea22239b633e0722fdbea6a566f5d84",
+    "outputs/tables/neighbourhood_indicators.csv": "3c4796f70458ae26e76aef36d475daa7f7608206e860b6b63594f6039405ace5",
+    "outputs/tables/priority_shortlist.csv": "ac6e28985d7a1f0fe2506063af7975ccfea3e390da1e1cc8a4c775ffaed7466b",
+    "outputs/figures/indicator_correlations.png": "2fb5abe03b98974767310b3e9b6bceac3aa427801e0285ceed29dd395dbcdef4",
+    "outputs/figures/indicator_correlations.svg": "3668b29e00cdba4d953406ccb5832ffe13f9197ffbe7c9aed5aa22bf0c8980d7",
+    "outputs/figures/moran_scatter.png": "26309877ee23075eb0b6ca369299cbcbeed6eac9e42a4370a3219a5af3b4d69a",
+    "outputs/figures/moran_scatter.svg": "8681198841e89e69d2c6d3c8f191f07e6c793c8a17a42517c32ff4209d9c49e6",
+    "outputs/figures/scenario_ranks.png": "edfd1666973c688c296e2ff885928d05295402723a2176d406aea07b92b70921",
+    "outputs/figures/scenario_ranks.svg": "3e78caf0d9b03ace7ea352b0c87f5734a6b63d42fed63c391b9d363ace85b1c3",
+    "outputs/figures/weight_sensitivity.png": "34cc31ecadea02beec012e813f7eed1eae9a929f6fb2d4287df442b8dd18c841",
+    "outputs/figures/weight_sensitivity.svg": "bc843f5cdc83ffb2c5ff833065d6a8fa77db4ffe342202dc63f0ae72ca7ff7ce",
+    "outputs/portfolio/interactive.html": "e6b8024caec689c08f9d21b019732e2fa84da3776942678d41b833b47b3b7f72"
+  }
+}

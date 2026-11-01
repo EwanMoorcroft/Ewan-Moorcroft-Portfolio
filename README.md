@@ -2,18 +2,26 @@
 
 [![Quality checks](https://github.com/EwanMoorcroft/Ewan-Moorcroft-Portfolio/actions/workflows/quality.yml/badge.svg)](https://github.com/EwanMoorcroft/Ewan-Moorcroft-Portfolio/actions/workflows/quality.yml)
 
-I am completing an MSc in Data Science and Artificial Intelligence at the University of Liverpool,
-with expected completion in September 2026. I graduated with a BSc in Geography in June 2025.
+I have completed an MSc in Data Science and Artificial Intelligence at the University of Liverpool
+and am awaiting formal award. I graduated with a BSc in Geography in June 2025.
 
 My main language is Python. I use it for statistical modelling, machine learning and data
 engineering, often with spatial or time-dependent data. This portfolio also includes R, SQL, GIS
 and Docker where they suit the problem.
 
-![Liverpool workplace-flow retention](projects/liverpool-urban-accessibility/assets/local-retention-map.png)
+[![Greater Manchester neighbourhood adaptation priorities](projects/uk-climate-resilience-gis/outputs/maps/05_priorities.png)](projects/uk-climate-resilience-gis/outputs/maps/05_priorities.png)
 
-*Local workplace-flow retention across Liverpool's 61 MSOAs, calculated from Census 2021 data.*
+*The balanced screen highlights neighbourhoods for local investigation. The 153 outlined areas meet the stated persistence rule; 174 grey areas lack enough heat evidence and remain unassessed. Open the full-size map for its legend and sources.*
 
 ## Selected projects
+
+### [Greater Manchester climate resilience](projects/uk-climate-resilience-gis/)
+
+This independent consultancy-style case asks where an adaptation team should investigate first.
+I combined flood, satellite, greenspace, deprivation and population evidence across 1,702
+neighbourhoods, then tested how the shortlist changes with policy assumptions. Python and PyQGIS
+produce a reviewable decision brief, six maps and an offline explorer: 153 areas meet the stated
+persistence rule, while 174 remain unassessed because heat evidence is insufficient.
 
 ### [Liverpool urban accessibility](projects/liverpool-urban-accessibility/)
 

@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "Please cite this independent portfolio case study and the original datasets when referring to its outputs."
+title: "Greater Manchester Climate Resilience: Evidence for Neighbourhood Adaptation Priorities"
+type: software
+authors:
+  - family-names: Moorcroft
+    given-names: Ewan
+version: 1.0.0
+abstract: "A reproducible Python and QGIS neighbourhood screening case study combining flood footprints, selected satellite surface-temperature observations, greenspace access, income deprivation and age structure, with scenario sensitivity and spatial diagnostics. Independent simulated consultancy work; not an official authority product."
+keywords:
+  - geospatial data science
+  - QGIS
+  - climate adaptation
+  - sensitivity analysis
+  - Greater Manchester

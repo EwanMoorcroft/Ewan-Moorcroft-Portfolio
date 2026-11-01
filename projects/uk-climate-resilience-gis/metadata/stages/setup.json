@@ -1,0 +1,23 @@
+{
+  "stage": "setup",
+  "status": "passed",
+  "completed_utc": "2026-09-29T16:44:12.101731+00:00",
+  "elapsed_seconds": 2.73,
+  "result": {
+    "python": "3.12.11",
+    "qgis": "4.2.2-Bel\u00e9m do Par\u00e1",
+    "imports": [
+      "numpy",
+      "pandas",
+      "geopandas",
+      "shapely",
+      "rasterio",
+      "scipy",
+      "requests",
+      "pyarrow",
+      "pyogrio",
+      "matplotlib",
+      "qgis.core"
+    ]
+  }
+}

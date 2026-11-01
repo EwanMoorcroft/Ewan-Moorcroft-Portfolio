@@ -1,0 +1,13 @@
+{
+  "stage": "validate",
+  "status": "passed",
+  "completed_utc": "2026-09-30T14:50:21.224007+00:00",
+  "elapsed_seconds": 12.33,
+  "result": {
+    "status": "passed",
+    "passed_checks": 267,
+    "total_checks": 267,
+    "eligible_neighbourhoods": 1528,
+    "excluded_neighbourhoods": 174
+  }
+}
